@@ -1,25 +1,55 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+
+  const [credentials, setcredentials] = useState({ username: "", password: "" })
+
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await fetch("http://localhost:5000/admin/login", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username: credentials.username, password: credentials.password })
+    });
+    const json = await response.json();
+    console.log(json)
+    if (json.username === credentials.username) {
+      localStorage.setItem('token', json.authtoken);
+      navigate("/home")
+    }
+    else {
+      alert("Invalid Credentials")
+    }
+  }
+  const onChange = (e) => {
+    setcredentials({ ...credentials, [e.target.name]: e.target.value })
+  }
   return (
     <div><div className='container d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
-    <form>
-      <div className="form-group">
-        <label htmlFor="exampleInputEmail1">Email address</label>
-        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
-        <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
-      </div>
-      <div className="form-group">
-        <label htmlFor="exampleInputPassword1">Password</label>
-        <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
-      </div>
-      <div className="form-group form-check">
-        <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-        <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
-      </div>
-      <button type="submit" className="btn btn-primary"  >Login</button>
-    </form>
-  </div></div>
+      <form onSubmit={handleSubmit}>
+        <h1>Welcome to Login Page</h1>
+        <div className="form-group">
+          <label htmlFor="username">username address</label>
+          <input type="text" className="form-control" id="username" name='username' value={credentials.username} onChange={onChange} aria-describedby="usernameHelp" placeholder="Enter username" />
+          <small id="usernameHelp" className="form-text text-muted">We'll never share your username with anyone else.</small>
+        </div>
+        <div className="form-group">
+          <label htmlFor="password">Password</label>
+          <input type="password" className="form-control" id="password" name='password' value={credentials.password} onChange={onChange} placeholder="Password" />
+        </div>
+        <div className="form-group form-check">
+          <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+          <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
+        </div>
+        <button type="submit" className="btn btn-primary" > Login</button>
+        <a className="btn btn-outline-primary mx-2" href="/register" role='button'>Register</a>
+      </form>
+    </div></div>
   )
 }
 
