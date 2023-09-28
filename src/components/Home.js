@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Navbar from './Navbar'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet'; // Import Leaflet directly for custom icons
 import 'leaflet/dist/leaflet.css';
@@ -33,6 +34,7 @@ const App = () => {
 
   return (
     <div className="App">
+      <Navbar/>
       <h1>Live Employee Locations</h1>
       <div className="map-container">
         <MapContainer center={[27.700769, 85.300140]} zoom={10} style={{ height: '500px', width: '100%' }}>

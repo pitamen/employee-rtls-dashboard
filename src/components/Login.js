@@ -19,7 +19,8 @@ const Login = () => {
     const json = await response.json();
     console.log(json)
     if (json.username === credentials.username) {
-      localStorage.setItem('token', json.authtoken);
+      console.log(json.accessToken)
+      sessionStorage.setItem('accessToken', json.accessToken);
       navigate("/home")
     }
     else {
