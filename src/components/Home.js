@@ -14,8 +14,11 @@ const App = () => {
   const dummyUserData = [
     { id: 1, name: 'Aakash', lat: 27.700769, lng: 85.300140, icon: userIcon1 },
     { id: 2, name: 'Nirakar', lat: 27.6710, lng: 85.4298, icon: userIcon2 },
+    { id: 3, name: 'User3', lat: 27.5710, lng: 85.4298, icon: userIcon2 },
     // Add more user data here
   ];
+
+  console.log(users.name)
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -34,7 +37,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Navbar/>
+      <Navbar users={users}/>
       <h1>Live Employee Locations</h1>
       <div className="map-container">
         <MapContainer center={[27.700769, 85.300140]} zoom={10} style={{ height: '500px', width: '100%' }}>

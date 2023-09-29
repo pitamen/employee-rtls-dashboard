@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react'
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export const Navbar = () => {
+export const Navbar = ({ users }) => {
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -10,9 +10,6 @@ export const Navbar = () => {
     navigate('/');
   }
 
-  let location = useLocation();
-  useEffect(() => {
-  }, [location])
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -24,21 +21,23 @@ export const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname === "/home" ? "active" : ""}`} aria-current="page" to="/home">Home</Link>
+                <Link className={`nav-link`} aria-current="page" to="/home">Home</Link>
               </li>
               <li className="nav-item">
-                <Link className={`nav-link ${location.pathname === "/" ? "active" : ""}`} to="/">History</Link>
+                <Link className={`nav-link`} to="/">History</Link>
               </li>
-              <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
+              <li className="nav-item dropdown">
+                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Users
+                </a>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  {users.map((user) => (
+                    <Link to={`${user.name}`} key={user.id} className="dropdown-item">
+                      {user.name}
+                    </Link>
+                  ))}
+                </ul>
+              </li>
             </ul>
             <form className="d-flex" role="search">
               <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />

@@ -4,6 +4,7 @@ import Home from './components/Home';
 import Login from './components/Login'
 import Register from './components/Register'
 import { useEffect, useState } from 'react';
+import User from './components/User';
 
 
 const PrivateRoute = ({ isAuthenticated, ...props }) => {
@@ -38,6 +39,7 @@ function App() {
             >
               <Route path="/home" element={<Home />}></Route>
             </Route>
+            <Route path='/home/:user' element={<User/>}></Route>
           </Routes>
         </div>
       </Router>
