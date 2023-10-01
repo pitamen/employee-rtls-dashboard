@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-export const Navbar = ({ users }) => {
+export const Navbar = ({ users, setSelectedUser, selectedUser }) => {
 
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -27,14 +27,28 @@ export const Navbar = ({ users }) => {
                 <Link className={`nav-link`} to="/">History</Link>
               </li>
               <li className="nav-item dropdown">
-                <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Users
+                <a
+                  className="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarDropdownMenuLink"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                 {selectedUser ? selectedUser.name : 'Users'}
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   {users.map((user) => (
-                    <Link to={`${user.name}`} key={user.id} className="dropdown-item">
-                      {user.name}
-                    </Link>
+                    <li key={user.id}>
+                      <button
+                        className="dropdown-item"
+                        onClick={() => {
+                          setSelectedUser(user);
+                        }}
+                      >
+                        {user.name}
+                      </button>
+                    </li>
                   ))}
                 </ul>
               </li>
@@ -42,7 +56,6 @@ export const Navbar = ({ users }) => {
             <form className="d-flex" role="search">
               <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
               <button className="btn btn-outline-success" type="submit">Search</button>
-
               <button className="btn btn-outline-success mx-2" onClick={handleLogout}>Logout</button>
             </form>
           </div>

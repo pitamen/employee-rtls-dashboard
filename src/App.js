@@ -31,13 +31,13 @@ function App() {
       <Router>
         <div className='container'>
           <Routes>
-            <Route exact path="/" element={<Login />} />
-            <Route path='/register' element={<Register />} />
+            <Route exact path="/" element={<Login/>} />
+            <Route path='/register' element={<Register/>} />
             <Route
               path="/home"
               element={<PrivateRoute isAuthenticated={isAuthenticated} />}
             >
-              <Route path="/home" element={<Home />}></Route>
+              <Route path="/home" element={<Home/>}></Route>
             </Route>
             <Route path='/home/:user' element={<User/>}></Route>
           </Routes>
