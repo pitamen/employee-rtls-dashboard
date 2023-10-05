@@ -5,8 +5,7 @@ import L from 'leaflet'; // Import Leaflet directly for custom icons
 import 'leaflet/dist/leaflet.css';
 
 // Import custom marker icons
-import userIcon1 from '../img/pin.png'; // Replace with your image file path
-import userIcon2 from '../img/pin.png'; // Replace with your image file path
+import userIcon from '../img/pin.png'; 
 
 
 const App = () => {
@@ -14,11 +13,37 @@ const App = () => {
 
   const [users, setUsers] = useState([]);
 
+  
+  const fetchData = async()=>{
+    const response = await fetch("http://localhost:3000/location/latest-locations-ofAllUsers", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+    let json = await response.json();
+    //dummyUserData.concat(json)
+    json.data.forEach(function(item){
+      const myobj = {
+        id: item.user_id,
+        name: item.user_id,
+        lat: item.latitude,
+        lng: item.longitude,
+        icon: userIcon
+      }
+      dummyUserData.push(myobj);
+    });
+    console.log(dummyUserData)
+  
+  }
+
+  fetchData();  
+
   const dummyUserData = [
-    { id: 1, name: 'Aakash', lat: 27.700769, lng: 85.300140, icon: userIcon1 },
-    { id: 2, name: 'Nirakar', lat: 27.6710, lng: 85.4298, icon: userIcon2 },
-    { id: 3, name: 'User3', lat: 27.5710, lng: 85.4298, icon: userIcon2 },
-    { id: 4, name: 'User4', lat: 27.5710, lng: 85.4298, icon: userIcon2 },
+    { id: 1, name: 'Aakash', lat: 27.700769, lng: 85.300140, icon: userIcon },
+    { id: 2, name: 'Nirakar', lat: 27.6710, lng: 85.4298, icon: userIcon },
+    { id: 3, name: 'User3', lat: 27.5710, lng: 85.4298, icon: userIcon },
+    { id: 4, name: 'User4', lat: 27.5710, lng: 85.4298, icon: userIcon },
     // Add more user data here
   ];
 
