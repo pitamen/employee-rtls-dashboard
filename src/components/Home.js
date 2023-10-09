@@ -22,7 +22,7 @@ const App = () => {
       }
     });
     let json = await response.json();
-    //dummyUserData.concat(json)
+    //userData.concat(json)
     json.data.forEach(function(item){
       const myobj = {
         id: item.user_id,
@@ -31,25 +31,25 @@ const App = () => {
         lng: item.longitude,
         icon: userIcon
       }
-      dummyUserData.push(myobj);
+      userData.push(myobj);
     });
-    console.log(dummyUserData)
+    console.log(userData)
   
   }
 
   fetchData();  
 
-  const dummyUserData = [
-    { id: 1, name: 'Aakash', lat: 27.700769, lng: 85.300140, icon: userIcon },
-    { id: 2, name: 'Nirakar', lat: 27.6710, lng: 85.4298, icon: userIcon },
-    { id: 3, name: 'User3', lat: 27.5710, lng: 85.4298, icon: userIcon },
-    { id: 4, name: 'User4', lat: 27.5710, lng: 85.4298, icon: userIcon },
-    // Add more user data here
+  const userData = [
+    // { id: 1, name: 'Aakash', lat: 27.700769, lng: 85.300140, icon: userIcon },
+    // { id: 2, name: 'Nirakar', lat: 27.6710, lng: 85.4298, icon: userIcon },
+    // { id: 3, name: 'User3', lat: 27.5710, lng: 85.4298, icon: userIcon },
+    // { id: 4, name: 'User4', lat: 27.5710, lng: 85.4298, icon: userIcon },
+    // // Add more user data here
   ];
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const updatedUsers = dummyUserData.map((user) => ({
+      const updatedUsers = userData.map((user) => ({
         ...user,
         lat: user.lat + (Math.random() - 0.2) * 0.01,
         lng: user.lng + (Math.random() - 0.2) * 0.01,

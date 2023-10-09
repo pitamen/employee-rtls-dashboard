@@ -40,14 +40,15 @@ export const Navbar = ({ users, setSelectedUser, selectedUser }) => {
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   {users.map((user) => (
                     <li key={user.id}>
-                      <button
+                      <Link
+                        to={`/home/${user.name}`}
                         className="dropdown-item"
                         onClick={() => {
                           setSelectedUser(user);
                         }}
                       >
                         {user.name}
-                      </button>
+                      </Link>
                     </li>
                   ))}
                 </ul>
