@@ -1,72 +1,63 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './Navbar'
+import Navbar from './Navbar';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet'; // Import Leaflet directly for custom icons
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 
 // Import custom marker icons
-import userIcon from '../img/circlePointer.png'; 
+import userIcon from '../img/circlePointer.png';
 
-
-const App = () => {
+const User = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
-
   const [users, setUsers] = useState([]);
-
   const userId = useParams();
 
-  
-  const fetchData = async()=>{
+  const fetchData = async () => {
+    props.setProgress(10)
     const response = await fetch(`http://localhost:3000/location/getLocationById/${userId.user}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
-      }
+        'Content-Type': 'application/json',
+      },
     });
-    let json = await response.json();
-    console.log(json)
-    //userData.concat(json)
-    json.data.forEach(function(item){
-      const myobj = {
-        id: item.user_id,
-        name: item.user_id,
-        lat: item.latitude,
-        lng: item.longitude,
-        icon: userIcon
-      }
-      userData.push(myobj);
-    });
-    console.log(userData)
-  
-  }
+    const json = await response.json();
+    props.setProgress(100);
 
-  fetchData();  
+    const userData = json.data.map((item) => ({
+      id: item.user_id,
+      name: item.user_id,
+      lat: item.latitude,
+      lng: item.longitude,
+      icon: userIcon,
+      trackedAt: item.tracked_at, // Add the tracked_at property
+    }));
 
-  const userData = [];
+    console.log(userData);
+    setUsers(userData);
+  };
 
   useEffect(() => {
+    fetchData();
+
     const intervalId = setInterval(() => {
-      const updatedUsers = userData.map((user) => ({
-        ...user
-      }));
-      setUsers(updatedUsers);
+      fetchData();
     }, 5000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, []);
+  }, [userId.user]);
 
   return (
     <div className="App">
-      <Navbar users={users} setSelectedUser={setSelectedUser} selectedUser={selectedUser}/>
+      <Navbar users={users} setSelectedUser={setSelectedUser} selectedUser={selectedUser} />
       <h1>Live Employee Locations</h1>
       <div className="map-container">
         <MapContainer
           center={
             selectedUser === null
-            ? [27.700769, 85.300140]
+              ? [27.700769, 85.300140]
               : [selectedUser.lat, selectedUser.lng]
           }
           zoom={10}
@@ -83,7 +74,7 @@ const App = () => {
                 position={[user.lat, user.lng]}
                 icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
               >
-                <Popup>{user.name}</Popup>
+                <Popup>{user.trackedAt}</Popup> {/* Display tracked_at date in Popup */}
               </Marker>
             ))
             : selectedUser && (
@@ -92,7 +83,7 @@ const App = () => {
                 position={[selectedUser.lat, selectedUser.lng]}
                 icon={L.icon({ iconUrl: selectedUser.icon, iconSize: [32, 32] })}
               >
-                <Popup>{selectedUser.name}</Popup>
+                <Popup>{selectedUser.trackedAt}</Popup> {/* Display tracked_at date in Popup */}
               </Marker>
             )}
         </MapContainer>
@@ -101,4 +92,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default User;

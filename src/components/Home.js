@@ -8,18 +8,20 @@ import 'leaflet/dist/leaflet.css';
 import userIcon from '../img/pin.png'; 
 
 
-const App = () => {
+const Home = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
 
   const [users, setUsers] = useState([]);
 
   
   const fetchData = async()=>{
+    props.setProgress(10)
     const response = await fetch("http://localhost:3000/location/latest-locations-ofAllUsers", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
+      
     });
     let json = await response.json();
     //userData.concat(json)
@@ -34,7 +36,7 @@ const App = () => {
       userData.push(myobj);
     });
     console.log(userData)
-  
+    props.setProgress(100);
   }
 
   fetchData();  
@@ -105,4 +107,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
