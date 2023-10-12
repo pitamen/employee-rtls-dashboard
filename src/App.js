@@ -32,7 +32,7 @@ function App() {
   return (
     <>
       <Router>
-        <div className='container'>
+        <div >
         <LoadingBar
         color='#f11946'
         progress={progress}

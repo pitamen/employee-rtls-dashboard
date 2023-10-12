@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.disabled-dropdown {
+  pointer-events: none; /* Disable click events */
+  cursor: not-allowed; /* Change the cursor style */
+  color: #6c757d !important; /* Change the text color */
+  text-decoration: none !important; /* Remove underline */
+}
