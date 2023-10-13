@@ -8,14 +8,14 @@ import User from './components/User';
 import LoadingBar from 'react-top-loading-bar'
 
 
-const PrivateRoute = ({ isAuthenticated, ...props }) => {
+const PrivateRoute = ({ isAuthenticated}) => {
   const token = sessionStorage.getItem("accessToken");
   return isAuthenticated || token ? (
     <>
       <Outlet />
     </>
   ) : (
-    <Navigate replace to="/" />
+    <Navigate replace to="/login" />
   );
 }
 
@@ -38,19 +38,15 @@ function App() {
         progress={progress}
       />
           <Routes>
-            <Route exact path="/" element={<Login/>} />
-            <Route path='/register' element={<Register/>} />
-            <Route
-              path="/home"
-              element={<PrivateRoute isAuthenticated={isAuthenticated} />}
-            >
-              <Route path="/home" element={<Home setProgress= {setProgress}/>}></Route>
-            </Route>
-            <Route path='/home/:user' element={<User setProgress= {setProgress}/>}></Route>
+            <Route exact path="/login" element={<Login/>} />
+            <Route exact path='/register' element={<Register/>} />
+            <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />} >
+              <Route exact path="/" element={<Home setProgress= {setProgress}/>}></Route>
+              <Route exact path='/:user' element={<User setProgress= {setProgress}/>}></Route>
+            </Route> 
           </Routes>
         </div>
       </Router>
-
     </>
   );
 }

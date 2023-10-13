@@ -59,7 +59,7 @@ const Home = (props) => {
       <Namebar />
       <div className="map-container">
         <MapContainer
-          center={[27.700769, 85.300140]}
+          center={[27.633367, 85.305531]}
           zoom={10}
           style={{ height: '500px', width: '100%' }}
         >

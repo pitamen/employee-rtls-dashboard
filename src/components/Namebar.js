@@ -1,18 +1,17 @@
 import React from 'react';
-import backgroundImg from '../img/NamebarBg.jpg'; // Replace with the actual path to your background image
+import backgroundImg from '../img/NamebarBg.jpg'; 
 
 const Namebar = () => {
     const namebarStyle = {
       backgroundImage: `url(${backgroundImg})`, // Use the imported image
       backgroundSize: 'cover', // Adjust as needed
       backgroundRepeat: 'no-repeat', // Adjust as needed
-      padding: '1px',
       color: 'white',
     };
   
     return (
       <div style={namebarStyle}>
-        <h2>Live Employee Locations</h2>
+        <h3 className='text-center py-2'>Live Employee Locations</h3>
       </div>
     );
   };

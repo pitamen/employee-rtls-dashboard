@@ -10,7 +10,7 @@ export const Navbar = ({ users, userId }) => {
 
   const handleLogout = () => {
     sessionStorage.removeItem('accessToken');
-    navigate('/');
+    navigate('/login');
   };
 
   const handleSearch = (e) => {
@@ -21,14 +21,14 @@ export const Navbar = ({ users, userId }) => {
   
     if (userToSearch) {
       // If a user with the matching ID is found, navigate to their profile
-      navigate(`/home/${userToSearch.name}`);
+      navigate(`/${userToSearch.name}`);
     } else {
       // If the search query is not a valid user ID, check if it's a user name
       const userByName = users.find((user) => user.name === searchQuery);
       
       if (userByName) {
         // If a user with the matching name is found, navigate to their profile
-        navigate(`/home/${userByName.name}`);
+        navigate(`/${userByName.name}`);
       } else {
         // Handle the case when the user is not found
         alert('User not found.');
@@ -40,7 +40,7 @@ export const Navbar = ({ users, userId }) => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/home">
+          <Link className="navbar-brand" to="/">
              <img src={logo} alt="Logo" width="40" height="40" style={{ marginRight: '10px' }}  />
              E-LTS
           </Link>
@@ -58,7 +58,7 @@ export const Navbar = ({ users, userId }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className={`nav-link`} aria-current="page" to="/home">
+                <Link className={`nav-link`} aria-current="page" to="/">
                   Home
                 </Link>
               </li>
@@ -77,7 +77,7 @@ export const Navbar = ({ users, userId }) => {
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   {users.map((user) => (
                     <li key={user.id}>
-                      <Link to={`/home/${user.name}`} className="dropdown-item">
+                      <Link to={`/${user.name}`} className="dropdown-item">
                         {user.name}
                       </Link>
                     </li>
