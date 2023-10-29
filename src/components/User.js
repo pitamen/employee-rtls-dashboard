@@ -29,13 +29,13 @@ const User = (props) => {
       const userData = json.data.map((item) => ({
         id: item.user_id,
         name: item.user_id,
-        lat: item.latitude,
-        lng: item.longitude,
+        lat: item.locations[0].latitude,
+        lng: item.locations[0].longitude,
         icon: userIcon,
-        trackedAt: item.tracked_at, // Add the tracked_at property
+        trackedAt: item.locations.tracked_at, // Add the tracked_at property
       }));
 
-      
+      console.log(json)
       setUsers(userData);
       props.setProgress(100); // Set loading to 100% when data is fetched
     };
