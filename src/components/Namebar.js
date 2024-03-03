@@ -11,7 +11,7 @@ const Namebar = () => {
   
     return (
       <div style={namebarStyle}>
-        <h3 className='text-center py-2'>Live Employee Locations</h3>
+        <h3 className='text-center py-0.5'>Live Employee Locations</h3>
       </div>
     );
   };

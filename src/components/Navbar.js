@@ -38,11 +38,11 @@ export const Navbar = ({ users, userId }) => {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar p-1 navbar-light bg-light">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
              <img src={logo} alt="Logo" width="40" height="40" style={{ marginRight: '10px' }}  />
-             E-LTS
+             {userId ? userId : 'DH-ETS'}
           </Link>
           <button
             className="navbar-toggler"
@@ -85,7 +85,7 @@ export const Navbar = ({ users, userId }) => {
                 </ul>
               </li>
             </ul>
-            <form className="d-flex" role="search" onSubmit={handleSearch}>
+            <form className="d-flex p-1" role="search" onSubmit={handleSearch}>
             {!userId && ( <input
                 className="form-control me-2"
                 type="search"
