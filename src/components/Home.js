@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet'; // Import Leaflet directly for custom icons
 import 'leaflet/dist/leaflet.css';
 import Namebar from './Namebar';
+import Sidedetails from './Sidedetails'
 
 // Import custom marker icons
 import userIcon from '../img/pin.png';
@@ -57,30 +58,40 @@ const Home = (props) => {
     <div className="App">
       <Navbar users={users} />
       <Namebar />
-      <div className="map-container">
-        <MapContainer
-          center={[27.633367, 85.305531]}
-          zoom={10}
-          style={{ height: '500px', width: '100%' }}
-        >
-          <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          />
-          {
-            users.map((user) => (
-              <Marker
-                key={user.id}
-                position={[user.lat, user.lng]}
-                icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
-              >
-                <Popup>{user.name}</Popup>
-              </Marker>
-            ))
+      <div class="d-flex">
+        <div class="col-3 px-2">
+          <div class="d-flex flex-column bd-highlight mb-3">
+            <div class="p-2 bd-highlight border"><Sidedetails users={users}/></div>
+          </div>
+        </div>
+        <div class="col-9">
+          <div className="map-container">
+            <MapContainer
+              center={[27.633367, 85.305531]}
+              zoom={10}
+              style={{ height: '500px', width: '100%' }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              />
+              {
+                users.map((user) => (
+                  <Marker
+                    key={user.id}
+                    position={[user.lat, user.lng]}
+                    icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
+                  >
+                    <Popup>{user.name}</Popup>
+                  </Marker>
+                ))
 
-          }
-        </MapContainer>
+              }
+            </MapContainer>
+          </div>
+        </div>
       </div>
+
     </div>
   );
 };

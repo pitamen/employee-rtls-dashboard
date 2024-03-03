@@ -58,12 +58,12 @@ export const Navbar = ({ users, userId }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className={`nav-link`} aria-current="page" to="/">
+                {/* <Link className={`nav-link`} aria-current="page" to="/">
                   Home
-                </Link>
+                </Link> */}
               </li>
               <li className="nav-item dropdown">
-                <a
+                {/* <a
                   className={`nav-link dropdown-toggle ${userId ? 'disabled-dropdown' : ''}`}
                   href="#"
                   id="navbarDropdownMenuLink"
@@ -73,7 +73,7 @@ export const Navbar = ({ users, userId }) => {
                   disabled={userId ? true : false}
                 >
                   {userId ? userId : 'All-Users'}
-                </a>
+                </a> */}
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   {users.map((user) => (
                     <li key={user.id}>

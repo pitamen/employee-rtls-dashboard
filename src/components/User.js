@@ -32,7 +32,7 @@ const User = (props) => {
         lat: item.locations[0].latitude,
         lng: item.locations[0].longitude,
         icon: userIcon,
-        trackedAt: item.locations.tracked_at, // Add the tracked_at property
+        trackedAt: item.locations[0].tracked_at, // Add the tracked_at property
       }));
 
       console.log(json)
