@@ -1,0 +1,1 @@
+export const BASE_URL = "http://rtls.dishhome.com.np:90/"

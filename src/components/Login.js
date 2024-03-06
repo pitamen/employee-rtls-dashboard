@@ -10,7 +10,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/admin/login", {
+    const response = await fetch("http://localhost:5000/users/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -18,7 +18,8 @@ const Login = () => {
       body: JSON.stringify({ username: credentials.username, password: credentials.password })
     });
     const json = await response.json();
-    if (json.username === credentials.username) {
+
+    if (json.data.username === credentials.username) {
       console.log(json.accessToken)
       sessionStorage.setItem('accessToken', json.accessToken);
       navigate("/")

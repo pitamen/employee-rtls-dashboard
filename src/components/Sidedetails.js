@@ -2,6 +2,40 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Sidedetails = ({ users, userId }) => {
+
+  const calculateTimeDifference = (targetTime) => {
+    var currDate = new Date().getTime();
+    var prevDate = new Date(targetTime).getTime();
+
+    var timeDifference = currDate - prevDate;
+
+    // Convert the time difference to a human-readable format
+    var seconds = Math.floor((timeDifference / 1000) % 60);
+    var minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+    var hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+    var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+    var result = "";
+
+    if (days > 0) {
+      result += days + " days, ";
+    }
+    if (hours > 0) {
+      result += hours + " hours, ";
+    }
+    if (minutes > 0) {
+      result += minutes + " minutes, ";
+    }
+    if (seconds > 0) {
+      result += seconds + " seconds ago";
+    }
+    if (result === "") {
+      result = "Just Now";
+    }
+
+    return result;
+
+  };
   return (
     <div>
       <div className="accordion" id="accordionExample">
@@ -15,7 +49,7 @@ const Sidedetails = ({ users, userId }) => {
               aria-expanded="true"
               aria-controls="collapseOne"
             >
-              Tendel
+              DishHome RO
             </button>
           </h2>
           <div
@@ -28,8 +62,8 @@ const Sidedetails = ({ users, userId }) => {
               <ul className="list-group">
                 {users.map((user) => (
                   <li key={user.id} className="list-group-item">
-                    <Link to={`/${user.name}`}>
-                      {user.name}
+                    <Link to={`/${user.name}`} style={{ textDecoration: 'none' }}>
+                      {user.name} ({calculateTimeDifference(user.time)})
                     </Link>
                   </li>
                 ))}
