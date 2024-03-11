@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import Timepicker from './Timepicker';
 import logo from '../img/DishHome_Logo.svg.png';
 
 export const Navbar = ({ users, userId }) => {
@@ -37,8 +37,8 @@ export const Navbar = ({ users, userId }) => {
   };
 
   return (
-    <div>
-      <nav className="navbar p-1 navbar-light bg-light">
+    <div className='navBar'>
+      <nav className="navbar navbar-expand-lg p-1 navbar-light bg-light">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
              <img src={logo} alt="Logo" width="40" height="40" style={{ marginRight: '10px' }}  />
@@ -85,6 +85,7 @@ export const Navbar = ({ users, userId }) => {
                 </ul>
               </li>
             </ul>
+            <Timepicker />
             <form className="d-flex p-1" role="search" onSubmit={handleSearch}>
             {!userId && ( <input
                 className="form-control me-2"

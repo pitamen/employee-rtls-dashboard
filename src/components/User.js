@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './Navbar';
+import NavbarUser from './NavbarUser';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -53,7 +53,7 @@ const User = (props) => {
 
   return (
     <div className="App">
-      <Navbar users={users} userId={userId.user}/>
+      <NavbarUser users={users} userId={userId.user}/>
       <Namebar/>
       <div className="map-container">
         <MapContainer
