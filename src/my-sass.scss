@@ -1,0 +1,24 @@
+$myColor: red;
+$borderColor: rgba(128, 128, 128, 0.3);
+$fontColor: rgba(128, 128, 128);
+
+.react-datepicker-popper {
+  z-index: 9999 !important;
+ 
+}
+
+/* Add this style to your CSS file or style block */
+.datepicker-wrapper {
+  font-size: 16px; /* Adjust the font size based on your preference */
+}
+
+.dateDiv {
+  width: 200px; /* Adjust the width based on your preference */
+  height: 38px; /* Adjust the height based on your preference */
+  font-size: 16px; /* Adjust the font size based on your preference */
+  border: 1px solid  $borderColor; /* Change the border color as needed */
+  border-radius: 1px; /* Optional: Add border-radius for rounded corners */
+  color: $fontColor;
+}
+
+
