@@ -62,7 +62,7 @@ const Sidedetails = ({ users, userId }) => {
               <ul className="list-group">
                 {users.map((user) => (
                   <li key={user.id} className="list-group-item">
-                    <Link to={`/${user.name}`} style={{ textDecoration: 'none' }}>
+                    <Link to={`/${user.id}`} style={{ textDecoration: 'none' }}>
                       {user.name} ({calculateTimeDifference(user.time)})
                     </Link>
                   </li>

@@ -35,7 +35,7 @@ const Home = (props) => {
   const fetchData = async () => {
     props.setProgress(10); // Set loading to 10% initially
     try {
-      const response = await fetch("http://localhost:5000/locations/live-location-traces", {
+      const response = await fetch("http://localhost:3000/locations/live-location-traces", {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -100,7 +100,7 @@ const Home = (props) => {
                     key={user.id}
                     position={[user.lat, user.lng]}
                     icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}>
-                      
+
                     <Popup><b>{user.name}</b><br />{convertUTCToNPT(user.time)}</Popup>
                   </Marker>
                 ))

@@ -18,7 +18,7 @@ const User = (props) => {
     props.setProgress(10); // Set loading to 10% initially
 
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/location/getLocationById/${userId.user}`, {
+      const response = await fetch(`http://localhost:3000/employees/${userId.user}/history`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -26,16 +26,15 @@ const User = (props) => {
       });
       const json = await response.json();
 
-      const userData = json.data.map((item) => ({
-        id: item.user_id,
-        name: item.user_id,
-        lat: item.locations[0].latitude,
-        lng: item.locations[0].longitude,
+      const userData = json.map((item) => ({
+        id: item.employeeId,
+        // name: item.user_id,
+        lat: item.latitude,
+        lng: item.longitude,
         icon: userIcon,
-        trackedAt: item.locations[0].tracked_at, // Add the tracked_at property
+        trackedAt: item.tracked_at, // Add the tracked_at property
       }));
 
-      console.log(json)
       setUsers(userData);
       props.setProgress(100); // Set loading to 100% when data is fetched
     };
