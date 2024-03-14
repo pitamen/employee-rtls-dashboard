@@ -1,12 +1,11 @@
 // MapComponent.js
 import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
-import CustomMarker from './partials/CustomMarker.js';
 import expandIconUrl from '../img/maximize.png';
 import shrinkIconUrl from '../img/minimize.png';
+import L from 'leaflet';
 
 const MapComponent = ({ users }) => {
   return (

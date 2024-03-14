@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import backgroundImg from '../img/NamebarBg.jpg'; 
+import { BASE_URL } from '../utils/constants';
 
 const Login = () => {
 
@@ -10,7 +11,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/users/login", {
+    const response = await fetch(BASE_URL+"users/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

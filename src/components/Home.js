@@ -14,14 +14,14 @@ const Home = (props) => {
   const [users, setUsers] = useState([]);
   const [orgResponse, setOrgResponse] = useState();
 
-  const getAllEmployees = async (jsonResponse) =>{
+  const getAllEmployees = async (jsonResponse) => {
     const allEmployees = [];
 
     jsonResponse.forEach(vendor => {
 
-       const {employees} = vendor;
-       allEmployees.push(...employees);
-      
+      const { employees } = vendor;
+      allEmployees.push(...employees);
+
     });
 
     return allEmployees;
@@ -29,7 +29,7 @@ const Home = (props) => {
 
   const fetchData = async () => {
     props.setProgress(10);
-    const response = await fetch(BASE_URL+"locations/live-location-traces", {
+    const response = await fetch(BASE_URL + "locations/live-location-traces", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -46,7 +46,7 @@ const Home = (props) => {
       lat: item.location.latitude,
       lng: item.location.longitude,
       time: item.location.tracked_at,
-      icon: calculateTimeDifferenceInMinutes(item.location.tracked_at) > 10 ? userIcon: liveLocationIcon
+      icon: calculateTimeDifferenceInMinutes(item.location.tracked_at) > 10 ? userIcon : liveLocationIcon
     }));
 
     setUsers(userData);

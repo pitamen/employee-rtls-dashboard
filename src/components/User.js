@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom';
 import userIcon from '../img/circlePointer.png';
 import Namebar from './Namebar';
 import { FullscreenControl } from 'react-leaflet-fullscreen';
+import { BASE_URL } from '../utils/constants';
 
 const User = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -19,7 +20,7 @@ const User = (props) => {
     props.setProgress(10); // Set loading to 10% initially
 
     const fetchData = async () => {
-      const response = await fetch(`http://localhost:3000/employees/${userId.user}/history`, {
+      const response = await fetch(`${BASE_URL}employees/${userId.user}/history`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
