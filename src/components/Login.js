@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import backgroundImg from '../img/NamebarBg.jpg'; 
+import backgroundImg from '../img/login.png'; 
 import { BASE_URL } from '../utils/constants';
 
 const Login = () => {
@@ -33,15 +33,10 @@ const Login = () => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value })
   }
   return (
-    <div style={{
-      // backgroundImage: `url(${backgroundImg})`, // Replace with the actual path to your image
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      minHeight: '100vh',
-    }}>
-      <div className='container d-flex align-items-center justify-content-center' style={{ height: '100vh' }}>
+    <div id='loginBg'>
+      <div className='container d-flex align-items-center justify-content-center' id='loginWallpaper' style={{ height: '100vh' }}>
         <form onSubmit={handleSubmit}>
-          <h1 >Welcome to Login Page</h1>
+          <h2>Login Here..</h2>
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input type="text" className="form-control" id="username" name='username' value={credentials.username} onChange={onChange} aria-describedby="usernameHelp" placeholder="Enter username" />
@@ -56,8 +51,8 @@ const Login = () => {
             <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
           </div>
           <div className='my-2'>
-            <button type="submit" className="btn btn-primary" > Login</button>
-            <a className="btn btn-outline-primary mx-2" href="/register" role='button'>Register</a>
+            <button type="submit" className="btn btn-danger" > Login</button>
+            <a className="btn btn-outline-secondary mx-2" href="/register" role='button'>Register</a>
           </div>
         </form>
       </div></div>
