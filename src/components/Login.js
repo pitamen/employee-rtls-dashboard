@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import backgroundImg from '../img/login.png'; 
 import { BASE_URL } from '../utils/constants';
 
 const Login = () => {
@@ -40,7 +39,6 @@ const Login = () => {
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input type="text" className="form-control" id="username" name='username' value={credentials.username} onChange={onChange} aria-describedby="usernameHelp" placeholder="Enter username" />
-            <small id="usernameHelp" className="form-text text-muted">We'll never share your username with anyone else.</small>
           </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>

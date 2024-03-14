@@ -3,8 +3,6 @@ import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
-import expandIconUrl from '../img/maximize.png';
-import shrinkIconUrl from '../img/minimize.png';
 import L from 'leaflet';
 
 const MapComponent = ({ users }) => {
@@ -30,8 +28,11 @@ const MapComponent = ({ users }) => {
           // <CustomMarker user={user}/>
         ))}
         <FullscreenControl position="topright"
-          expandIconUrl={expandIconUrl}
-          collapseIconUrl={shrinkIconUrl} /> {/* Add FullscreenControl */}
+          content= '<b>FS</b>'
+          title = "Fullscreen"
+          titleCancel = "Exit Fullscreen"
+          forceSeparateButton = 'true'
+           /> {/* Add FullscreenControl */}
       </MapContainer>
     </div>
   );
