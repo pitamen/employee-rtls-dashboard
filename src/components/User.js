@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 // Import custom marker icons
 import userIcon from '../img/circlePointer.png';
 import Namebar from './Namebar';
+import { FullscreenControl } from 'react-leaflet-fullscreen';
 
 const User = (props) => {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -42,7 +43,7 @@ const User = (props) => {
     fetchData();
 
     const intervalId = setInterval(() => {
-      fetchData();
+      // fetchData();
     }, 5000);
 
     return () => {
@@ -76,6 +77,7 @@ const User = (props) => {
               </Popup>
             </Marker>
           ))}
+           <FullscreenControl position="topright" /> {/* Add FullscreenControl */}
         </MapContainer>
       </div>
     </div>
