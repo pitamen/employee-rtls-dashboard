@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
 import L from 'leaflet';
+import UserCard from './UserCard'
 
 const MapComponent = ({ users }) => {
   return (
@@ -23,16 +24,16 @@ const MapComponent = ({ users }) => {
             position={[user.lat, user.lng]}
             icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
           >
-            <Popup>{user.name}</Popup>
+            <Popup><UserCard user={user} /></Popup>
           </Marker>
           // <CustomMarker user={user}/>
         ))}
         <FullscreenControl position="topright"
-          content= '<b>FS</b>'
-          title = "Fullscreen"
-          titleCancel = "Exit Fullscreen"
-          forceSeparateButton = 'true'
-           /> {/* Add FullscreenControl */}
+          content='<b>FS</b>'
+          title="Fullscreen"
+          titleCancel="Exit Fullscreen"
+          forceSeparateButton='true'
+        /> {/* Add FullscreenControl */}
       </MapContainer>
     </div>
   );
