@@ -10,7 +10,7 @@ const MapComponent = ({ users }) => {
 
   const customIcon = (name, icon) => L.divIcon({
     className: 'custom-div-icon',
-    html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 32px; height: 32px;">`
+    html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 24px; height: 24px;">`
   })
   return (
     <div className="map-container">
