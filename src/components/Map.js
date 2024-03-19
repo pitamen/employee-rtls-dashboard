@@ -26,6 +26,7 @@ const MapComponent = ({ users }) => {
           >
             <Popup><UserCard user={user} /></Popup>
           </Marker>
+          
           // <CustomMarker user={user}/>
         ))}
         <FullscreenControl position="topright"

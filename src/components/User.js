@@ -27,7 +27,7 @@ const User = (props) => {
         },
       });
       const json = await response.json();
-
+    
       const userData = json.map((item) => ({
         id: item.employeeId,
         // name: item.user_id,
@@ -51,7 +51,6 @@ const User = (props) => {
       clearInterval(intervalId);
     };
   }, []); // Empty dependency array, so it only runs once
-
   return (
     <div className="App">
       <NavbarUser users={users} userId={userId.user}/>

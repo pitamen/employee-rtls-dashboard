@@ -43,7 +43,7 @@
           <div className="container-fluid">
             <Link className="navbar-brand" to="/">
               <img src={logo} alt="Logo" width="40" height="40" style={{ marginRight: '10px' }}  />
-              {userId ? userId : 'DH-ETS'}
+              {users.name ? users.name : 'DH-ETS'}
             </Link>
             <button
               className="navbar-toggler"
