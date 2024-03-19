@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Sidedetails = ({ users, userId }) => {
 
@@ -65,9 +66,9 @@ const Sidedetails = ({ users, userId }) => {
                   <ul className="list-group">
                     {vendor ? vendor.employees?.map((user) => (
                       <li key={user.employeeId} className="list-group-item">
-                        {/* <Link to={`/${user.employeeId}`} style={{ textDecoration: 'none' }}> */}
+                        <Link to={`/${user.employeeId}`} style={{ textDecoration: 'none' }}>
                           {user.name} ({calculateTimeDifference(user.location.tracked_at)})
-                        {/* </Link> */}
+                        </Link>
                       </li>
                     )) : <></>}
                   </ul>

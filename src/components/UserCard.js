@@ -17,8 +17,8 @@ const UserCard = ({ user }) => {
                         <h8 className="card-subtitle mb-2 text-body-secondary">
                             <span>{lastOnline < 10 ? '🟢 online' : `🔴 ${lastOnline} min ago`}</span>
                         </h8>
-                        <p className="card-text">Latitude: {user.lat}</p>
-                        <p className="card-text">Longitude: {user.lng}</p>
+                        <p className="card-text"><b>Location:</b> {user.lat}, {user.lng}</p>
+                        <p><b>Vendor Name:</b> {user.vendorName}</p>
                         <a href="#" className="card-link">History</a>
                     </div>
                 </div>

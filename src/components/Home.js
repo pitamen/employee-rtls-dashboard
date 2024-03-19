@@ -23,7 +23,6 @@ const Home = (props) => {
       allEmployees.push(...employees);
 
     });
-
     return allEmployees;
   }
 
@@ -46,7 +45,8 @@ const Home = (props) => {
       lat: item.location.latitude,
       lng: item.location.longitude,
       time: item.location.tracked_at,
-      icon: calculateTimeDifferenceInMinutes(item.location.tracked_at) > 10 ? userIcon : liveLocationIcon
+      icon: calculateTimeDifferenceInMinutes(item.location.tracked_at) > 10 ? userIcon : liveLocationIcon,
+      vendorName: item.vendor_name
     }));
 
     setUsers(userData);
