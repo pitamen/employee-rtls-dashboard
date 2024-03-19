@@ -73,3 +73,19 @@ $backgroundImg: '/img/login.png';
   object-fit: cover;
 }
 
+.custom-div-icon{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.marker-text {
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+
