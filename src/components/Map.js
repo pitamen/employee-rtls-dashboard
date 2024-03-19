@@ -3,10 +3,15 @@ import React from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
-import L from 'leaflet';
+import L, { icon } from 'leaflet';
 import UserCard from './UserCard'
 
 const MapComponent = ({ users }) => {
+
+  const customIcon = (name, icon) => L.divIcon({
+    className: 'custom-div-icon',
+    html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 24px; height: 24px;">`
+  })
   return (
     <div className="map-container">
       <MapContainer
@@ -19,14 +24,17 @@ const MapComponent = ({ users }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {users.map((user) => (
-          <Marker
-            key={user.id}
-            position={[user.lat, user.lng]}
-            icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
-          >
+          // <Marker
+          //   key={user.id}
+          //   position={[user.lat, user.lng]}
+          //   icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
+          // >
+          //   <Popup><UserCard user={user} /></Popup>
+          // </Marker>
+          // <CustomMarker user={user}/>
+          <Marker position={[user.lat, user.lng]} icon={customIcon(user.name, user.icon)}>
             <Popup><UserCard user={user} /></Popup>
           </Marker>
-          
           // <CustomMarker user={user}/>
         ))}
         <FullscreenControl position="topright"

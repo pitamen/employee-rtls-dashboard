@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import NavbarUser from './NavbarUser';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useParams } from 'react-router-dom';
@@ -53,8 +53,8 @@ const User = (props) => {
   }, []); // Empty dependency array, so it only runs once
   return (
     <div className="App">
-      <NavbarUser users={users} userId={userId.user}/>
-      <Namebar/>
+      <NavbarUser users={users} userId={userId.user} />
+      <Namebar />
       <div className="map-container">
         <MapContainer
           center={[27.633367, 85.305531]}
@@ -66,18 +66,23 @@ const User = (props) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {users.map((user) => (
-            <Marker
-              key={userId.user}
-              position={[user.lat, user.lng]}
-              icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
-            >
+            // <Marker
+            //   key={userId.user}
+            //   position={[user.lat, user.lng]}
+            //   icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
+            // >
+            //   <Popup>
+            //     User_id: {userId.user} <br />
+            //     {new Date(user.trackedAt).toLocaleString()}
+            //   </Popup>
+            // </Marker>
+            <CircleMarker center={[user.lat, user.lng]} radius={5} color="red" fillOpacity={0.5}>
               <Popup>
-                User_id: {userId.user} <br />
                 {new Date(user.trackedAt).toLocaleString()}
               </Popup>
-            </Marker>
+            </CircleMarker>
           ))}
-           <FullscreenControl position="topright" /> {/* Add FullscreenControl */}
+          <FullscreenControl position="topright" /> {/* Add FullscreenControl */}
         </MapContainer>
       </div>
     </div>
