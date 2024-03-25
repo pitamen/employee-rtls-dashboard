@@ -16,7 +16,7 @@ const UserCard = ({ user }) => {
                         </h8>
                         <p className="card-text"><b>Location:</b> {user.lat}, {user.lng}</p>
                         <p><b>Vendor Name:</b> {user.vendorName}</p>
-                        <a href={`/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link">Show History</a>
+                        <a href={`/${user.id}`} style={{ textDecoration: 'none' }} className="card-link">Show History</a>
                     </div>
                     <div className={`user-avatar${status}`} >
                         <img src={profilePic} alt="User Avatar" className='avatar-image' />

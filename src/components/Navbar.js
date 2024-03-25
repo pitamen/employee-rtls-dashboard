@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import Timepicker from './Timepicker';
+// import Timepicker from './Timepicker';
 import logo from '../img/DishHome_Logo.svg.png';
 
 export const Navbar = ({ users, userId }) => {
@@ -21,14 +21,14 @@ export const Navbar = ({ users, userId }) => {
   
     if (userToSearch) {
       // If a user with the matching ID is found, navigate to their profile
-      navigate(`/${userToSearch.name}`);
+      navigate(`/${userToSearch.id}`);
     } else {
       // If the search query is not a valid user ID, check if it's a user name
       const userByName = users.find((user) => user.name === searchQuery);
       
       if (userByName) {
         // If a user with the matching name is found, navigate to their profile
-        navigate(`/${userByName.name}`);
+        navigate(`/${userByName.id}`);
       } else {
         // Handle the case when the user is not found
         alert('User not found.');
@@ -58,22 +58,8 @@ export const Navbar = ({ users, userId }) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                {/* <Link className={`nav-link`} aria-current="page" to="/">
-                  Home
-                </Link> */}
               </li>
               <li className="nav-item dropdown">
-                {/* <a
-                  className={`nav-link dropdown-toggle ${userId ? 'disabled-dropdown' : ''}`}
-                  href="#"
-                  id="navbarDropdownMenuLink"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                  disabled={userId ? true : false}
-                >
-                  {userId ? userId : 'All-Users'}
-                </a> */}
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   {users.map((user) => (
                     <li key={user.id}>
@@ -85,7 +71,7 @@ export const Navbar = ({ users, userId }) => {
                 </ul>
               </li>
             </ul>
-            <Timepicker />
+            {/* <Timepicker /> */}
             <form className="d-flex p-1" role="search" onSubmit={handleSearch}>
             {!userId && ( <input
                 className="form-control me-2"

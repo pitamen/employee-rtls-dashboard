@@ -24,15 +24,8 @@ const MapComponent = ({ users }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {users.map((user) => (
-          // <Marker
-          //   key={user.id}
-          //   position={[user.lat, user.lng]}
-          //   icon={L.icon({ iconUrl: user.icon, iconSize: [32, 32] })}
-          // >
-          //   <Popup><UserCard user={user} /></Popup>
-          // </Marker>
-          // <CustomMarker user={user}/>
-          <Marker position={[user.lat, user.lng]} icon={customIcon(user.name, user.icon)}>
+    
+          <Marker  position={[user.lat, user.lng]} icon={customIcon(user.name, user.icon)}>
             <Popup><UserCard user={user} /></Popup>
           </Marker>
           // <CustomMarker user={user}/>

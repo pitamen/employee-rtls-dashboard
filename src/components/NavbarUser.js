@@ -64,17 +64,7 @@
                   </Link> */}
                 </li>
                 <li className="nav-item dropdown">
-                  {/* <a
-                    className={`nav-link dropdown-toggle ${userId ? 'disabled-dropdown' : ''}`}
-                    href="#"
-                    id="navbarDropdownMenuLink"
-                    role="button"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                    disabled={userId ? true : false}
-                  >
-                    {userId ? userId : 'All-Users'}
-                  </a> */}
+            
                   <ul className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                     {users.map((user) => (
                       <li key={user.id}>

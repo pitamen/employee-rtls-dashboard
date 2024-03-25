@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { calculateTimeDifference } from '../utils/commonUtils';
 
-const Sidedetails = ({ users, userId }) => {
-  const orgUsersResponse = users;
-  
+const Sidedetails = ({ users, orgResponse }) => {
+  const orgUsersResponse = orgResponse;
   return (
     <div>
       <div className="accordion" id="accordionExample">
