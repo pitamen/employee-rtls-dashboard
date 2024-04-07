@@ -6,6 +6,8 @@ import Register from './components/Register';
 import { useEffect, useState } from 'react';
 import User from './components/User';
 import LoadingBar from 'react-top-loading-bar';
+import { NewHome } from './components/NewHome';
+
 
 const PrivateRoute = ({ isAuthenticated }) => {
   const token = sessionStorage.getItem('accessToken');
@@ -41,6 +43,7 @@ function App() {
             <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route exact path="/" element={<Home setProgress={setProgress} />} />
               <Route exact path="/:user" element={<User setProgress={setProgress} />} />
+              <Route exact path="/NewHome" element={<NewHome/>} />
             </Route>
           </Routes>
         </div>

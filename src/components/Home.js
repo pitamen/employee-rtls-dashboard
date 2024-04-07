@@ -98,6 +98,15 @@ const Home = (props) => {
     }
   };
 
+  const [receivedData, setReceivedData] = useState();
+
+  const logDataFromSidedetails = (data) => {
+    console.log("Data from Sidedetails:", data.latitude);
+    setReceivedData(data);
+  };
+
+ 
+
   return (
     <div className="App">
       {!isFullScreen && (
@@ -105,15 +114,15 @@ const Home = (props) => {
           <Navbar users={users} />
           <Namebar toggleFullScreen={toggleFullScreen}/>
           <div className="d-flex">
-            <div className="col-3 px-2">
+            <div className="col-4 col-lg-3 px-2">
               <div className="d-flex flex-column bd-highlight mb-3">
                 <div className="p-2 bd-highlight border">
-                  <Sidedetails orgResponse={orgResponse}  users={users}/>
+                  <Sidedetails orgResponse={orgResponse}  users={users} logData={logDataFromSidedetails}/>
                 </div>
               </div>
             </div>
-            <div className="col-9">
-              <MapComponent users={users} />
+            <div className="col-8 col-lg-9">
+              <MapComponent users={users}  receivedData={receivedData}/>
             </div>
           </div>
         </>
