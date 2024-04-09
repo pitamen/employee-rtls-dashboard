@@ -5,7 +5,7 @@ import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import Fullscre
 import L from 'leaflet';
 import UserCard from './UserCard';
 
-const MapComponent = ({ users, receivedData }) => {
+const MapComponent = ({ users, receivedData,  isFullScreen=false }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 27.7172, longitude: 85.3240 });
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const MapComponent = ({ users, receivedData }) => {
 
   return (
     <div className="map-container">
-      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={10} style={{ height: '85vh', width: '100%' }} key={receivedData.mapKey} >
+      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={10} style={{ height: isFullScreen?'98vh':'85vh', width: '100%' }} key={receivedData ? receivedData.mapKey ?? 0 : 0} >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

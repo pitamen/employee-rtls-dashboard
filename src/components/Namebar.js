@@ -1,7 +1,7 @@
 import React from 'react';
 import backgroundImg from '../img/NamebarBg.jpg'; 
 
-const Namebar = ({toggleFullScreen}) => {
+const Namebar = ({toggleFullScreen, isFullScreen=false}) => {
     const namebarStyle = {
       backgroundImage: `url(${backgroundImg})`, // Use the imported image
       backgroundSize: 'cover', // Adjust as needed
@@ -14,7 +14,7 @@ const Namebar = ({toggleFullScreen}) => {
       <div style={namebarStyle} className="d-flex justify-content-between">
         <button type="button" id='fullScreenButton' className="btn btn-outline btn-sm" >Dish home</button>
         <h5 className='pt-1 ps-5'>Live Technician Locations</h5>
-        <button type="button" id='fullScreenButton' className="btn btn-outline btn-sm" onClick={toggleFullScreen}>Full Screen</button>
+        <button type="button" id='fullScreenButton' className="btn btn-outline btn-sm" onClick={toggleFullScreen}>{isFullScreen?'Exit Full Screen': 'Full Screen'}</button>
       </div>
     );
   };

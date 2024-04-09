@@ -126,7 +126,7 @@ const Home = (props) => {
           </div>
         </>
       )}
-      {isFullScreen && <><Namebar toggleFullScreen={toggleFullScreen}/><MapComponent users={users} /></>} {/* Render MapComponent only when in full-screen mode */}
+      {isFullScreen && <><Namebar toggleFullScreen={toggleFullScreen}  isFullScreen={true}/><MapComponent users={users} receivedData={receivedData}  isFullScreen={true}/></>} 
     </div>
   );
 };
