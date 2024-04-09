@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { calculateTimeDifference } from '../utils/commonUtils';
 
 const Sidedetails = ({ users, orgResponse, logData }) => {
   const orgUsersResponse = orgResponse;
+  const [mapKey, setMapKey] = useState(0)
 
   const handleClick = (user) => {
-    console.log("Clicked User Latitude:", user.location.latitude);
-    console.log("Clicked User Longitude:", user.location.longitude);
-    logData({ latitude: user.location.latitude, longitude: user.location.longitude });
+    setMapKey(pervValue => pervValue + 1)
+    logData({ latitude: user.location.latitude, longitude: user.location.longitude, mapKey: mapKey });
   };
 
   return (

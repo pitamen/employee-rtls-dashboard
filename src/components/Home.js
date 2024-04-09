@@ -101,7 +101,6 @@ const Home = (props) => {
   const [receivedData, setReceivedData] = useState();
 
   const logDataFromSidedetails = (data) => {
-    console.log("Data from Sidedetails:", data.latitude);
     setReceivedData(data);
   };
 

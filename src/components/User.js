@@ -11,7 +11,7 @@ import { FullscreenControl } from 'react-leaflet-fullscreen';
 import { BASE_URL } from '../utils/constants';
 
 const User = (props) => {
-  const [selectedUser, setSelectedUser] = useState(null);
+  // const [selectedUser, setSelectedUser] = useState(null);
   const [users, setUsers] = useState([]);
   const userId = useParams();
 

@@ -15,7 +15,6 @@ const MapComponent = ({ users, receivedData }) => {
     }
   }, [receivedData]);
 
- console.log(newCenter.latitude)
 
   const customIcon = (name, icon) =>
     L.divIcon({
@@ -25,7 +24,7 @@ const MapComponent = ({ users, receivedData }) => {
 
   return (
     <div className="map-container">
-      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={10} style={{ height: '85vh', width: '100%' }}>
+      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={10} style={{ height: '85vh', width: '100%' }} key={receivedData.mapKey} >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
