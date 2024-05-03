@@ -19,12 +19,14 @@ const Login = () => {
     });
     const json = await response.json();
 
+    console.log(json);
+
     if (json.success) {
       sessionStorage.setItem('accessToken', json.accessToken);
       navigate("/")
     }
     else {
-      alert(json.message)
+      alert('Invalid Credentials')
     }
   }
   const onChange = (e) => {

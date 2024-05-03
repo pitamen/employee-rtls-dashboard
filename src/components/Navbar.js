@@ -15,17 +15,17 @@ export const Navbar = ({ users, userId }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-  
+
     // Check if the search query is a valid user ID
     const userToSearch = users.find((user) => user.id === searchQuery);
-  
+
     if (userToSearch) {
       // If a user with the matching ID is found, navigate to their profile
       navigate(`/${userToSearch.id}`);
     } else {
       // If the search query is not a valid user ID, check if it's a user name
       const userByName = users.find((user) => user.name === searchQuery);
-      
+
       if (userByName) {
         // If a user with the matching name is found, navigate to their profile
         navigate(`/${userByName.id}`);
@@ -41,8 +41,8 @@ export const Navbar = ({ users, userId }) => {
       <nav className="navbar navbar-expand-lg p-1 navbar-light bg-light">
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
-             <img src={logo} alt="Logo" width="40" height="40" style={{ marginRight: '10px' }}  />
-             DH-RTLS
+            <img src={logo} alt="Logo" width="40" height="40" style={{ marginRight: '10px' }} />
+            DH-RTLS
           </Link>
           <button
             className="navbar-toggler"
@@ -72,8 +72,8 @@ export const Navbar = ({ users, userId }) => {
               </li>
             </ul>
             {/* <Timepicker /> */}
-            <form className="d-flex p-1" role="search" onSubmit={handleSearch}>
-            {!userId && ( <input
+            <form className="d-flex p-1" role="search" onSubmit={() => { }}>
+              {!userId && (<input
                 className="form-control me-2"
                 type="search"
                 placeholder="Search by User ID"
@@ -81,7 +81,7 @@ export const Navbar = ({ users, userId }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />)}
-              {!userId &&(<button className="btn btn-outline-success" type="submit">
+              {!userId && (<button className="btn btn-outline-success" type="submit">
                 Search
               </button>)}
               <button className="btn btn-outline-success mx-2" onClick={handleLogout}>
