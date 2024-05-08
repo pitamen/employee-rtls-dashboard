@@ -23,6 +23,7 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
     L.divIcon({
       className: 'custom-div-icon',
       html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 24px; height: 24px;">`,
+      iconAnchor:[0,24]
     });
 
   return (
