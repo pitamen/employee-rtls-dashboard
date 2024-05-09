@@ -66,7 +66,7 @@ const User = (props) => {
   return (
     <div className="App">
       <NavbarUser users={userData} userId={userId.user} />
-      <Namebar />
+      <Namebar name={userId.name??''} />
       <div className="map-container">
         <MapContainer
           key={`${newCenter.latitude}-${newCenter.longitude}`}

@@ -24,7 +24,7 @@ const Sidedetails = ({ users, orgResponse, logData }) => {
   }
 
   return (
-    <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+    <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh',  scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
       {
         orgUsersResponse ? orgUsersResponse.map((vendor, index) => (
           <Accordion key={index}>
@@ -33,7 +33,7 @@ const Sidedetails = ({ users, orgResponse, logData }) => {
               aria-controls='panel1-content'
               id="panel1-header"
             >
-              <Typography> {vendor.vendor_name} ({vendor.employees.length})</Typography>
+              <Typography variant='subtitle2'> {vendor.vendor_name} ({vendor.employees.length})</Typography>
             </AccordionSummary>
             <AccordionDetails>
               <ul className="list-group">
@@ -44,9 +44,9 @@ const Sidedetails = ({ users, orgResponse, logData }) => {
                       style={{ textDecoration: 'none' }}
                       onClick={() => handleClick(user)}
                     >
-                      {user.name}<br /> ({calculateTimeDifference(user.location.tracked_at)})
+                      <Typography variant='body2' style={{fontWeight: 'bold', color: '#581845'}}>{user.name}</Typography> <Typography variant='body2'>({calculateTimeDifference(user.location.tracked_at)})</Typography>
                     </Link>
-                    <a href={`/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link">
+                    <a href={`/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>
                       <span><PreviewIcon style={{color: '#CC5500'}} /></span>
                     </a>
                   </li>
