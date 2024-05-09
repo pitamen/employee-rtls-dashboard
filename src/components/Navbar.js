@@ -76,7 +76,7 @@ export const Navbar = ({ users, userId }) => {
               {!userId && (<input
                 className="form-control me-2"
                 type="search"
-                placeholder="Search by User ID"
+                placeholder="Search by Tech Username"
                 aria-label="Search"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
