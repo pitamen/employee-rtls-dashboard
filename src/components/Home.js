@@ -113,7 +113,7 @@ const Home = (props) => {
     <div className="App">
       {!isFullScreen && (
         <>
-          <Navbar users={users} />
+          <Navbar users={users} logData={logDataFromSidedetails} />
           <Namebar toggleFullScreen={toggleFullScreen} />
           <div className="d-flex">
             <div className="col-4 col-lg-3 px-2">

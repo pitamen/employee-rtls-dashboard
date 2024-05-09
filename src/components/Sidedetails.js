@@ -18,11 +18,6 @@ const Sidedetails = ({ users, orgResponse, logData }) => {
     logData({ latitude: user.location.latitude, longitude: user.location.longitude, mapKey: mapKey });
   };
 
-  const navigateToUserDetail = (user) => {
-    console.log(user)
-    navigate("/" + user.employeeId);
-  }
-
   return (
     <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh',  scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
       {
