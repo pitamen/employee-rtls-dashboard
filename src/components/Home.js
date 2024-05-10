@@ -9,6 +9,12 @@ import userIcon from '../img/live-person-location-off.png';
 import liveLocationIcon from '../img/live-person-location.png';
 import { calculateTimeDifferenceInMinutes } from '../utils/commonUtils';
 import { BASE_URL } from '../utils/constants';
+import edrIcon from '../img/tech-edr.png';
+import cdrIcon from '../img/tech-cdr.png';
+import mwdrIcon from '../img/tech-mwdr.png';
+import pokIcon from '../img/tech-pok.png';
+import fwdrIcon from '../img/tech-fwdr.png';
+import wdrIcon from '../img/tech-wdr.png';
 
 const Home = (props) => {
   const [users, setUsers] = useState([]);
@@ -26,6 +32,16 @@ const Home = (props) => {
     });
     return allEmployees;
   }
+
+  const vendorToIconMap = {
+    'POK': pokIcon,
+    'EDR': cdrIcon,
+    'WDR-Butwal': wdrIcon,
+    'CDR': edrIcon,
+    'FWDR': fwdrIcon,
+    'MWDR': mwdrIcon
+  }
+
 
   const fetchData = async () => {
     props.setProgress(10);
@@ -46,7 +62,8 @@ const Home = (props) => {
       lat: item.location.latitude,
       lng: item.location.longitude,
       time: item.location.tracked_at,
-      icon: calculateTimeDifferenceInMinutes(item.location.tracked_at) > 10 ? userIcon : liveLocationIcon,
+      // icon: calculateTimeDifferenceInMinutes(item.location.tracked_at) > 10 ? userIcon : liveLocationIcon,
+      icon: vendorToIconMap[item.vendor_name],
       vendorName: item.vendor_name
     }));
 

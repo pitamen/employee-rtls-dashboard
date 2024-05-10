@@ -2,19 +2,26 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
-import L from 'leaflet';
+import L, { icon } from 'leaflet';
 import UserCard from './UserCard';
-import userIcon1 from '../img/live-person-location.png';
+// import userIcon1 from '../img/live-person-location.png';
+import edrIcon from '../img/tech-edr.png';
+import pokIcon from '../img/tech-pok.png';
+import mwdrIcon from '../img/tech-mwdr.png';
+import cdrIcon from '../img/tech-cdr.png';
 
 const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 27.7172, longitude: 85.3240 });
   const [zoomLevel, setZoomLevel] = useState(10);
 
-  const lessZoomedIcon = new L.Icon({
-    iconUrl: userIcon1,
-    iconSize: [24, 24], // Adjust the size of your icon as needed
-    iconAnchor: [12, 24], // Adjust the anchor point if necessary
-  });
+  const lessZoomedIcon = (icon_name) => {
+    console.log(icon_name)
+    return new L.Icon({
+      iconUrl: icon_name,
+      iconSize: [48, 48], // Adjust the size of your icon as needed
+      iconAnchor: [24, 48], // Adjust the anchor point if necessary
+    })
+  };
 
   useEffect(() => {
     if (receivedData) {
@@ -30,8 +37,8 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
   const customIcon = (name, icon) =>
     L.divIcon({
       className: 'custom-div-icon',
-      html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 24px; height: 24px;">`,
-      iconAnchor: [0, 24]
+      html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 48px; height: 48px;">`,
+      iconAnchor: [0, 48]
     });
 
   const MyMapComponent = () => {
@@ -53,7 +60,7 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {users.map((user) => (
-          <Marker key={user.id} position={[user.lat, user.lng]} icon={zoomLevel > 13 ? customIcon(user.name, user.icon) : lessZoomedIcon}>
+          <Marker key={user.id} position={[user.lat, user.lng]} icon={zoomLevel > 10 ? customIcon(user.name, user.icon) : lessZoomedIcon(user.icon)}>
             <Popup>
               <UserCard user={user} />
             </Popup>
