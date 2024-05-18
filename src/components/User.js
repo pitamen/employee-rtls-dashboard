@@ -71,7 +71,7 @@ const User = (props) => {
         <MapContainer
           key={`${newCenter.latitude}-${newCenter.longitude}`}
           center={[newCenter.latitude, newCenter.longitude]}
-          zoom={40}
+          zoom={15}
           style={{ height: '90vh', width: '100%' }}
         >
           <TileLayer
