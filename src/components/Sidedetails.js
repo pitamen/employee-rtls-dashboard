@@ -25,7 +25,9 @@ const Sidedetails = ({ users, orgResponse, logData }) => {
     'WDR-Butwal': wdrHalfIcon,
     'CDR': edrHalfIcon,
     'FWDR': fwdrHalfIcon,
-    'MWDR': mwdrHalfIcon
+    'MWDR': mwdrHalfIcon,
+    "Bagmati Central": edrHalfIcon,
+    'Bagmati': edrHalfIcon
   }
 
   const handleClick = (user) => {

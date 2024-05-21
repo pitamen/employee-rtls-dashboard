@@ -39,7 +39,9 @@ const Home = (props) => {
     'WDR-Butwal': wdrIcon,
     'CDR': edrIcon,
     'FWDR': fwdrIcon,
-    'MWDR': mwdrIcon
+    'MWDR': mwdrIcon,
+    'Bagmati': edrIcon,
+    'Bagmati Central': edrIcon
   }
 
 
