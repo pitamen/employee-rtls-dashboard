@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Namebar from './Namebar';
 import Sidedetails from './Sidedetails';
-import MapComponent from './Map'; // Import the MapComponent
+import MapComponent from './Map'; 
 
 // Import custom marker icons
 import userIcon from '../img/live-person-location-off.png';
@@ -134,17 +134,9 @@ const Home = (props) => {
         <>
           <Navbar users={users} logData={logDataFromSidedetails} />
           <Namebar toggleFullScreen={toggleFullScreen} />
-          <div className="d-flex">
-            <div className="col-4 col-lg-3 px-2">
-              <div className="d-flex flex-column bd-highlight mb-3" style={{ maxHeight: '85vh', overflowY: 'auto' }}>
-                <div className="p-2 bd-highlight border">
-                  <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
-                </div>
-              </div>
-            </div>
-            <div className="col-8 col-lg-9">
+          <div >
+          <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
               <MapComponent users={users} receivedData={receivedData} />
-            </div>
           </div>
         </>
       )}
