@@ -40,43 +40,55 @@ const Sidedetails = ({ users, orgResponse, logData }) => {
   };
 
   return (
-    <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
-      {
-        orgUsersResponse ? orgUsersResponse.map((vendor, index) => (
-          <Accordion key={index}>
-            <AccordionSummary
-              expandIcon={<ArrowDropDownIcon />}
-              aria-controls='panel1-content'
-              id="panel1-header"
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <VendorIcon imageUrl={vendorToIconMap[vendor.vendor_name]} />
-                <div style={{ marginLeft: '10px' }}></div>
-                <Typography variant='subtitle2'> {vendor.vendor_name} ({vendor.employees.length})</Typography>
-              </div>
-            </AccordionSummary>
-            <AccordionDetails>
-              <ul className="list-group">
-                {vendor.employees && vendor.employees.map((user) => (
-                  <li key={user.employeeId} className="list-group-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Link
-                      to="#"
-                      style={{ textDecoration: 'none' }}
-                      onClick={() => handleClick(user)}
-                    >
-                      <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography> <Typography variant='body2'>({calculateTimeDifference(user.location.tracked_at)})</Typography>
-                    </Link>
-                    <a href={`/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>
-                      <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </AccordionDetails>
-          </Accordion>
-        )) : null
-      }
-    </div>
+    <>
+      <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div className="offcanvas-header">
+          <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Vendor-Technician</h5>
+          <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div className="offcanvas-body">
+          <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
+            {
+              orgUsersResponse ? orgUsersResponse.map((vendor, index) => (
+                <Accordion key={index}>
+                  <AccordionSummary
+                    expandIcon={<ArrowDropDownIcon />}
+                    aria-controls='panel1-content'
+                    id="panel1-header"
+                  >
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <VendorIcon imageUrl={vendorToIconMap[vendor.vendor_name]} />
+                      <div style={{ marginLeft: '10px' }}></div>
+                      <Typography variant='subtitle2'> {vendor.vendor_name} ({vendor.employees.length})</Typography>
+                    </div>
+                  </AccordionSummary>
+                  <AccordionDetails>
+                    <ul className="list-group">
+                      {vendor.employees && vendor.employees.map((user) => (
+                        <li key={user.employeeId} className="list-group-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <Link
+                            to="#"
+                            style={{ textDecoration: 'none' }}
+                            onClick={() => handleClick(user)}
+                          >
+                            <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography> <Typography variant='body2'>({calculateTimeDifference(user.location.tracked_at)})</Typography>
+                          </Link>
+                          <a href={`/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>
+                            <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionDetails>
+                </Accordion>
+              )) : null
+            }
+          </div>
+        </div>
+      </div>
+
+    </>
+
   );
 };
 
