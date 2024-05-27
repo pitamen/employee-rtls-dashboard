@@ -13,8 +13,9 @@ import edrHalfIcon from '../img/tech-edr-half.png';
 import pokHalfIcon from '../img/tech-pok-half.png';
 import wdrHalfIcon from '../img/tech-wdr-half.png';
 import mwdrHalfIcon from '../img/tech-mwdr-half.png';
+import Search from './Search';
 
-const Sidedetails = ({ users, orgResponse, logData }) => {
+const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   const navigate = useNavigate();
   const orgUsersResponse = orgResponse;
   const [mapKey, setMapKey] = useState(0)
@@ -39,14 +40,29 @@ const Sidedetails = ({ users, orgResponse, logData }) => {
     return <img src={imageUrl} alt="Vendor Icon" style={{ width: '20px', height: '20px', borderRadius: '5px' }} />;
   };
 
+  const handleSuccessfulSearch = (user, userId) => {
+    setMapKey((prevValue) => prevValue + 1);
+    logData({ latitude: user.lat, longitude: user.lng, mapKey: mapKey });
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('accessToken');
+    navigate('/login');
+  };
+
   return (
     <>
-      <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-        <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Vendor-Technician</h5>
-          <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
-        <div className="offcanvas-body">
+        <div className='container py-2'>
+          {!userId && (
+            <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
+          )}
+        </div>
+        <div class="offcanvas-body">
           <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
             {
               orgUsersResponse ? orgUsersResponse.map((vendor, index) => (
@@ -85,6 +101,9 @@ const Sidedetails = ({ users, orgResponse, logData }) => {
             }
           </div>
         </div>
+        <button className="btn btn-outline-success m-2" onClick={handleLogout} >
+            Logout
+          </button>
       </div>
 
     </>

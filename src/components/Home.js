@@ -135,7 +135,7 @@ const Home = (props) => {
           <Navbar users={users} logData={logDataFromSidedetails} />
           <Namebar toggleFullScreen={toggleFullScreen} />
           <div >
-          <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
+          <Sidedetails  orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
               <MapComponent users={users} receivedData={receivedData} />
           </div>
         </>
