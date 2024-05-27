@@ -2,12 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Namebar from './Namebar';
 import Sidedetails from './Sidedetails';
-import MapComponent from './Map'; 
-
-// Import custom marker icons
-import userIcon from '../img/live-person-location-off.png';
-import liveLocationIcon from '../img/live-person-location.png';
-import { calculateTimeDifferenceInMinutes } from '../utils/commonUtils';
+import MapComponent from './Map';
 import { BASE_URL } from '../utils/constants';
 import edrIcon from '../img/tech-edr.png';
 import cdrIcon from '../img/tech-cdr.png';
@@ -134,13 +129,16 @@ const Home = (props) => {
         <>
           <Navbar users={users} logData={logDataFromSidedetails} />
           <Namebar toggleFullScreen={toggleFullScreen} />
-          <div >
-          <Sidedetails  orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
-              <MapComponent users={users} receivedData={receivedData} />
-          </div>
+            <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
+            <MapComponent users={users} receivedData={receivedData}/>
         </>
       )}
-      {isFullScreen && <><Namebar toggleFullScreen={toggleFullScreen} isFullScreen={true} /><MapComponent users={users} receivedData={receivedData} isFullScreen={true} /></>}
+      {isFullScreen &&
+        <>
+          <Namebar toggleFullScreen={toggleFullScreen} isFullScreen={true} />
+          <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
+          <MapComponent users={users} receivedData={receivedData} isFullScreen={true} />
+        </>}
     </div>
   );
 };
