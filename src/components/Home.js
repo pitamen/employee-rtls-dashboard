@@ -127,10 +127,10 @@ const Home = (props) => {
     <div className="App">
       {!isFullScreen && (
         <>
-          <Navbar users={users} logData={logDataFromSidedetails} />
+          {/* <Navbar users={users} logData={logDataFromSidedetails} /> */}
           <Namebar toggleFullScreen={toggleFullScreen} />
             <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
-            <MapComponent users={users} receivedData={receivedData}/>
+            <MapComponent users={users} receivedData={receivedData}isFullScreen={true}/>
         </>
       )}
       {isFullScreen &&

@@ -29,7 +29,7 @@ const Search = ({ users, handleSuccessfulSearch }) => {
   };
 
   return (
-    <form className="d-flex p-1" role="search" onSubmit={handleSearch}>
+    <form className="d-flex" role="search" onSubmit={handleSearch}>
       <input
         className="form-control me-2"
         type="search"
@@ -38,7 +38,7 @@ const Search = ({ users, handleSuccessfulSearch }) => {
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <button className="btn btn-outline-success" type="submit">
+      <button className="btn btn-danger" type="submit">
         Search
       </button>
     </form>

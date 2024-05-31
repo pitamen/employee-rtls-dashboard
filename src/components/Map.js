@@ -10,12 +10,12 @@ import pokIcon from '../img/tech-pok.png';
 import mwdrIcon from '../img/tech-mwdr.png';
 import cdrIcon from '../img/tech-cdr.png';
 
+
 const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 27.7172, longitude: 85.3240 });
   const [zoomLevel, setZoomLevel] = useState(10);
 
   const lessZoomedIcon = (icon_name) => {
-    console.log(icon_name)
     return new L.Icon({
       iconUrl: icon_name,
       iconSize: [48, 48], // Adjust the size of your icon as needed
@@ -53,7 +53,7 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
 
   return (
     <div className="map-container">
-      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={10} style={{ height: isFullScreen ? '98vh' : '85vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`} >
+      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={10} style={{ height: isFullScreen ? '95vh' : '85vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`} >
         <MyMapComponent />
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -61,7 +61,7 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
         />
         {users.map((user) => (
           <Marker key={user.id} position={[user.lat, user.lng]} icon={zoomLevel > 10 ? customIcon(user.name, user.icon) : lessZoomedIcon(user.icon)}>
-            <Popup>
+            <Popup >
               <UserCard user={user} />
             </Popup>
           </Marker>

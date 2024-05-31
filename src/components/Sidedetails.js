@@ -14,6 +14,7 @@ import pokHalfIcon from '../img/tech-pok-half.png';
 import wdrHalfIcon from '../img/tech-wdr-half.png';
 import mwdrHalfIcon from '../img/tech-mwdr-half.png';
 import Search from './Search';
+import './SCSS/SideDetails.scss'
 
 const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   const navigate = useNavigate();
@@ -54,7 +55,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
     <>
       <div className="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div className="offcanvas-header">
-          <h5 className="offcanvas-title" id="offcanvasScrollingLabel">Colored with scrolling</h5>
+          <h5 className="offcanvas-title" id="offcanvasScrollingLabel"></h5>
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div className='container py-2'>
@@ -101,7 +102,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
             }
           </div>
         </div>
-        <button className="btn btn-outline-success m-2" onClick={handleLogout} >
+        <button className="btn btn-outline-danger my-2 mx-3" onClick={handleLogout} >
             Logout
           </button>
       </div>
