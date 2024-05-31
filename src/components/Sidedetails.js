@@ -63,6 +63,11 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
             <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
           )}
         </div>
+        <div class="d-flex justify-content-around">
+        <div class="p-2">🟦Total-15</div>
+          <div class="p-2">🟩Online-5</div>
+          <div class="p-2">🟥Offline-10</div>
+        </div>
         <div className="offcanvas-body">
           <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
             {
@@ -103,8 +108,8 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
           </div>
         </div>
         <button className="btn btn-outline-danger my-2 mx-3" onClick={handleLogout} >
-            Logout
-          </button>
+          Logout
+        </button>
       </div>
 
     </>
