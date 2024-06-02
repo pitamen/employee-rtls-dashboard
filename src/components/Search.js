@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Search = ({ users, handleSuccessfulSearch }) => {
   const navigate = useNavigate();
@@ -33,13 +34,13 @@ const Search = ({ users, handleSuccessfulSearch }) => {
       <input
         className="form-control me-2"
         type="search"
-        placeholder="Search by Tech Username"
+        placeholder="Search by Username"
         aria-label="Search"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <button className="btn btn-danger" type="submit">
-        Search
+      <i class="fa-solid fa-magnifying-glass"></i>
       </button>
     </form>
   );

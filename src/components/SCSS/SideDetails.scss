@@ -15,3 +15,7 @@
 .offcanvas-header {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle border */
 }
+
+.offcanvas {
+  --bs-offcanvas-width: min(90vw, 300px) !important;
+}

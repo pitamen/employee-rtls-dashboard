@@ -13,13 +13,13 @@ export const Navbar = () => {
             DH-RTLS
           </Link>
         </div>
-        <div class="collapse navbar-collapse" id="navbarText">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-            <button type="button" class="btn btn-success">Online</button>
+        <div className="collapse navbar-collapse" id="navbarText">
+          <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+            <li className="nav-item">
+            <button type="button" className="btn btn-success">Online</button>
             </li>
-            <li class="nav-item">
-            <button type="button" class="btn btn-danger">Offline</button>
+            <li className="nav-item">
+            <button type="button" className="btn btn-danger">Offline</button>
             </li>
           </ul>
         </div>

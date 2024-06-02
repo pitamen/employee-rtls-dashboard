@@ -63,10 +63,10 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
             <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
           )}
         </div>
-        <div class="d-flex justify-content-around">
-        <div class="p-2">🟦Total-15</div>
-          <div class="p-2">🟩Online-5</div>
-          <div class="p-2">🟥Offline-10</div>
+        <div className="d-flex justify-content-around">
+        <div className="p-2"><small>🟦Total-15</small></div>
+          <div className="p-2"><small>🟩Online-5</small></div>
+          <div className="p-2"><small>🟥Offline-10</small></div>
         </div>
         <div className="offcanvas-body">
           <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
