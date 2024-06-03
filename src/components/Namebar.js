@@ -8,7 +8,7 @@ const Namebar = ({ toggleFullScreen, isFullScreen = false, name = "", userId }) 
   return (
     <div className="d-flex justify-content-between " id='namebarStyle'>
       <button className="btn btn-outline btn-sm" id='fullScreenButton' data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
-        {window.innerWidth < 600 ? <i class="fa-solid fa-list"></i>: <span>Technician List</span>}
+        {window.innerWidth < 600 ? <i class="fa-solid fa-list"></i>: <span><i class="fa-solid fa-list"></i> Technician List </span>}
       </button>
       <h6 className='pt-1' >
         <Link className="navbar-brand" to="/">
@@ -17,7 +17,8 @@ const Namebar = ({ toggleFullScreen, isFullScreen = false, name = "", userId }) 
         </Link>
       </h6>
       <button id='fullScreenButton' className="btn btn-outline btn-sm" onClick={toggleFullScreen}>
-        {isFullScreen ? (window.innerWidth < 600 ? <i class="fa-solid fa-down-left-and-up-right-to-center"></i>: 'Exit Full Screen') : (window.innerWidth < 600 ? <i class="fa-solid fa-up-right-and-down-left-from-center"></i>: 'Full Screen')}
+        {isFullScreen ? (window.innerWidth < 600 ? <i class="fa-solid fa-down-left-and-up-right-to-center"></i>: <span>Exit Full Screen <i class="fa-solid fa-down-left-and-up-right-to-center"></i></span>) 
+        :(window.innerWidth < 600 ? <i class="fa-solid fa-up-right-and-down-left-from-center"></i>: <span>Full Screen <i class="fa-solid fa-up-right-and-down-left-from-center"></i></span>)}
       </button>
     </div>
   );

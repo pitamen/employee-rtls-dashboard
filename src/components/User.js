@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import NavbarUser from './NavbarUser';
 import { MapContainer, TileLayer, Popup, CircleMarker, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useParams } from 'react-router-dom';
@@ -8,6 +7,7 @@ import { BASE_URL } from '../utils/constants';
 import userIcon1 from '../img/live-person-location.png';
 import Namebar from './Namebar';
 import L from 'leaflet';
+import UserSidedetails from './UserSidedetails';
 
 const User = (props) => {
   const [userData, setUserData] = useState([]);
@@ -56,23 +56,23 @@ const User = (props) => {
 
     fetchData();
 
-    const intervalId = setInterval(fetchData, 10000); // Fetch data every 10 seconds
+    // const intervalId = setInterval(fetchData, 10000); // Fetch data every 10 seconds
 
     return () => {
-      clearInterval(intervalId);
+      // clearInterval(intervalId);
     };
   }, [userId.user]);
 
   return (
     <div className="App">
-      <NavbarUser users={userData} userId={userId.user} />
       <Namebar name={userId.name??''} />
+      <UserSidedetails newCenter={newCenter} />
       <div className="map-container">
         <MapContainer
           key={`${newCenter.latitude}-${newCenter.longitude}`}
           center={[newCenter.latitude, newCenter.longitude]}
           zoom={15}
-          style={{ height: '90vh', width: '100%' }}
+          style={{ height: '95vh', width: '100%' }}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

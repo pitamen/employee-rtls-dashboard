@@ -12,7 +12,7 @@ import cdrIcon from '../img/tech-cdr.png';
 
 
 const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
-  const [newCenter, setNewCenter] = useState({ latitude: 27.7172, longitude: 85.3240 });
+  const [newCenter, setNewCenter] = useState({ latitude: 28.2096, longitude: 83.9856 });
   const [zoomLevel, setZoomLevel] = useState(10);
 
   const lessZoomedIcon = (icon_name) => {
@@ -53,7 +53,7 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
 
   return (
     <div className="map-container">
-      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={10} style={{ height: isFullScreen ? '95vh' : '85vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`} >
+      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={9} style={{ height: isFullScreen ? '95vh' : '85vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`} >
         <MyMapComponent />
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -66,13 +66,13 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
             </Popup>
           </Marker>
         ))}
-        <FullscreenControl
+        {/* <FullscreenControl
           position="topright"
           content='<b>FS</b>'
           title="Fullscreen"
           titleCancel="Exit Fullscreen"
           forceSeparateButton="true"
-        />
+        /> */}
 
       </MapContainer>
     </div>
