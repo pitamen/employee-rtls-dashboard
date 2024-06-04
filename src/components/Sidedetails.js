@@ -64,7 +64,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
           )}
         </div>
         <div className="d-flex justify-content-around">
-        <div className="p-2"><small>🟦Total-15</small></div>
+          <div className="p-2"><small>🟦Total-15</small></div>
           <div className="p-2"><small>🟩Online-5</small></div>
           <div className="p-2"><small>🟥Offline-10</small></div>
         </div>

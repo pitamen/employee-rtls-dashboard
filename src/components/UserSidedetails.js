@@ -22,12 +22,19 @@ const UserSidedetails = (newCenter) => {
         <div className='container py-2'>
         </div>
         <div className="d-flex justify-content-around">
-
+          <h4><i class="fa-solid fa-location-pin"></i> Latest Tracked Location</h4>
         </div>
         <div className='offcanvas-body'>
-          <h4>Latest Tracked Location</h4>
-          <p>Lattitude: {newCenter.newCenter.latitude}</p>
-          <p>Longitude: {newCenter.newCenter.longitude}</p>
+        <div class="d-flex bd-highlight mb-3 px-2">
+            <div class="me-auto p-2 bd-highlight">Tracked at: FWDR</div>
+          </div>
+          <div class="d-flex bd-highlight mb-3 px-2">
+            <div class="me-auto p-2 bd-highlight">Lattitude: {newCenter.newCenter.latitude}</div>
+            <div class="p-2 bd-highlight">Longitude: {newCenter.newCenter.longitude}</div>
+          </div>
+          <div class="d-flex bd-highlight mb-3 px-2">
+            <div class="me-auto p-2 bd-highlight">Region Name: FWDR</div>
+          </div>
         </div>
         <Timepicker />
         <button className="btn btn-outline-danger my-2 mx-3" onClick={handleLogout} >
