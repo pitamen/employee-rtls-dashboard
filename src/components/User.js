@@ -145,11 +145,11 @@ const User = () => {
           {userData.map((user, index) => (
             index === 0 ? (
               <Marker key={user.keyId} position={[user.lat, user.lng]} icon={customMapIcon(userDetail ? userDetail.name : '', userIcon1)}>
-                <Popup>{new Date(user.trackedAt).toLocaleString()}</Popup>
+                <Popup>{new Date(trackedAt).toLocaleString()}</Popup>
               </Marker>
             ) : (
               <CircleMarker key={user.keyId} center={[user.lat, user.lng]} radius={1} color="red" fillOpacity={1}>
-                <Popup>{new Date(user.trackedAt).toLocaleString()}</Popup>
+                <Popup>{new Date(trackedAt).toLocaleString()}</Popup>
               </CircleMarker>
             )
           ))}
