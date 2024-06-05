@@ -13,10 +13,12 @@ import wdrHalfIcon from '../img/tech-wdr-half.png';
 import mwdrHalfIcon from '../img/tech-mwdr-half.png';
 import Search from './Search';
 import './SCSS/SideDetails.scss'
+import { VENDOR_NAMES } from '../utils/constants';
 
 const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   const navigate = useNavigate();
   const orgUsersResponse = orgResponse;
+  console.log(orgUsersResponse)
   const [mapKey, setMapKey] = useState(0)
 
   const vendorToIconMap = {
@@ -27,7 +29,8 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
     'FWDR': fwdrHalfIcon,
     'MWDR': mwdrHalfIcon,
     "Bagmati Central": edrHalfIcon,
-    'Bagmati': edrHalfIcon
+    'Bagmati': edrHalfIcon,
+    'DMN(P)':edrHalfIcon
   }
 
   const handleClick = (user) => {
@@ -77,7 +80,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                     id="panel1-header"
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <VendorIcon imageUrl={vendorToIconMap[vendor.vendor_name]} />
+                      <VendorIcon imageUrl={VENDOR_NAMES.includes(vendor.vendor_name)? vendorToIconMap[vendor.vendor_name]:edrHalfIcon} />
                       <div style={{ marginLeft: '10px' }}></div>
                       <Typography variant='subtitle2'> {vendor.vendor_name} ({vendor.employees.length})</Typography>
                     </div>

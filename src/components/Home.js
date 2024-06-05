@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Namebar from './Namebar';
 import Sidedetails from './Sidedetails';
 import MapComponent from './Map';
-import { BASE_URL } from '../utils/constants';
+import { BASE_URL, VENDOR_NAMES } from '../utils/constants';
 import edrIcon from '../img/tech-edr.png';
 import cdrIcon from '../img/tech-cdr.png';
 import mwdrIcon from '../img/tech-mwdr.png';
@@ -35,7 +35,7 @@ const Home = (props) => {
     'FWDR': fwdrIcon,
     'MWDR': mwdrIcon,
     'Bagmati': edrIcon,
-    'Bagmati Central': edrIcon
+    'Bagmati Central': edrIcon,
   }
 
 
@@ -57,9 +57,13 @@ const Home = (props) => {
         lat: item.location.latitude,
         lng: item.location.longitude,
         time: item.location.tracked_at,
-        icon: vendorToIconMap[item.vendor_name],
+        icon: VENDOR_NAMES.includes(item.vendor_name)? vendorToIconMap[item.vendor_name]:edrIcon,
         vendorName: item.vendor_name
       }));
+
+     userData.map(user=>{
+      console.log(user.icon)
+     })
 
       setUsers(userData);
       props.setProgress(100);
