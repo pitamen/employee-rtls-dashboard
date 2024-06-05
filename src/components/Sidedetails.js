@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { Accordion, AccordionSummary, Typography, AccordionDetails } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PreviewIcon from '@mui/icons-material/Preview';
-import ColoredBlock from './partials/ColoredBlock';
-
 import fwdrHalfIcon from '../img/tech-fwdr-half.png';
 import cdrHalfIcon from '../img/tech-cdr-half.png';
 import edrHalfIcon from '../img/tech-edr-half.png';
@@ -63,11 +61,11 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
             <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
           )}
         </div>
-        <div className="d-flex justify-content-around">
+        {/* <div className="d-flex justify-content-around">
           <div className="p-2"><small>🟦Total-15</small></div>
           <div className="p-2"><small>🟩Online-5</small></div>
           <div className="p-2"><small>🟥Offline-10</small></div>
-        </div>
+        </div> */}
         <div className="offcanvas-body">
           <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
             {
@@ -93,9 +91,9 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                             style={{ textDecoration: 'none' }}
                             onClick={() => handleClick(user)}
                           >
-                            <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography> <Typography variant='body2'>({calculateTimeDifference(user.location.tracked_at)})</Typography>
+                            <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography> <Typography variant='body2'>(Last Update: {calculateTimeDifference(user.location.tracked_at)} ago)</Typography>
                           </Link>
-                          <a href={`/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>
+                          <a href={`/user/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>
                             <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
                           </a>
                         </li>

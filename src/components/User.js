@@ -12,20 +12,47 @@ import UserSidedetails from './UserSidedetails';
 const User = (props) => {
   const [userData, setUserData] = useState([]);
   const [newCenter, setNewCenter] = useState({ latitude: 27.633367, longitude: 85.305531 });
-  const userId = useParams();
+  const { user: userId, name: userName } = useParams();
+  const [userDetail, setUserDetail] = useState(null);
+  const [isFetchingUserDetail, setIsFetchingUserDetail] = useState(false);
 
-  const customIcon = new L.Icon({
+  const customIcon = useMemo(() => new L.Icon({
     iconUrl: userIcon1,
     iconSize: [32, 32], // Adjust the size of your icon as needed
     iconAnchor: [16, 32], // Adjust the anchor point if necessary
-  });
+  }), []);
+
+  useEffect(() => {
+    const fetchUserDetail = async () => {
+      setIsFetchingUserDetail(true);
+      try {
+        const response = await fetch(`${BASE_URL}employees/detail/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        const userDetailResponse = await response.json();
+        if (userDetailResponse.length > 0) {
+          setUserDetail(userDetailResponse[0]);
+        }
+        setIsFetchingUserDetail(false);
+      } catch (error) {
+        setIsFetchingUserDetail(false);
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchUserDetail();
+  }, [userId]);
 
   useEffect(() => {
     props.setProgress(10); // Set loading to 10% initially
 
     const fetchData = async () => {
       try {
-        const response = await fetch(`${BASE_URL}employees/${userId.user}/history`, {
+        const response = await fetch(`${BASE_URL}employees/${userId}/history`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -47,26 +74,19 @@ const User = (props) => {
         }
 
         setUserData(updatedUserData);
-
-        props.setProgress(100); // Set loading to 100% when data is fetched
+        props.setProgress(100);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
 
     fetchData();
-
-    // const intervalId = setInterval(fetchData, 10000); // Fetch data every 10 seconds
-
-    return () => {
-      // clearInterval(intervalId);
-    };
-  }, [userId.user]);
+  }, [userId, props]);
 
   return (
     <div className="App">
-      <Namebar name={userId.name??''} />
-      <UserSidedetails newCenter={newCenter} />
+      <Namebar name={userName ?? ''} userDetail={userDetail} />
+      <UserSidedetails newCenter={newCenter} userDetail={userDetail} isFetchingUserDetail={isFetchingUserDetail} />
       <div className="map-container">
         <MapContainer
           key={`${newCenter.latitude}-${newCenter.longitude}`}
@@ -79,18 +99,17 @@ const User = (props) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {userData.map((user, index) => (
-            index !== 0 ?
-              <CircleMarker key={user.keyId} center={[user.lat, user.lng]} radius={index === 0 ? 5 : 1} color={index === 0 ? "light-blue" : "red"} fillOpacity={1}>
-                <Popup>
-                  {new Date(user.trackedAt).toLocaleString()}
-                </Popup>
-              </CircleMarker> : <Marker key={user.keyId} position={[user.lat, user.lng]} icon={customIcon}>
-                <Popup>
-                  {new Date(user.trackedAt).toLocaleString()}
-                </Popup>
+            index === 0 ? (
+              <Marker key={user.keyId} position={[user.lat, user.lng]} icon={customIcon}>
+                <Popup>{new Date(user.trackedAt).toLocaleString()}</Popup>
               </Marker>
+            ) : (
+              <CircleMarker key={user.keyId} center={[user.lat, user.lng]} radius={1} color="red" fillOpacity={1}>
+                <Popup>{new Date(user.trackedAt).toLocaleString()}</Popup>
+              </CircleMarker>
+            )
           ))}
-          <FullscreenControl position="topright" /> {/* Add FullscreenControl */}
+          <FullscreenControl position="topright" />
         </MapContainer>
       </div>
     </div>
