@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Popup, CircleMarker, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, CircleMarker, Marker, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useParams } from 'react-router-dom';
 import { FullscreenControl } from 'react-leaflet-fullscreen';
@@ -7,7 +7,7 @@ import { BASE_URL } from '../utils/constants';
 import userIcon1 from '../img/live-person-location.png';
 import Namebar from './Namebar';
 import UserSidedetails from './UserSidedetails';
-import L from 'leaflet';
+import L, { point } from 'leaflet';
 import '../my-sass.scss'
 import { unixTimeStampToISOStringConverter } from '../utils/commonUtils';
 
@@ -20,6 +20,7 @@ const User = () => {
   const [fetchIntervalId, setFetchIntervalId] = useState(null);
   const [fetchEnabled, setFetchEnabled] = useState(false);
   const [trackedAt, setUserTrackedAt] = useState(false);
+  const [travelledPoints, setTravelledPoints] = useState([])
 
   const enableDisableLiveTracking = () => {
     console.log("clicked fetch enabled")
@@ -101,7 +102,7 @@ const User = () => {
       }));
 
       var trackedAt = updatedUserData[0].device_timestamp ? unixTimeStampToISOStringConverter(updatedUserData[0].device_timestamp) : updatedUserData[0].trackedAt
-      console.log("Tracked at",trackedAt)
+      console.log("Tracked at", trackedAt)
       setUserTrackedAt(trackedAt)
 
       if (updatedUserData.length > 0) {
@@ -109,6 +110,9 @@ const User = () => {
       }
 
       setUserData(updatedUserData);
+
+      const travelledPointsData = updatedUserData.map((point) => [point.lat, point.lng])
+      setTravelledPoints(travelledPointsData)
 
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -137,6 +141,7 @@ const User = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
+          <Polyline positions={travelledPoints} color="#3d5a91" />
           {userData.map((user, index) => (
             index === 0 ? (
               <Marker key={user.keyId} position={[user.lat, user.lng]} icon={customMapIcon(userDetail ? userDetail.name : '', userIcon1)}>
