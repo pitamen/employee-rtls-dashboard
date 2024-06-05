@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from './Navbar';
 import Namebar from './Namebar';
 import Sidedetails from './Sidedetails';
-import MapComponent from './Map'; // Import the MapComponent
-
-// Import custom marker icons
-import userIcon from '../img/live-person-location-off.png';
-import liveLocationIcon from '../img/live-person-location.png';
-import { calculateTimeDifferenceInMinutes } from '../utils/commonUtils';
+import MapComponent from './Map';
 import { BASE_URL } from '../utils/constants';
 import edrIcon from '../img/tech-edr.png';
 import cdrIcon from '../img/tech-cdr.png';
@@ -45,42 +39,45 @@ const Home = (props) => {
   }
 
 
-  const fetchData = async () => {
-    props.setProgress(10);
-    const response = await fetch(BASE_URL + "locations/live-location-traces", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    let orgResponse = await response.json();
-    setOrgResponse(orgResponse);
+  const fetchUserData = async () => {
+    try {
+      props.setProgress(10);
+      const response = await fetch(BASE_URL + "locations/live-location-traces", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      let orgResponse = await response.json();
+      setOrgResponse(orgResponse);
+      let json = await getAllEmployees(orgResponse);
+      const userData = json.map((item) => ({
+        id: item.employeeId,
+        name: item.name,
+        lat: item.location.latitude,
+        lng: item.location.longitude,
+        time: item.location.tracked_at,
+        icon: vendorToIconMap[item.vendor_name],
+        vendorName: item.vendor_name
+      }));
 
-    let json = await getAllEmployees(orgResponse);
+      setUsers(userData);
+      props.setProgress(100);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle error, perhaps set some state to indicate the error to the user
+    }
+  };
 
-    const userData = json.map((item) => ({
-      id: item.employeeId,
-      name: item.name,
-      lat: item.location.latitude,
-      lng: item.location.longitude,
-      time: item.location.tracked_at,
-      // icon: calculateTimeDifferenceInMinutes(item.location.tracked_at) > 10 ? userIcon : liveLocationIcon,
-      icon: vendorToIconMap[item.vendor_name],
-      vendorName: item.vendor_name
-    }));
-
-    setUsers(userData);
-    props.setProgress(100);
-  }
 
 
   useEffect(() => {
-    fetchData();
+    fetchUserData();
   }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      fetchData();
+      fetchUserData();
     }, 5000);
 
     return () => {
@@ -123,32 +120,22 @@ const Home = (props) => {
     setReceivedData(data);
   };
 
-  const bodyStyle = {
-    overflow: 'hidden'
-  };
-
-
   return (
     <div className="App">
       {!isFullScreen && (
         <>
-          <Navbar users={users} logData={logDataFromSidedetails} />
+          {/* <Navbar users={users} logData={logDataFromSidedetails} /> */}
           <Namebar toggleFullScreen={toggleFullScreen} />
-          <div className="d-flex">
-            <div className="col-4 col-lg-3 px-2">
-              <div className="d-flex flex-column bd-highlight mb-3" style={{ maxHeight: '85vh', overflowY: 'auto' }}>
-                <div className="p-2 bd-highlight border">
-                  <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
-                </div>
-              </div>
-            </div>
-            <div className="col-8 col-lg-9">
-              <MapComponent users={users} receivedData={receivedData} />
-            </div>
-          </div>
+          <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
+          <MapComponent users={users} receivedData={receivedData} isFullScreen={true} />
         </>
       )}
-      {isFullScreen && <><Namebar toggleFullScreen={toggleFullScreen} isFullScreen={true} /><MapComponent users={users} receivedData={receivedData} isFullScreen={true} /></>}
+      {isFullScreen &&
+        <>
+          <Namebar toggleFullScreen={toggleFullScreen} isFullScreen={true} />
+          <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
+          <MapComponent users={users} receivedData={receivedData} isFullScreen={true} />
+        </>}
     </div>
   );
 };

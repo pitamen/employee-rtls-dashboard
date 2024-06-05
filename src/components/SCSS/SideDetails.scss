@@ -1,0 +1,22 @@
+.offcanvas {
+  background: rgba(255, 255, 255, 0.1); /* Adjust the alpha value to control the transparency */
+  backdrop-filter: blur(5px); /* Optional: Adds a blur effect */
+  -webkit-backdrop-filter: blur(10px); /* For Safari */
+}
+
+.offcanvas-body {
+  color: #000; /* Ensure the text color is readable against the transparent background */
+}
+
+// .btn-close {
+//   filter: invert(1); /* Invert the color of the close button for visibility */
+// }
+
+.offcanvas-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle border */
+}
+
+.offcanvas {
+  --bs-offcanvas-width: min(90vw, 350px) !important;
+}
+
