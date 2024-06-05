@@ -91,7 +91,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                             style={{ textDecoration: 'none' }}
                             onClick={() => handleClick(user)}
                           >
-                            <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography> <Typography variant='body2'>(Last Update: {calculateTimeDifference(user.location.tracked_at)} ago)</Typography>
+                            <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography> <Typography variant='body2'>Last Update: {calculateTimeDifference(user.location.tracked_at)} ago</Typography>
                           </Link>
                           <a href={`/user/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>
                             <span><PreviewIcon style={{ color: '#CC5500' }} /></span>

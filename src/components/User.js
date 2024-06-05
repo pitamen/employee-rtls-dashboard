@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Popup, CircleMarker, Marker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useParams } from 'react-router-dom';
@@ -6,21 +6,36 @@ import { FullscreenControl } from 'react-leaflet-fullscreen';
 import { BASE_URL } from '../utils/constants';
 import userIcon1 from '../img/live-person-location.png';
 import Namebar from './Namebar';
-import L from 'leaflet';
 import UserSidedetails from './UserSidedetails';
+import L from 'leaflet';
+import '../my-sass.scss'
+import { unixTimeStampToISOStringConverter } from '../utils/commonUtils';
 
-const User = (props) => {
+const User = () => {
   const [userData, setUserData] = useState([]);
   const [newCenter, setNewCenter] = useState({ latitude: 27.633367, longitude: 85.305531 });
   const { user: userId, name: userName } = useParams();
   const [userDetail, setUserDetail] = useState(null);
   const [isFetchingUserDetail, setIsFetchingUserDetail] = useState(false);
+  const [fetchIntervalId, setFetchIntervalId] = useState(null);
+  const [fetchEnabled, setFetchEnabled] = useState(false);
+  const [trackedAt, setUserTrackedAt] = useState(false);
 
-  const customIcon = useMemo(() => new L.Icon({
-    iconUrl: userIcon1,
-    iconSize: [32, 32], // Adjust the size of your icon as needed
-    iconAnchor: [16, 32], // Adjust the anchor point if necessary
-  }), []);
+  const enableDisableLiveTracking = () => {
+    console.log("clicked fetch enabled")
+    if (fetchEnabled) {
+      setFetchEnabled(false)
+    } else {
+      setFetchEnabled(true)
+    }
+  }
+
+  const customMapIcon = (name, icon) =>
+    L.divIcon({
+      className: 'custom-div-icon',
+      html: `<span className="marker-text">${name}</span><img src="${icon}" style="width: 32px; height: 32px;">`,
+      iconAnchor: [0, 32]
+    });
 
   useEffect(() => {
     const fetchUserDetail = async () => {
@@ -48,45 +63,69 @@ const User = (props) => {
   }, [userId]);
 
   useEffect(() => {
-    props.setProgress(10); // Set loading to 10% initially
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch(`${BASE_URL}employees/${userId}/history`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-
-        const json = await response.json();
-
-        const updatedUserData = json.map((item) => ({
-          keyId: item._id,
-          id: item.employeeId,
-          lat: item.latitude,
-          lng: item.longitude,
-          trackedAt: item.tracked_at, // Add the tracked_at property
-        }));
-
-        if (updatedUserData.length > 0) {
-          setNewCenter({ latitude: updatedUserData[0].lat, longitude: updatedUserData[0].lng });
-        }
-
-        setUserData(updatedUserData);
-        props.setProgress(100);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+    if (fetchEnabled) {
+      const intervalId = setInterval(fetchData, 1000);
+      setFetchIntervalId(intervalId);
+    } else {
+      clearInterval(fetchIntervalId)
+    }
+    return () => {
+      clearInterval(fetchIntervalId);
     };
 
+  }, [fetchEnabled])
+
+  useEffect(() => {
+    console.log('')
+  }, [trackedAt])
+
+  const fetchData = async () => {
+    console.log("called")
+    try {
+      const response = await fetch(`${BASE_URL}employees/${userId}/history`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const json = await response.json();
+
+      const updatedUserData = json.map((item) => ({
+        keyId: item._id,
+        id: item.employeeId,
+        lat: item.latitude,
+        lng: item.longitude,
+        trackedAt: item.trackedAt,
+        device_timestamp: item.device_timestamp
+      }));
+
+      var trackedAt = updatedUserData[0].device_timestamp ? unixTimeStampToISOStringConverter(updatedUserData[0].device_timestamp) : updatedUserData[0].trackedAt
+      console.log("Tracked at",trackedAt)
+      setUserTrackedAt(trackedAt)
+
+      if (updatedUserData.length > 0) {
+        setNewCenter({ latitude: updatedUserData[0].lat, longitude: updatedUserData[0].lng });
+      }
+
+      setUserData(updatedUserData);
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
     fetchData();
-  }, [userId, props]);
+  }, [userId]);
 
   return (
     <div className="App">
       <Namebar name={userName ?? ''} userDetail={userDetail} />
-      <UserSidedetails newCenter={newCenter} userDetail={userDetail} isFetchingUserDetail={isFetchingUserDetail} />
+      <UserSidedetails userDetail={userDetail} isFetchingUserDetail={isFetchingUserDetail}
+        fetch_enabling={enableDisableLiveTracking} isFetchEnabled={fetchEnabled}
+        trackedAt={trackedAt}
+      />
       <div className="map-container">
         <MapContainer
           key={`${newCenter.latitude}-${newCenter.longitude}`}
@@ -100,7 +139,7 @@ const User = (props) => {
           />
           {userData.map((user, index) => (
             index === 0 ? (
-              <Marker key={user.keyId} position={[user.lat, user.lng]} icon={customIcon}>
+              <Marker key={user.keyId} position={[user.lat, user.lng]} icon={customMapIcon(userDetail ? userDetail.name : '', userIcon1)}>
                 <Popup>{new Date(user.trackedAt).toLocaleString()}</Popup>
               </Marker>
             ) : (

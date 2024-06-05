@@ -2,14 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
-import L, { icon } from 'leaflet';
+import L from 'leaflet';
 import UserCard from './UserCard';
-// import userIcon1 from '../img/live-person-location.png';
-import edrIcon from '../img/tech-edr.png';
-import pokIcon from '../img/tech-pok.png';
-import mwdrIcon from '../img/tech-mwdr.png';
-import cdrIcon from '../img/tech-cdr.png';
-
 
 const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 28.2096, longitude: 83.9856 });
