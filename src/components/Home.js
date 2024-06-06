@@ -61,10 +61,6 @@ const Home = (props) => {
         vendorName: item.vendor_name
       }));
 
-     userData.map(user=>{
-      console.log(user.icon)
-     })
-
       setUsers(userData);
       props.setProgress(100);
     } catch (error) {

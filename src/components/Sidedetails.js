@@ -18,7 +18,7 @@ import { VENDOR_NAMES } from '../utils/constants';
 const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   const navigate = useNavigate();
   const orgUsersResponse = orgResponse;
-  console.log(orgUsersResponse)
+ 
   const [mapKey, setMapKey] = useState(0)
 
   const vendorToIconMap = {
@@ -82,7 +82,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <VendorIcon imageUrl={VENDOR_NAMES.includes(vendor.vendor_name)? vendorToIconMap[vendor.vendor_name]:edrHalfIcon} />
                       <div style={{ marginLeft: '10px' }}></div>
-                      <Typography variant='subtitle2'> {vendor.vendor_name} ({vendor.employees.length})</Typography>
+                      <Typography variant='subtitle2'> {VENDOR_NAMES.includes(vendor.vendor_name)?vendor.vendor_name:'Others'} ({vendor.employees.length})</Typography>
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>

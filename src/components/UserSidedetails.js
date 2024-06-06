@@ -7,7 +7,6 @@ import '../user-side-details.scss'
 import { calculateTimeDifference } from '../utils/commonUtils';
 
 const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isFetchEnabled = false, trackedAt }) => {
-  console.log(trackedAt)
   const navigate = useNavigate();
   return (
     <div className="offcanvas offcanvas-start show user-side-detail" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">

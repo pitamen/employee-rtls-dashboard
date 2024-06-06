@@ -23,7 +23,6 @@ const User = () => {
   const [travelledPoints, setTravelledPoints] = useState([])
 
   const enableDisableLiveTracking = () => {
-    console.log("clicked fetch enabled")
     if (fetchEnabled) {
       setFetchEnabled(false)
     } else {
@@ -81,7 +80,6 @@ const User = () => {
   }, [trackedAt])
 
   const fetchData = async () => {
-    console.log("called")
     try {
       const response = await fetch(`${BASE_URL}employees/${userId}/history`, {
         method: 'GET',
@@ -97,12 +95,11 @@ const User = () => {
         id: item.employeeId,
         lat: item.latitude,
         lng: item.longitude,
-        trackedAt: item.trackedAt,
+        trackedAt: item.tracked_at,
         device_timestamp: item.device_timestamp
       }));
 
       var trackedAt = updatedUserData[0].device_timestamp ? unixTimeStampToISOStringConverter(updatedUserData[0].device_timestamp) : updatedUserData[0].trackedAt
-      console.log("Tracked at", trackedAt)
       setUserTrackedAt(trackedAt)
 
       if (updatedUserData.length > 0) {

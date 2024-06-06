@@ -19,8 +19,6 @@ const Search = ({ users, handleSuccessfulSearch }) => {
       navigate(`/${userToSearch.id}`);
     } else {
       const userByName = users.find((user) => user.name === searchQuery);
-
-      console.log(userByName);
       if (userByName) {
         handleSuccessfulSearch(userByName);
       } else {
