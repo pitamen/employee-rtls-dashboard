@@ -9,6 +9,7 @@ import mwdrIcon from '../img/tech-mwdr.png';
 import pokIcon from '../img/tech-pok.png';
 import fwdrIcon from '../img/tech-fwdr.png';
 import wdrIcon from '../img/tech-wdr.png';
+import { defaultAppValues } from '../utils/commonUtils'
 
 const Home = (props) => {
   const [users, setUsers] = useState([]);
@@ -57,7 +58,7 @@ const Home = (props) => {
         lat: item.location.latitude,
         lng: item.location.longitude,
         time: item.location.tracked_at,
-        icon: VENDOR_NAMES.includes(item.vendor_name)? vendorToIconMap[item.vendor_name]:edrIcon,
+        icon: VENDOR_NAMES.includes(item.vendor_name) ? vendorToIconMap[item.vendor_name] : defaultAppValues.defaultIcon,
         vendorName: item.vendor_name
       }));
 

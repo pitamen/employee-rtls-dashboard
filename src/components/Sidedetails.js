@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { calculateTimeDifference } from '../utils/commonUtils';
+import { calculateTimeDifference, defaultAppValues } from '../utils/commonUtils';
 import { useNavigate } from 'react-router-dom';
 import { Accordion, AccordionSummary, Typography, AccordionDetails } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -29,8 +29,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
     'FWDR': fwdrHalfIcon,
     'MWDR': mwdrHalfIcon,
     "Bagmati Central": edrHalfIcon,
-    'Bagmati': edrHalfIcon,
-    'DMN(P)':edrHalfIcon
+    'Bagmati': edrHalfIcon
   }
 
   const handleClick = (user) => {
@@ -80,9 +79,9 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                     id="panel1-header"
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <VendorIcon imageUrl={VENDOR_NAMES.includes(vendor.vendor_name)? vendorToIconMap[vendor.vendor_name]:edrHalfIcon} />
+                      <VendorIcon imageUrl={VENDOR_NAMES.includes(vendor.vendor_name)? vendorToIconMap[vendor.vendor_name]:defaultAppValues.defaultHalfIcon} />
                       <div style={{ marginLeft: '10px' }}></div>
-                      <Typography variant='subtitle2'> {VENDOR_NAMES.includes(vendor.vendor_name)?vendor.vendor_name:'Others'} ({vendor.employees.length})</Typography>
+                      <Typography variant='subtitle2'> {vendor.vendor_name} ({vendor.employees.length})</Typography>
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>

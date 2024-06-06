@@ -1,4 +1,6 @@
 import L from 'leaflet';
+import defaultIconHalf from '../img/default-icon-half.png'
+import defaultIcon from '../img/default-icon.png'
 
 export const calculateTimeDifferenceInMinutes = (targetTime) => {
   var currDate = new Date().getTime();
@@ -82,4 +84,9 @@ export const customMapIcon = (name, icon) =>
 
 export const unixTimeStampToISOStringConverter = (timestamp) => {
   return new Date(timestamp).toISOString();
+}
+
+export const defaultAppValues = {
+  defaultHalfIcon: defaultIconHalf,
+  defaultIcon: defaultIcon
 }
