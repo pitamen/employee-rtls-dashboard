@@ -150,7 +150,12 @@ const User = () => {
               </CircleMarker>
             )
           ))}
-          <FullscreenControl position="topright" />
+          <FullscreenControl
+          position="topright"
+          content='<b>FS</b>'
+          title="Fullscreen"
+          titleCancel="Exit Fullscreen"
+        />
         </MapContainer>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './SCSS/SideDetails.scss';
 import Timepicker from './Timepicker';
 import { userNameToName } from '../utils/stringUtils';
-import '../user-side-details.scss'
+import '../user-side-details.scss';
 import { calculateTimeDifference } from '../utils/commonUtils';
 
 const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isFetchEnabled = false, trackedAt }) => {
@@ -16,56 +16,88 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
       </div>
       <div className="container py-2"></div>
       <div className="d-flex justify-content-around">
-        <h4>{!isFetchingUserDetail && userDetail ? userNameToName(userDetail.name) : ''}</h4>
+        <h4>{!isFetchingUserDetail && userDetail ? <span><i class="uil uil-user"></i> {userNameToName(userDetail.name)}</span> : ''}</h4>
       </div>
       {!isFetchingUserDetail && userDetail ? (
         <div className="offcanvas-body">
-          <div className="d-flex bd-highlight mb-3 px-2">
-            <div className="me-auto p-2 bd-highlight">Checked In: <span className="item-value">{userDetail.isCheckedIn ? 'Yes' : 'No'}</span></div>
-            {/* <div className="me-auto p-2">
-              {userDetail.isCheckedIn
-                ? `Check In Device: ${userDetail.lastAttendance?.device_detail?.deviceName || 'N/A'}`
-                : `Last Used Device: ${userDetail.lastAttendance?.device_detail?.deviceName || 'N/A'}`}
-            </div> */}
-          </div>
-          <div className="d-flex bd-highlight mb-3 px-2">
-            <div className="me-auto p-2">
-              {userDetail.isCheckedIn ? "Check In Device: " : "Last Used Device"}
-              <span className="item-value">{userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</span>
+          <div className="accordion" id="userDetailsAccordion">
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingCheckedIn">
+                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
+                  Checked In: {userDetail.isCheckedIn ? <span>&nbsp;Yes<i class="uil uil-check"></i></span> : <span>&nbsp;No<i class="uil uil-times"></i></span>}
+                </button>
+              </h2>
+              <div id="collapseCheckedIn" className="accordion-collapse collapse show" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
+                <div className="accordion-body">
+                <p>Checked Out at 2:00pm</p>
+                </div>
+              </div>
             </div>
-
-          </div>
-          <div className="d-flex bd-highlight mb-3 px-2">
-            <div className="me-auto p-2">
-              Last Location Update:
-              <span className="item-value">{trackedAt ? ` ${calculateTimeDifference(trackedAt)} ago` : 'N/A'}</span>
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingDevice">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDevice" aria-expanded="false" aria-controls="collapseDevice">
+                  {userDetail.isCheckedIn ? 'Check In Device' : 'Last Used Device'}
+                </button>
+              </h2>
+              <div id="collapseDevice" className="accordion-collapse collapse" aria-labelledby="headingDevice" data-bs-parent="#userDetailsAccordion">
+                <div className="accordion-body">
+                  <p>Model: {userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</p>
+                  <p>Battery Level: 24%</p>
+                </div>
+              </div>
             </div>
-
-          </div>
-          <div className="d-flex bd-highlight mb-3 px-2">
-            <div className="me-auto p-2 bd-highlight">App Version: <span className="item-value">v{userDetail.lastAttendance?.app_version || 'N/A'}</span></div>
-
-          </div>
-          <div className="d-flex bd-highlight mb-3 px-2">
-            <div className="me-auto p-2 bd-highlight">{
-              userDetail.vendor && userDetail.vendor.is_ro ? "Regional Office: " : "Vendor: "
-            }
-              <span className="item-value">{`${userDetail.vendor?.name || 'N/A'}`}</span>
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingLocation">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLocation" aria-expanded="false" aria-controls="collapseLocation">
+                  Last Location Update
+                </button>
+              </h2>
+              <div id="collapseLocation" className="accordion-collapse collapse" aria-labelledby="headingLocation" data-bs-parent="#userDetailsAccordion">
+                <div className="accordion-body">
+                  <p>{trackedAt ? `${calculateTimeDifference(trackedAt)} ago` : 'N/A'}</p>
+                </div>
+              </div>
+            </div>
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingAppVersion">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAppVersion" aria-expanded="false" aria-controls="collapseAppVersion">
+                  App Version
+                </button>
+              </h2>
+              <div id="collapseAppVersion" className="accordion-collapse collapse" aria-labelledby="headingAppVersion" data-bs-parent="#userDetailsAccordion">
+                <div className="accordion-body">
+                  <p>v{userDetail.lastAttendance?.app_version || 'N/A'}</p>
+                </div>
+              </div>
+            </div>
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingVendor">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVendor" aria-expanded="false" aria-controls="collapseVendor">
+                  {userDetail.vendor && userDetail.vendor.is_ro ? 'Regional Office' : 'Vendor'}
+                </button>
+              </h2>
+              <div id="collapseVendor" className="accordion-collapse collapse" aria-labelledby="headingVendor" data-bs-parent="#userDetailsAccordion">
+                <div className="accordion-body">
+                  <p>{userDetail.vendor?.name || 'N/A'}</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="d-flex justify-content-center">
+          <div className="d-flex justify-content-center mt-3">
             <button
               className={`btn ${isFetchEnabled ? 'btn-danger btn-fetching' : 'btn-primary'}`}
               onClick={fetch_enabling}
               disabled={!userDetail.isCheckedIn}
             >
-              {!isFetchEnabled ? "Start Tracking" : "Stop Tracking"}
+              {!isFetchEnabled ? 'Start Tracking' : 'Stop Tracking'}
               {isFetchEnabled && <span className="spinner"></span>}
             </button>
           </div>
         </div>
       ) : null}
+      <div className='pt-2'>
       <Timepicker />
+      </div>
       <button className="btn btn-outline-danger my-2 mx-3" onClick={() => navigate('/')}>
         Home
       </button>

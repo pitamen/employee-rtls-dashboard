@@ -60,13 +60,12 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
             </Popup>
           </Marker>
         ))}
-        {/* <FullscreenControl
+        <FullscreenControl
           position="topright"
           content='<b>FS</b>'
           title="Fullscreen"
           titleCancel="Exit Fullscreen"
-          forceSeparateButton="true"
-        /> */}
+        />
 
       </MapContainer>
     </div>
