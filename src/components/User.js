@@ -9,7 +9,7 @@ import Namebar from './Namebar';
 import UserSidedetails from './UserSidedetails';
 import L, { point } from 'leaflet';
 import '../my-sass.scss'
-import { unixTimeStampToISOStringConverter } from '../utils/commonUtils';
+import { unixTimeStampToISOStringConverter, toggleFullScreen } from '../utils/commonUtils';
 
 const User = () => {
   const [userData, setUserData] = useState([]);
@@ -122,7 +122,7 @@ const User = () => {
 
   return (
     <div className="App">
-      <Namebar name={userName ?? ''} userDetail={userDetail} />
+      <Namebar name={userName ?? ''} userDetail={userDetail} toggleFullScreen={toggleFullScreen} />
       <UserSidedetails userDetail={userDetail} isFetchingUserDetail={isFetchingUserDetail}
         fetch_enabling={enableDisableLiveTracking} isFetchEnabled={fetchEnabled}
         trackedAt={trackedAt}

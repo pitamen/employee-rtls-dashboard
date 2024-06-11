@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './SCSS/SideDetails.scss';
+import './SCSS/user-side-details.scss';
 import Timepicker from './Timepicker';
 import { userNameToName } from '../utils/stringUtils';
-import '../user-side-details.scss';
+// import '../user-side-details.scss';
 import { calculateTimeDifference } from '../utils/commonUtils';
 
 const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isFetchEnabled = false, trackedAt }) => {
@@ -16,7 +16,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
       </div>
       <div className="container py-2"></div>
       <div className="d-flex justify-content-around">
-        <h4>{!isFetchingUserDetail && userDetail ? <span><i class="uil uil-user"></i> {userNameToName(userDetail.name)}</span> : ''}</h4>
+        <h4>{!isFetchingUserDetail && userDetail ? <span><i className="uil uil-user"></i> {userNameToName(userDetail.name)}</span> : ''}</h4>
       </div>
       {!isFetchingUserDetail && userDetail ? (
         <div className="offcanvas-body">
@@ -24,12 +24,12 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingCheckedIn">
                 <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
-                  Checked In: {userDetail.isCheckedIn ? <span>&nbsp;Yes<i class="uil uil-check"></i></span> : <span>&nbsp;No<i class="uil uil-times"></i></span>}
+                  Checked In: {userDetail.isCheckedIn ? <span><b>&nbsp;Yes<i className="uil uil-check"></i></b></span> : <span><b>&nbsp;No<i className="uil uil-times"></i></b></span>}
                 </button>
               </h2>
               <div id="collapseCheckedIn" className="accordion-collapse collapse show" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                <p>Checked Out at 2:00pm</p>
+                <p className='pTag'>Checked Out at 2:00pm</p>
                 </div>
               </div>
             </div>
@@ -41,8 +41,8 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               </h2>
               <div id="collapseDevice" className="accordion-collapse collapse" aria-labelledby="headingDevice" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                  <p>Model: {userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</p>
-                  <p>Battery Level: 24%</p>
+                  <p className='pTag'>Model: {userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</p>
+                  <p className='pTag'>Battery Level: 24%</p>
                 </div>
               </div>
             </div>
@@ -54,7 +54,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               </h2>
               <div id="collapseLocation" className="accordion-collapse collapse" aria-labelledby="headingLocation" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                  <p>{trackedAt ? `${calculateTimeDifference(trackedAt)} ago` : 'N/A'}</p>
+                  <p className='pTag'>{trackedAt ? `${calculateTimeDifference(trackedAt)} ago` : 'N/A'}</p>
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               </h2>
               <div id="collapseAppVersion" className="accordion-collapse collapse" aria-labelledby="headingAppVersion" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                  <p>v{userDetail.lastAttendance?.app_version || 'N/A'}</p>
+                  <p className='pTag'>v{userDetail.lastAttendance?.app_version || 'N/A'}</p>
                 </div>
               </div>
             </div>
@@ -78,7 +78,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               </h2>
               <div id="collapseVendor" className="accordion-collapse collapse" aria-labelledby="headingVendor" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                  <p>{userDetail.vendor?.name || 'N/A'}</p>
+                  <p className='pTag'>{userDetail.vendor?.name || 'N/A'}</p>
                 </div>
               </div>
             </div>

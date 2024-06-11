@@ -5,7 +5,7 @@ import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import Fullscre
 import L from 'leaflet';
 import UserCard from './UserCard';
 
-const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
+const MapComponent = ({ users, receivedData }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 28.2096, longitude: 83.9856 });
   const [zoomLevel, setZoomLevel] = useState(10);
 
@@ -25,7 +25,6 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
   }, [receivedData]);
 
   useEffect(() => {
-    console.log(newCenter.latitude); // Log newCenter.latitude whenever it changes
   }, [newCenter.latitude]);
 
   const customIcon = (name, icon) =>
@@ -47,7 +46,7 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
 
   return (
     <div className="map-container">
-      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={9} style={{ height: isFullScreen ? '95vh' : '85vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`} >
+      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={9} style={{ height: '95vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`} >
         <MyMapComponent />
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

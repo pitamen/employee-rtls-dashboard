@@ -46,7 +46,7 @@ export const calculateTimeDifference = (targetTime) => {
 
 };
 
-export const toggleFullScreen = () => {
+export const toggleFullScreen = (isFullScreen) => {
   var elem = document.documentElement;
   if (!document.fullscreenElement && !document.mozFullScreenElement &&
     !document.webkitFullscreenElement && !document.msFullscreenElement) {
@@ -59,6 +59,7 @@ export const toggleFullScreen = () => {
     } else if (elem.webkitRequestFullscreen) {
       elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     }
+    isFullScreen= true;
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -70,7 +71,7 @@ export const toggleFullScreen = () => {
       document.webkitExitFullscreen();
     }
   }
-
+  isFullScreen= false;
 }
 
 

@@ -38,7 +38,7 @@ const Search = ({ users, handleSuccessfulSearch }) => {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <button className="btn btn-danger" type="submit">
-      <i class="fa-solid fa-magnifying-glass"></i>
+      <i className="fa-solid fa-magnifying-glass"></i>
       </button>
     </form>
   );

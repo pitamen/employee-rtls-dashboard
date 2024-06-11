@@ -9,12 +9,11 @@ import mwdrIcon from '../img/tech-mwdr.png';
 import pokIcon from '../img/tech-pok.png';
 import fwdrIcon from '../img/tech-fwdr.png';
 import wdrIcon from '../img/tech-wdr.png';
-import { defaultAppValues } from '../utils/commonUtils'
+import { defaultAppValues, toggleFullScreen } from '../utils/commonUtils'
 
 const Home = (props) => {
   const [users, setUsers] = useState([]);
   const [orgResponse, setOrgResponse] = useState();
-  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const getAllEmployees = async (jsonResponse) => {
     const allEmployees = [];
@@ -70,8 +69,6 @@ const Home = (props) => {
     }
   };
 
-
-
   useEffect(() => {
     fetchUserData();
   }, []);
@@ -86,35 +83,6 @@ const Home = (props) => {
     };
   }, [users]);
 
-  // Function to toggle full-screen mode
-  const toggleFullScreen = () => {
-    var elem = document.documentElement;
-    if (!document.fullscreenElement && !document.mozFullScreenElement &&
-      !document.webkitFullscreenElement && !document.msFullscreenElement) {
-      if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-      } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-      } else if (elem.mozRequestFullScreen) {
-        elem.mozRequestFullScreen();
-      } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-      }
-      setIsFullScreen(true); // Update state when entering full-screen mode
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-      }
-      setIsFullScreen(false); // Update state when exiting full-screen mode
-    }
-  };
-
   const [receivedData, setReceivedData] = useState();
 
   const logDataFromSidedetails = (data) => {
@@ -123,20 +91,9 @@ const Home = (props) => {
 
   return (
     <div className="App">
-      {!isFullScreen && (
-        <>
-          {/* <Navbar users={users} logData={logDataFromSidedetails} /> */}
-          <Namebar toggleFullScreen={toggleFullScreen} />
-          <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
-          <MapComponent users={users} receivedData={receivedData} isFullScreen={true} />
-        </>
-      )}
-      {isFullScreen &&
-        <>
-          <Namebar toggleFullScreen={toggleFullScreen} isFullScreen={true} />
-          <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
-          <MapComponent users={users} receivedData={receivedData} isFullScreen={true} />
-        </>}
+      <Namebar toggleFullScreen={toggleFullScreen}  />
+      <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
+      <MapComponent users={users} receivedData={receivedData} />
     </div>
   );
 };
