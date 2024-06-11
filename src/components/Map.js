@@ -31,7 +31,7 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
   const customIcon = (name, icon) =>
     L.divIcon({
       className: 'custom-div-icon',
-      html: `<span className="marker-text">${name}</span><img src="${icon}" style="width: 48px; height: 48px;">`,
+      html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 48px; height: 48px;">`,
       iconAnchor: [0, 48]
     });
 

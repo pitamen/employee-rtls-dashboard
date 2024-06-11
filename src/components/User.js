@@ -33,7 +33,7 @@ const User = () => {
   const customMapIcon = (name, icon) =>
     L.divIcon({
       className: 'custom-div-icon',
-      html: `<span className="marker-text">${name}</span><img src="${icon}" style="width: 32px; height: 32px;">`,
+      html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 32px; height: 32px;">`,
       iconAnchor: [0, 32]
     });
 
