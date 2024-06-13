@@ -95,7 +95,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
           </div>
         </div>
       ) : null}
-      <div className='pt-2'>
+      <div className='pt-2 ps-2'>
       <Timepicker />
       </div>
       <button className="btn btn-outline-danger my-2 mx-3" onClick={() => navigate('/')}>

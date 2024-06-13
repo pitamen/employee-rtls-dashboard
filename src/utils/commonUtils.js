@@ -46,7 +46,7 @@ export const calculateTimeDifference = (targetTime) => {
 
 };
 
-export const toggleFullScreen = (isFullScreen) => {
+export const toggleFullScreen = (setIsFullScreen) => {
   var elem = document.documentElement;
   if (!document.fullscreenElement && !document.mozFullScreenElement &&
     !document.webkitFullscreenElement && !document.msFullscreenElement) {
@@ -59,7 +59,7 @@ export const toggleFullScreen = (isFullScreen) => {
     } else if (elem.webkitRequestFullscreen) {
       elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     }
-    isFullScreen= true;
+    setIsFullScreen(true);
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -70,9 +70,11 @@ export const toggleFullScreen = (isFullScreen) => {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
+    setIsFullScreen(false);
   }
-  isFullScreen= false;
 }
+
+
 
 
 export const customMapIcon = (name, icon) =>
