@@ -29,7 +29,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               </h2>
               <div id="collapseCheckedIn" className="accordion-collapse collapse show" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                <p className='pTag'>Checked Out at 2:00pm</p>
+                  <p className='pTag'>Checked Out at 2:00pm</p>
                 </div>
               </div>
             </div>
@@ -41,8 +41,9 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               </h2>
               <div id="collapseDevice" className="accordion-collapse collapse" aria-labelledby="headingDevice" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
+                  <p className='pTag'>Brand: {userDetail.lastAttendance?.device_detail?.brand || 'N/A'}</p>
                   <p className='pTag'>Model: {userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</p>
-                  <p className='pTag'>Battery Level: 24%</p>
+                  <p className='pTag'>Battery: {userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</p>
                 </div>
               </div>
             </div>
@@ -96,7 +97,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
         </div>
       ) : null}
       <div className='pt-2 ps-2'>
-      <Timepicker />
+        <Timepicker />
       </div>
       <button className="btn btn-outline-danger my-2 mx-3" onClick={() => navigate('/')}>
         Home

@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
 import L from 'leaflet';
 import UserCard from './UserCard';
+import './SCSS/Map.scss'
 
 const MapComponent = ({ users, receivedData }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 28.2096, longitude: 83.9856 });
@@ -65,7 +66,6 @@ const MapComponent = ({ users, receivedData }) => {
           title="Fullscreen"
           titleCancel="Exit Fullscreen"
         />
-
       </MapContainer>
     </div>
   );
