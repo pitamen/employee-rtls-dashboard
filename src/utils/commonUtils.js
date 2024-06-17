@@ -1,4 +1,3 @@
-import L from 'leaflet';
 import defaultIconHalf from '../img/default-icon-half.png'
 import defaultIcon from '../img/default-icon.png'
 
@@ -73,17 +72,6 @@ export const toggleFullScreen = (setIsFullScreen) => {
     setIsFullScreen(false);
   }
 }
-
-
-
-
-export const customMapIcon = (name, icon) =>
-  L.divIcon({
-    className: 'custom-div-icon',
-    html: `<span className="marker-text">${name}</span><img src="${icon}" style="width: 32px; height: 32px;">`,
-    iconAnchor: [0, 32]
-  });
-
 
 export const unixTimeStampToISOStringConverter = (timestamp) => {
   return new Date(timestamp).toISOString();

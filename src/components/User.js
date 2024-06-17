@@ -7,9 +7,9 @@ import { BASE_URL } from '../utils/constants';
 import userIcon1 from '../img/live-person-location.png';
 import Namebar from './Namebar';
 import UserSidedetails from './UserSidedetails';
-import L, { point } from 'leaflet';
 import '../my-sass.scss'
 import { unixTimeStampToISOStringConverter, toggleFullScreen } from '../utils/commonUtils';
+import { customMapIcon } from '../utils/mapUtils';
 
 const User = () => {
   const [userData, setUserData] = useState([]);
@@ -29,13 +29,6 @@ const User = () => {
       setFetchEnabled(true)
     }
   }
-
-  const customMapIcon = (name, icon) =>
-    L.divIcon({
-      className: 'custom-div-icon',
-      html: `<span className="marker-text">${name}</span><img src="${icon}" style="width: 32px; height: 32px;">`,
-      iconAnchor: [0, 32]
-    });
 
   useEffect(() => {
     const fetchUserDetail = async () => {
@@ -151,11 +144,11 @@ const User = () => {
             )
           ))}
           <FullscreenControl
-          position="topright"
-          content='<b>FS</b>'
-          title="Fullscreen"
-          titleCancel="Exit Fullscreen"
-        />
+            position="topright"
+            content='<b>FS</b>'
+            title="Fullscreen"
+            titleCancel="Exit Fullscreen"
+          />
         </MapContainer>
       </div>
     </div>

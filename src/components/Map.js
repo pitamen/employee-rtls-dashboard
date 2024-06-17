@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
 import L from 'leaflet';
 import UserCard from './UserCard';
+import { customMapIcon } from '../utils/mapUtils';
 
 const MapComponent = ({ users, receivedData }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 28.2096, longitude: 83.9856 });
@@ -27,13 +28,6 @@ const MapComponent = ({ users, receivedData }) => {
   useEffect(() => {
   }, [newCenter.latitude]);
 
-  const customIcon = (name, icon) =>
-    L.divIcon({
-      className: 'custom-div-icon',
-      html: `<span className="marker-text">${name}</span><img src="${icon}" style="width: 48px; height: 48px;">`,
-      iconAnchor: [0, 48]
-    });
-
   const MyMapComponent = () => {
     const map = useMapEvents({
       zoomend: () => {
@@ -53,7 +47,7 @@ const MapComponent = ({ users, receivedData }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {users.map((user) => (
-          <Marker key={user.id} position={[user.lat, user.lng]} icon={zoomLevel > 10 ? customIcon(user.name, user.icon) : lessZoomedIcon(user.icon)}>
+          <Marker key={user.id} position={[user.lat, user.lng]} icon={zoomLevel > 10 ? customMapIcon(user.name, user.icon, [0, 48], 48, 48) : lessZoomedIcon(user.icon)}>
             <Popup >
               <UserCard user={user} />
             </Popup>
