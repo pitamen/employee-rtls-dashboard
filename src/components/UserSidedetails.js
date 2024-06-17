@@ -16,20 +16,40 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
       </div>
       <div className="container py-2"></div>
       <div className="d-flex justify-content-around">
-        <h4>{!isFetchingUserDetail && userDetail ? <span><i className="uil uil-user"></i> {userNameToName(userDetail.name)}</span> : ''}</h4>
+        <h4>{!isFetchingUserDetail && userDetail ? <span><i className="uil uil-user"></i> {userNameToName(userDetail.name)}</span> : ''}
+          <div className="d-flex justify-content-center mt-3">
+            <button
+              className={`btn ${isFetchEnabled ? 'btn-danger btn-fetching' : 'btn-primary'}`}
+              onClick={fetch_enabling}
+            // disabled={!userDetail.isCheckedIn}
+            >
+              {!isFetchEnabled ? 'Start Tracking' : 'Stop Tracking'}
+              {isFetchEnabled && <span className="spinner"></span>}
+            </button>
+          </div></h4>
       </div>
       {!isFetchingUserDetail && userDetail ? (
         <div className="offcanvas-body">
-          <div className="card">
-            <div className="card-body">
-              <ul className="list-unstyled">
-                <li>Checked In: {userDetail.isCheckedIn ? <span><b>&nbsp;Yes<i className="uil uil-check"></i></b></span> : <span><b>&nbsp;No<i className="uil uil-times"></i></b></span>}</li>
-                <li>{userDetail.vendor && userDetail.vendor.is_ro ? 'Regional Office' : 'Vendor'}: <b>{userDetail.vendor?.name || 'N/A'}</b></li>
-                <li>App Version: <b>v{userDetail.lastAttendance?.app_version || 'N/A'}</b></li>
-                <li>Last Location Update: <b>{trackedAt ? `${calculateTimeDifference(trackedAt)} ago` : 'N/A'}</b></li>
-              </ul>
-            </div>
-          </div>
+          <table className="table table-striped">
+            <tbody>
+              <tr>
+                <td>Checked In:</td>
+                <td>{userDetail.isCheckedIn ? <span><b>&nbsp;Yes<i className="uil uil-check"></i></b></span> : <span><b>&nbsp;No<i className="uil uil-times"></i></b></span>}</td>
+              </tr>
+              <tr>
+                <td>{userDetail.vendor && userDetail.vendor.is_ro ? 'Regional Office' : 'Vendor'}:</td>
+                <td><b>{userDetail.vendor?.name || 'N/A'}</b></td>
+              </tr>
+              <tr>
+                <td>App Version:</td>
+                <td><b>v{userDetail.lastAttendance?.app_version || 'N/A'}</b></td>
+              </tr>
+              <tr>
+                <td>Last Location Update:</td>
+                <td><b>{trackedAt ? `${calculateTimeDifference(trackedAt)} ago` : 'N/A'}</b></td>
+              </tr>
+            </tbody>
+          </table>
           <div className="accordion" id="userDetailsAccordion">
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingDevice">
@@ -39,45 +59,64 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               </h2>
               <div id="collapseDevice" className="accordion-collapse collapse" aria-labelledby="headingDevice" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                  <ul className="list-unstyled">
-                  <li>Checked In Time: <b>9:30 am</b></li>  
-                  <li>Device Name: <b>{userDetail.lastAttendance?.device_detail?.brand || 'N/A'}</b></li>
-                  <li>Device Brand: <b>{userDetail.lastAttendance?.device_detail?.brand || 'N/A'}</b></li>
-                  <li>Device Model: <b>{userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</b></li>
-                  <li>Device Battery: <b>{userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</b></li>
-                  <li>OS Version: <b>20.5</b></li>
-                  </ul>
+                  <table class="table table-striped">
+                    <tbody>
+                      <tr>
+                        <th>Checked In Time:</th>
+                        <td><b>{userDetail.lastAttendance?.checkedInTime || 'N/A'}</b></td>
+                      </tr>
+                      <tr>
+                        <th>Device Name:</th>
+                        <td><b>{userDetail.lastAttendance?.device_detail?.brand || 'N/A'}</b></td>
+                      </tr>
+                      <tr>
+                        <th>Device Model:</th>
+                        <td><b>{userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</b></td>
+                      </tr>
+                      <tr>
+                        <th>Device Battery:</th>
+                        <td><b>{userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</b></td>
+                      </tr>
+                      <tr>
+                        <th>OS Version:</th>
+                        <td><b>20.5</b></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingCheckedIn">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
-                 Ticket Details
+                  Ticket Details
                 </button>
               </h2>
               <div id="collapseCheckedIn" className="accordion-collapse collapse" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                <ul className="list-unstyled">  
-                  <li>Ticket no.: 1201456787</li>
-                  <li>Picked at: 2:00 pm</li>
-                  <li>Category: </li>
-                  <li>Sub-Category: {userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</li>
-                  </ul>
+                  <table class="table table-striped">  <tbody>
+                    <tr>
+                      <th>Ticket no.:</th>
+                      <td><b>1201456787</b></td>
+                    </tr>
+                    <tr>
+                      <th>Picked at:</th>
+                      <td><b>2:00 pm</b></td>
+                    </tr>
+                    <tr>
+                      <th>Category:</th>
+                      <td><b>NST</b></td>
+                    </tr>
+                    <tr>
+                      <th>Sub-Category:</th>
+                      <td><b>LOS</b></td>
+                    </tr>
+                  </tbody>
+                  </table>
                   <button className='btn btn-primary'>View</button>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="d-flex justify-content-center mt-3">
-            <button
-              className={`btn ${isFetchEnabled ? 'btn-danger btn-fetching' : 'btn-primary'}`}
-              onClick={fetch_enabling}
-              disabled={!userDetail.isCheckedIn}
-            >
-              {!isFetchEnabled ? 'Start Tracking' : 'Stop Tracking'}
-              {isFetchEnabled && <span className="spinner"></span>}
-            </button>
           </div>
         </div>
       ) : null}
