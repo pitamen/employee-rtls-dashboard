@@ -20,66 +20,51 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
       </div>
       {!isFetchingUserDetail && userDetail ? (
         <div className="offcanvas-body">
-          <div className="accordion" id="userDetailsAccordion">
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headingCheckedIn">
-                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
-                  Checked In: {userDetail.isCheckedIn ? <span><b>&nbsp;Yes<i className="uil uil-check"></i></b></span> : <span><b>&nbsp;No<i className="uil uil-times"></i></b></span>}
-                </button>
-              </h2>
-              <div id="collapseCheckedIn" className="accordion-collapse collapse show" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
-                <div className="accordion-body">
-                  <p className='pTag'>Checked Out at 2:00pm</p>
-                </div>
-              </div>
+          <div className="card">
+            <div className="card-body">
+              <ul className="list-unstyled">
+                <li>Checked In: {userDetail.isCheckedIn ? <span><b>&nbsp;Yes<i className="uil uil-check"></i></b></span> : <span><b>&nbsp;No<i className="uil uil-times"></i></b></span>}</li>
+                <li>{userDetail.vendor && userDetail.vendor.is_ro ? 'Regional Office' : 'Vendor'}: <b>{userDetail.vendor?.name || 'N/A'}</b></li>
+                <li>App Version: <b>v{userDetail.lastAttendance?.app_version || 'N/A'}</b></li>
+                <li>Last Location Update: <b>{trackedAt ? `${calculateTimeDifference(trackedAt)} ago` : 'N/A'}</b></li>
+              </ul>
             </div>
+          </div>
+          <div className="accordion" id="userDetailsAccordion">
             <div className="accordion-item">
               <h2 className="accordion-header" id="headingDevice">
                 <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDevice" aria-expanded="false" aria-controls="collapseDevice">
-                  {userDetail.isCheckedIn ? 'Check In Device' : 'Last Used Device'}
+                  {userDetail.isCheckedIn ? 'CheckIn Details' : 'Last CheckIn Details'}
                 </button>
               </h2>
               <div id="collapseDevice" className="accordion-collapse collapse" aria-labelledby="headingDevice" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                  <p className='pTag'>Brand: {userDetail.lastAttendance?.device_detail?.brand || 'N/A'}</p>
-                  <p className='pTag'>Model: {userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</p>
-                  <p className='pTag'>Battery: {userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</p>
+                  <ul className="list-unstyled">
+                  <li>Checked In Time: <b>9:30 am</b></li>  
+                  <li>Device Name: <b>{userDetail.lastAttendance?.device_detail?.brand || 'N/A'}</b></li>
+                  <li>Device Brand: <b>{userDetail.lastAttendance?.device_detail?.brand || 'N/A'}</b></li>
+                  <li>Device Model: <b>{userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</b></li>
+                  <li>Device Battery: <b>{userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</b></li>
+                  <li>OS Version: <b>20.5</b></li>
+                  </ul>
                 </div>
               </div>
             </div>
             <div className="accordion-item">
-              <h2 className="accordion-header" id="headingLocation">
-                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseLocation" aria-expanded="false" aria-controls="collapseLocation">
-                  Last Location Update
+              <h2 className="accordion-header" id="headingCheckedIn">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
+                 Ticket Details
                 </button>
               </h2>
-              <div id="collapseLocation" className="accordion-collapse collapse" aria-labelledby="headingLocation" data-bs-parent="#userDetailsAccordion">
+              <div id="collapseCheckedIn" className="accordion-collapse collapse" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
                 <div className="accordion-body">
-                  <p className='pTag'>{trackedAt ? `${calculateTimeDifference(trackedAt)} ago` : 'N/A'}</p>
-                </div>
-              </div>
-            </div>
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headingAppVersion">
-                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAppVersion" aria-expanded="false" aria-controls="collapseAppVersion">
-                  App Version
-                </button>
-              </h2>
-              <div id="collapseAppVersion" className="accordion-collapse collapse" aria-labelledby="headingAppVersion" data-bs-parent="#userDetailsAccordion">
-                <div className="accordion-body">
-                  <p className='pTag'>v{userDetail.lastAttendance?.app_version || 'N/A'}</p>
-                </div>
-              </div>
-            </div>
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headingVendor">
-                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseVendor" aria-expanded="false" aria-controls="collapseVendor">
-                  {userDetail.vendor && userDetail.vendor.is_ro ? 'Regional Office' : 'Vendor'}
-                </button>
-              </h2>
-              <div id="collapseVendor" className="accordion-collapse collapse" aria-labelledby="headingVendor" data-bs-parent="#userDetailsAccordion">
-                <div className="accordion-body">
-                  <p className='pTag'>{userDetail.vendor?.name || 'N/A'}</p>
+                <ul className="list-unstyled">  
+                  <li>Ticket no.: 1201456787</li>
+                  <li>Picked at: 2:00 pm</li>
+                  <li>Category: </li>
+                  <li>Sub-Category: {userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</li>
+                  </ul>
+                  <button className='btn btn-primary'>View</button>
                 </div>
               </div>
             </div>
