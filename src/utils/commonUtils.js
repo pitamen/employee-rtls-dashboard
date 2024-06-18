@@ -1,6 +1,7 @@
 import defaultIconHalf from '../img/default-icon-half.png'
 import defaultIcon from '../img/default-icon.png'
 import moment from 'moment-timezone';
+import L from 'leaflet'
 
 export const calculateTimeDifferenceInMinutes = (targetTime) => {
   var currDate = new Date().getTime();
