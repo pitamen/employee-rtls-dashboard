@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
 import L from 'leaflet';
 import UserCard from './UserCard';
+import { customMapIcon } from '../utils/mapUtils';
+import './SCSS/Map.scss'
 
-const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
+const MapComponent = ({ users, receivedData }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 28.2096, longitude: 83.9856 });
   const [zoomLevel, setZoomLevel] = useState(10);
 
@@ -25,15 +27,7 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
   }, [receivedData]);
 
   useEffect(() => {
-    console.log(newCenter.latitude); // Log newCenter.latitude whenever it changes
   }, [newCenter.latitude]);
-
-  const customIcon = (name, icon) =>
-    L.divIcon({
-      className: 'custom-div-icon',
-      html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 48px; height: 48px;">`,
-      iconAnchor: [0, 48]
-    });
 
   const MyMapComponent = () => {
     const map = useMapEvents({
@@ -47,27 +41,25 @@ const MapComponent = ({ users, receivedData, isFullScreen = false }) => {
 
   return (
     <div className="map-container">
-      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={9} style={{ height: isFullScreen ? '95vh' : '85vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`} >
+      <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={9} style={{ height: '95vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`} >
         <MyMapComponent />
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {users.map((user) => (
-          <Marker key={user.id} position={[user.lat, user.lng]} icon={zoomLevel > 10 ? customIcon(user.name, user.icon) : lessZoomedIcon(user.icon)}>
+          <Marker key={user.id} position={[user.lat, user.lng]} icon={zoomLevel > 10 ? customMapIcon(user.name, user.icon, [0, 48], 48, 48) : lessZoomedIcon(user.icon)}>
             <Popup >
               <UserCard user={user} />
             </Popup>
           </Marker>
         ))}
-        {/* <FullscreenControl
+        <FullscreenControl
           position="topright"
           content='<b>FS</b>'
           title="Fullscreen"
           titleCancel="Exit Fullscreen"
-          forceSeparateButton="true"
-        /> */}
-
+        />
       </MapContainer>
     </div>
   );

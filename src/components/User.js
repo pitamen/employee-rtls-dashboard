@@ -7,9 +7,9 @@ import { BASE_URL } from '../utils/constants';
 import userIcon1 from '../img/live-person-location.png';
 import Namebar from './Namebar';
 import UserSidedetails from './UserSidedetails';
-import L, { point } from 'leaflet';
 import '../my-sass.scss'
-import { unixTimeStampToISOStringConverter } from '../utils/commonUtils';
+import { unixTimeStampToISOStringConverter, toggleFullScreen } from '../utils/commonUtils';
+import { customMapIcon } from '../utils/mapUtils';
 
 const User = () => {
   const [userData, setUserData] = useState([]);
@@ -21,6 +21,8 @@ const User = () => {
   const [fetchEnabled, setFetchEnabled] = useState(false);
   const [trackedAt, setUserTrackedAt] = useState(false);
   const [travelledPoints, setTravelledPoints] = useState([])
+  const [currentTicketDetail, setCurrentTicketDetail] = useState(null)
+  const [isFetchingCurrentTicketDetail, setIsFetchingCurrentTicketDetail] = useState(false)
 
   const enableDisableLiveTracking = () => {
     if (fetchEnabled) {
@@ -30,18 +32,11 @@ const User = () => {
     }
   }
 
-  const customMapIcon = (name, icon) =>
-    L.divIcon({
-      className: 'custom-div-icon',
-      html: `<span class="marker-text">${name}</span><img src="${icon}" style="width: 32px; height: 32px;">`,
-      iconAnchor: [0, 32]
-    });
-
   useEffect(() => {
     const fetchUserDetail = async () => {
       setIsFetchingUserDetail(true);
       try {
-        const response = await fetch(`${BASE_URL}employees/detail/${userId}`, {
+        const response = await fetch(`${BASE_URL}v2/employees/byempid/detail?id=${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -49,8 +44,13 @@ const User = () => {
         });
 
         const userDetailResponse = await response.json();
-        if (userDetailResponse.length > 0) {
-          setUserDetail(userDetailResponse[0]);
+        const userData = userDetailResponse.data;
+        console.log("User Data", userData)
+        if (userData.length > 0) {
+          setUserDetail(userData[0]);
+          if (userData[0].inProgressTicket && Object.keys(userData[0].inProgressTicket).length > 0 && userData[0].inProgressTicket.ticket_id) {
+            fetchTicketDetail(userData[0].inProgressTicket.ticket_id)
+          }
         }
         setIsFetchingUserDetail(false);
       } catch (error) {
@@ -78,6 +78,28 @@ const User = () => {
   useEffect(() => {
     console.log('')
   }, [trackedAt])
+
+
+  const fetchTicketDetail = async (ticketId) => {
+    try {
+      setIsFetchingCurrentTicketDetail(true)
+      const response = await fetch(`${BASE_URL}v2/tickets/detail/${ticketId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const json = await response.json();
+      console.log("Json", json)
+      setCurrentTicketDetail(json)
+    } catch (error) {
+      setCurrentTicketDetail(null)
+      console.error('error: ', error.message)
+    } finally {
+      setIsFetchingCurrentTicketDetail(false)
+    }
+  }
 
   const fetchData = async () => {
     try {
@@ -122,10 +144,12 @@ const User = () => {
 
   return (
     <div className="App">
-      <Namebar name={userName ?? ''} userDetail={userDetail} />
+      <Namebar name={userName ?? ''} userDetail={userDetail} toggleFullScreen={toggleFullScreen} />
       <UserSidedetails userDetail={userDetail} isFetchingUserDetail={isFetchingUserDetail}
         fetch_enabling={enableDisableLiveTracking} isFetchEnabled={fetchEnabled}
         trackedAt={trackedAt}
+        ticketDetail={currentTicketDetail}
+        isFetchingCurrentTicketDetail={isFetchingCurrentTicketDetail}
       />
       <div className="map-container">
         <MapContainer
@@ -150,7 +174,12 @@ const User = () => {
               </CircleMarker>
             )
           ))}
-          <FullscreenControl position="topright" />
+          <FullscreenControl
+            position="topright"
+            content='<b>FS</b>'
+            title="Fullscreen"
+            titleCancel="Exit Fullscreen"
+          />
         </MapContainer>
       </div>
     </div>

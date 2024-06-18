@@ -1,6 +1,6 @@
-import L from 'leaflet';
 import defaultIconHalf from '../img/default-icon-half.png'
 import defaultIcon from '../img/default-icon.png'
+import moment from 'moment-timezone';
 
 export const calculateTimeDifferenceInMinutes = (targetTime) => {
   var currDate = new Date().getTime();
@@ -46,7 +46,7 @@ export const calculateTimeDifference = (targetTime) => {
 
 };
 
-export const toggleFullScreen = () => {
+export const toggleFullScreen = (setIsFullScreen) => {
   var elem = document.documentElement;
   if (!document.fullscreenElement && !document.mozFullScreenElement &&
     !document.webkitFullscreenElement && !document.msFullscreenElement) {
@@ -59,6 +59,7 @@ export const toggleFullScreen = () => {
     } else if (elem.webkitRequestFullscreen) {
       elem.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
     }
+    setIsFullScreen(true);
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -69,8 +70,8 @@ export const toggleFullScreen = () => {
     } else if (document.webkitExitFullscreen) {
       document.webkitExitFullscreen();
     }
+    setIsFullScreen(false);
   }
-
 }
 
 
@@ -89,4 +90,11 @@ export const unixTimeStampToISOStringConverter = (timestamp) => {
 export const defaultAppValues = {
   defaultHalfIcon: defaultIconHalf,
   defaultIcon: defaultIcon
+}
+
+export const utcToNpt = (utctime) => {
+  const nptDate = moment.utc(utctime).tz('Asia/Kathmandu')
+  const formattedNptDate = nptDate.format("YYYY-MM-DD hh:mm A");
+
+  return formattedNptDate;
 }

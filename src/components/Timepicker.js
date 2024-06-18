@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import "./SCSS/Timepicker.scss"
 
 const Timepicker = () => {
   const [startDate, setStartDate] = useState(null); // Use null for no initial date

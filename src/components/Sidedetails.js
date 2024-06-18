@@ -18,7 +18,7 @@ import { VENDOR_NAMES } from '../utils/constants';
 const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   const navigate = useNavigate();
   const orgUsersResponse = orgResponse;
- 
+
   const [mapKey, setMapKey] = useState(0)
 
   const vendorToIconMap = {
@@ -31,6 +31,18 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
     "Bagmati Central": edrHalfIcon,
     'Bagmati': edrHalfIcon
   }
+
+  const countTotalLiveUsers = (data) => {
+    let liveCount = 0;
+    data.forEach(vendor => {
+      liveCount += vendor.employees.length
+    });
+
+    return liveCount;
+  }
+
+
+  const totalLiveusers = orgUsersResponse?.length > 0 ? countTotalLiveUsers(orgUsersResponse) : 0
 
   const handleClick = (user) => {
     setMapKey(pervValue => pervValue + 1)
@@ -52,7 +64,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   };
 
   return (
-    <>
+    <div>
       <div className="offcanvas offcanvas-start show" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div className="offcanvas-header">
           <h5 className="offcanvas-title" id="offcanvasScrollingLabel"></h5>
@@ -63,11 +75,11 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
             <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
           )}
         </div>
-        {/* <div className="d-flex justify-content-around">
-          <div className="p-2"><small>🟦Total-15</small></div>
-          <div className="p-2"><small>🟩Online-5</small></div>
-          <div className="p-2"><small>🟥Offline-10</small></div>
-        </div> */}
+        <div className="d-flex justify-content-around">
+          <div className="p-2"><small>🟦Total-76</small></div>
+          <div className="p-2"><small>🟩Online-{totalLiveusers}</small></div>
+          <div className="p-2"><small>🟥Offline-{76 - totalLiveusers}</small></div>
+        </div>
         <div className="offcanvas-body">
           <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
             {
@@ -79,7 +91,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                     id="panel1-header"
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <VendorIcon imageUrl={VENDOR_NAMES.includes(vendor.vendor_name)? vendorToIconMap[vendor.vendor_name]:defaultAppValues.defaultHalfIcon} />
+                      <VendorIcon imageUrl={VENDOR_NAMES.includes(vendor.vendor_name) ? vendorToIconMap[vendor.vendor_name] : defaultAppValues.defaultHalfIcon} />
                       <div style={{ marginLeft: '10px' }}></div>
                       <Typography variant='subtitle2'> {vendor.vendor_name} ({vendor.employees.length})</Typography>
                     </div>
@@ -111,8 +123,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
           Logout
         </button>
       </div>
-
-    </>
+    </div>
 
   );
 };
