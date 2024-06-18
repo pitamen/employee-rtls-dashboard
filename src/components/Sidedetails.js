@@ -20,6 +20,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   const orgUsersResponse = orgResponse;
 
   const [mapKey, setMapKey] = useState(0)
+  const [offcanvasOpen, setOffcanvasOpen] = useState(true);
 
   const vendorToIconMap = {
     'POK': pokHalfIcon,
@@ -63,12 +64,16 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
     navigate('/login');
   };
 
+  const toggleOffcanvas = () => {
+    setOffcanvasOpen(!offcanvasOpen); // Toggle offcanvas state
+  };
+
   return (
     <div>
-      <div className="offcanvas offcanvas-start show" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+      <div className={`offcanvas offcanvas-start ${offcanvasOpen ? 'show' : ''}`} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
         <div className="offcanvas-header">
           <h5 className="offcanvas-title" id="offcanvasScrollingLabel"></h5>
-          <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" onClick={toggleOffcanvas}></button>
         </div>
         <div className='container py-2'>
           {!userId && (
