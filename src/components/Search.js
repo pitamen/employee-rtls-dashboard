@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Search = ({ users, handleSuccessfulSearch }) => {
   const navigate = useNavigate();

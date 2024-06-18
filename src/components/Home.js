@@ -90,11 +90,11 @@ const Home = (props) => {
   };
 
   return (
-    <div className="App">
+    <>
       <Namebar toggleFullScreen={toggleFullScreen}  />
       <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
       <MapComponent users={users} receivedData={receivedData} />
-    </div>
+    </>
   );
 };
 
