@@ -1,6 +1,6 @@
 $myColor: red;
-$onColor:rgb(52, 255, 52);
-$offColor:rgb(255, 71, 71);
+$onColor: rgb(52, 255, 52);
+$offColor: rgb(255, 71, 71);
 $borderColor: rgba(128, 128, 128, 0.3);
 $fontColor: rgba(128, 128, 128);
 $backgroundImg: '/img/login.png';
@@ -17,28 +17,35 @@ body {
 
 /* Add this style to your CSS file or style block */
 .datepicker-wrapper {
-  font-size: 16px; /* Adjust the font size based on your preference */
+  font-size: 16px;
+  /* Adjust the font size based on your preference */
 }
 
 .dateDiv {
-  width: 200px; /* Adjust the width based on your preference */
-  height: 38px; /* Adjust the height based on your preference */
-  font-size: 16px; /* Adjust the font size based on your preference */
-  border: 1px solid  $borderColor; /* Change the border color as needed */
-  border-radius: 1px; /* Optional: Add border-radius for rounded corners */
+  width: 200px;
+  /* Adjust the width based on your preference */
+  height: 38px;
+  /* Adjust the height based on your preference */
+  font-size: 16px;
+  /* Adjust the font size based on your preference */
+  border: 1px solid $borderColor;
+  /* Change the border color as needed */
+  border-radius: 1px;
+  /* Optional: Add border-radius for rounded corners */
   color: $fontColor;
 }
 
 
-#loginBg , #registerBg {
-  background-image: url('#{$backgroundImg}'); 
+#loginBg,
+#registerBg {
+  background-image: url('#{$backgroundImg}');
   background-size: cover;
   background-position: bottom;
   min-height: 100vh;
 }
 
 .card {
-  position: relative; 
+  position: relative;
 }
 
 .user-info {
@@ -51,8 +58,10 @@ body {
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid $onColor; /* You can change the border color here */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow */
+  border: 2px solid $onColor;
+  /* You can change the border color here */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  /* Optional: Add shadow */
 }
 
 .user-avatarOffline {
@@ -60,8 +69,10 @@ body {
   height: 50px;
   border-radius: 50%;
   overflow: hidden;
-  border: 2px solid $offColor; /* You can change the border color here */
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Optional: Add shadow */
+  border: 2px solid $offColor;
+  /* You can change the border color here */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  /* Optional: Add shadow */
 }
 
 .avatar-image {
@@ -70,31 +81,34 @@ body {
   object-fit: cover;
 }
 
-.custom-div-icon{
+.custom-div-icon {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+
 .marker-text {
-  background-color: #fff;
-  padding: 5px;
-  border-radius: 5px;
-  font-weight: bold;
+  background-color: hsla(0, 0%, 100%, .5);
+  border: 1px solid rgba(255, 0, 0, .26);
 }
 
 /* MapComponent.css */
-.leaflet-popup-content-wrapper, .card {
-  background: rgba(255, 255, 255, 0.3); /* Adjust the alpha value to control the transparency */
-  backdrop-filter: blur(5px); /* Optional: Adds a blur effect */
-  -webkit-backdrop-filter: blur(10px); /* For Safari */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add shadow for a better visual effect */
+.leaflet-popup-content-wrapper,
+.card {
+  background: rgba(255, 255, 255, 0.3);
+  /* Adjust the alpha value to control the transparency */
+  backdrop-filter: blur(5px);
+  /* Optional: Adds a blur effect */
+  -webkit-backdrop-filter: blur(10px);
+  /* For Safari */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Add shadow for a better visual effect */
 }
 
 
 .leaflet-popup-tip-container {
-  display: none; /* Hide the default popup tip if you don't need it */
+  display: none;
+  /* Hide the default popup tip if you don't need it */
 }
-
-

@@ -4,10 +4,12 @@ import './SCSS/user-side-details.scss';
 import Timepicker from './Timepicker';
 import { userNameToName } from '../utils/stringUtils';
 // import '../user-side-details.scss';
-import { calculateTimeDifference } from '../utils/commonUtils';
+import { calculateTimeDifference, utcToNpt } from '../utils/commonUtils';
 
-const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isFetchEnabled = false, trackedAt }) => {
+const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isFetchEnabled = false, trackedAt, ticketDetail, isFetchingCurrentTicketDetail }) => {
   const navigate = useNavigate();
+  const ticket = ticketDetail ? ticketDetail.data : null
+
   return (
     <div className="offcanvas offcanvas-start show user-side-detail" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
       <div className="offcanvas-header">
@@ -63,7 +65,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
                     <tbody>
                       <tr>
                         <th>Checked In Time:</th>
-                        <td><b>{userDetail.lastAttendance?.checkedInTime || 'N/A'}</b></td>
+                        <td><b>{userDetail.lastAttendance ? utcToNpt(userDetail.lastAttendance.timeIn) : 'N/A'}</b></td>
                       </tr>
                       <tr>
                         <th>Device Name:</th>
@@ -73,50 +75,56 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
                         <th>Device Model:</th>
                         <td><b>{userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</b></td>
                       </tr>
-                      <tr>
+                      {/* <tr>
                         <th>Device Battery:</th>
                         <td><b>{userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</b></td>
-                      </tr>
+                      </tr> */}
                       <tr>
                         <th>OS Version:</th>
-                        <td><b>20.5</b></td>
+                        <td><b> {userDetail.lastAttendance?.device_detail ? `Android ${userDetail.lastAttendance?.device_detail?.osVersion}` : 'N/A'}</b></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            <div className="accordion-item">
-              <h2 className="accordion-header" id="headingCheckedIn">
-                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
-                  Ticket Details
-                </button>
-              </h2>
-              <div id="collapseCheckedIn" className="accordion-collapse collapse" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
-                <div className="accordion-body">
-                  <table class="table table-striped">  <tbody>
-                    <tr>
-                      <th>Ticket no.:</th>
-                      <td><b>1201456787</b></td>
-                    </tr>
-                    <tr>
-                      <th>Picked at:</th>
-                      <td><b>2:00 pm</b></td>
-                    </tr>
-                    <tr>
-                      <th>Category:</th>
-                      <td><b>NST</b></td>
-                    </tr>
-                    <tr>
-                      <th>Sub-Category:</th>
-                      <td><b>LOS</b></td>
-                    </tr>
-                  </tbody>
-                  </table>
-                  <button className='btn btn-primary'>View</button>
+            {
+              userDetail.inProgressTicket && Object.keys(userDetail.inProgressTicket).length > 0 && !isFetchingCurrentTicketDetail && ticket !== null ? <div className="accordion-item">
+                <h2 className="accordion-header" id="headingCheckedIn">
+                  <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
+                    Ticket Details
+                  </button>
+                </h2>
+                <div id="collapseCheckedIn" className="accordion-collapse collapse" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
+                  <div className="accordion-body">
+                    <table class="table table-striped">  <tbody>
+                      <tr>
+                        <th>Ticket no.:</th>
+                        <td><b>{ticket.TicketNo}</b></td>
+                      </tr>
+                      <tr>
+                        <th>Picked at:</th>
+                        <td><b>{utcToNpt(userDetail.inProgressTicket.picked_at)}</b></td>
+                      </tr>
+                      <tr>
+                        <th>POD Station:</th>
+                        <td><b>{ticket.PODStation}</b></td>
+                      </tr>
+                      <tr>
+                        <th>Category:</th>
+                        <td><b>{ticket.Category}</b></td>
+                      </tr>
+                      <tr>
+                        <th>Sub-Category:</th>
+                        <td><b>{ticket.SubCategory}</b></td>
+                      </tr>
+                    </tbody>
+                    </table>
+                    <button className='btn btn-primary'>View</button>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </div> : <></>
+            }
           </div>
         </div>
       ) : null}

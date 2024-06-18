@@ -1,5 +1,6 @@
 import defaultIconHalf from '../img/default-icon-half.png'
 import defaultIcon from '../img/default-icon.png'
+import moment from 'moment-timezone';
 
 export const calculateTimeDifferenceInMinutes = (targetTime) => {
   var currDate = new Date().getTime();
@@ -80,4 +81,11 @@ export const unixTimeStampToISOStringConverter = (timestamp) => {
 export const defaultAppValues = {
   defaultHalfIcon: defaultIconHalf,
   defaultIcon: defaultIcon
+}
+
+export const utcToNpt = (utctime) => {
+  const nptDate = moment.utc(utctime).tz('Asia/Kathmandu')
+  const formattedNptDate = nptDate.format("YYYY-MM-DD hh:mm A");
+
+  return formattedNptDate;
 }

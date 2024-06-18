@@ -21,6 +21,8 @@ const User = () => {
   const [fetchEnabled, setFetchEnabled] = useState(false);
   const [trackedAt, setUserTrackedAt] = useState(false);
   const [travelledPoints, setTravelledPoints] = useState([])
+  const [currentTicketDetail, setCurrentTicketDetail] = useState(null)
+  const [isFetchingCurrentTicketDetail, setIsFetchingCurrentTicketDetail] = useState(false)
 
   const enableDisableLiveTracking = () => {
     if (fetchEnabled) {
@@ -34,7 +36,7 @@ const User = () => {
     const fetchUserDetail = async () => {
       setIsFetchingUserDetail(true);
       try {
-        const response = await fetch(`${BASE_URL}employees/detail/${userId}`, {
+        const response = await fetch(`${BASE_URL}v2/employees/byempid/detail?id=${userId}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -42,8 +44,13 @@ const User = () => {
         });
 
         const userDetailResponse = await response.json();
-        if (userDetailResponse.length > 0) {
-          setUserDetail(userDetailResponse[0]);
+        const userData = userDetailResponse.data;
+        console.log("User Data", userData)
+        if (userData.length > 0) {
+          setUserDetail(userData[0]);
+          if (userData[0].inProgressTicket && Object.keys(userData[0].inProgressTicket).length > 0 && userData[0].inProgressTicket.ticket_id) {
+            fetchTicketDetail(userData[0].inProgressTicket.ticket_id)
+          }
         }
         setIsFetchingUserDetail(false);
       } catch (error) {
@@ -71,6 +78,28 @@ const User = () => {
   useEffect(() => {
     console.log('')
   }, [trackedAt])
+
+
+  const fetchTicketDetail = async (ticketId) => {
+    try {
+      setIsFetchingCurrentTicketDetail(true)
+      const response = await fetch(`${BASE_URL}v2/tickets/detail/${ticketId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      const json = await response.json();
+      console.log("Json", json)
+      setCurrentTicketDetail(json)
+    } catch (error) {
+      setCurrentTicketDetail(null)
+      console.error('error: ', error.message)
+    } finally {
+      setIsFetchingCurrentTicketDetail(false)
+    }
+  }
 
   const fetchData = async () => {
     try {
@@ -119,6 +148,8 @@ const User = () => {
       <UserSidedetails userDetail={userDetail} isFetchingUserDetail={isFetchingUserDetail}
         fetch_enabling={enableDisableLiveTracking} isFetchEnabled={fetchEnabled}
         trackedAt={trackedAt}
+        ticketDetail={currentTicketDetail}
+        isFetchingCurrentTicketDetail={isFetchingCurrentTicketDetail}
       />
       <div className="map-container">
         <MapContainer
