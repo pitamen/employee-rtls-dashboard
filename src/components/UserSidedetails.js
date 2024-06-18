@@ -25,7 +25,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               onClick={fetch_enabling}
             // disabled={!userDetail.isCheckedIn}
             >
-              {!isFetchEnabled ? 'Start Tracking' : 'Stop Tracking'}
+              Live
               {isFetchEnabled && <span className="spinner"></span>}
             </button>
           </div></h4>
