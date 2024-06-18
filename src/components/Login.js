@@ -50,7 +50,7 @@ const Login = () => {
           </div>
           <div className='my-2'>
             <button type="submit" className="btn btn-danger" >Login</button>
-            <a className="btn btn-outline-secondary mx-2" href="/register" role='button'>Register</a>
+            {/* <a className="btn btn-outline-secondary mx-2" href="/register" role='button'>Register</a> */}
           </div>
         </form>
       </div></div>
