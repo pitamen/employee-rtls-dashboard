@@ -1,14 +1,31 @@
-import React from 'react';
+import React , { useState }  from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SCSS/user-side-details.scss';
 import Timepicker from './Timepicker';
 import { userNameToName } from '../utils/stringUtils';
 // import '../user-side-details.scss';
-import { calculateTimeDifference, utcToNpt } from '../utils/commonUtils';
+import { calculateTimeDifference } from '../utils/commonUtils';
+import CustomModal from './Modal';
 
-const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isFetchEnabled = false, trackedAt, ticketDetail, isFetchingCurrentTicketDetail }) => {
+const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isFetchEnabled = false, trackedAt }) => {
   const navigate = useNavigate();
-  const ticket = ticketDetail ? ticketDetail.data : null
+  const [showModal, setShowModal] = useState(false);
+
+  const handleModalOpen = () => {
+    setShowModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+
+    // Sample table data for the modal
+    const tableData = [
+      { label: 'Ticket no.:', value: <b>1201456787</b> },
+      { label: 'Picked at:', value: <b>2:00 pm</b> },
+      { label: 'Category:', value: <b>NST</b> },
+      { label: 'Sub-Category:', value: <b>LOS</b> },
+    ];
 
   return (
     <div className="offcanvas offcanvas-start show user-side-detail" data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -25,7 +42,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
               onClick={fetch_enabling}
             // disabled={!userDetail.isCheckedIn}
             >
-              Live
+              {!isFetchEnabled ? 'Start Tracking' : 'Stop Tracking'}
               {isFetchEnabled && <span className="spinner"></span>}
             </button>
           </div></h4>
@@ -65,7 +82,7 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
                     <tbody>
                       <tr>
                         <th>Checked In Time:</th>
-                        <td><b>{userDetail.lastAttendance ? utcToNpt(userDetail.lastAttendance.timeIn) : 'N/A'}</b></td>
+                        <td><b>{userDetail.lastAttendance?.checkedInTime || 'N/A'}</b></td>
                       </tr>
                       <tr>
                         <th>Device Name:</th>
@@ -75,56 +92,56 @@ const UserSidedetails = ({ isFetchingUserDetail, userDetail, fetch_enabling, isF
                         <th>Device Model:</th>
                         <td><b>{userDetail.lastAttendance?.device_detail?.modelName || 'N/A'}</b></td>
                       </tr>
-                      {/* <tr>
+                      <tr>
                         <th>Device Battery:</th>
                         <td><b>{userDetail.lastAttendance?.device_detail?.platformApiLevel || 'N/A'}%</b></td>
-                      </tr> */}
+                      </tr>
                       <tr>
                         <th>OS Version:</th>
-                        <td><b> {userDetail.lastAttendance?.device_detail ? `Android ${userDetail.lastAttendance?.device_detail?.osVersion}` : 'N/A'}</b></td>
+                        <td><b>20.5</b></td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            {
-              userDetail.inProgressTicket && Object.keys(userDetail.inProgressTicket).length > 0 && !isFetchingCurrentTicketDetail && ticket !== null ? <div className="accordion-item">
-                <h2 className="accordion-header" id="headingCheckedIn">
-                  <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
-                    Ticket Details
-                  </button>
-                </h2>
-                <div id="collapseCheckedIn" className="accordion-collapse collapse" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
-                  <div className="accordion-body">
-                    <table class="table table-striped">  <tbody>
-                      <tr>
-                        <th>Ticket no.:</th>
-                        <td><b>{ticket.TicketNo}</b></td>
-                      </tr>
-                      <tr>
-                        <th>Picked at:</th>
-                        <td><b>{utcToNpt(userDetail.inProgressTicket.picked_at)}</b></td>
-                      </tr>
-                      <tr>
-                        <th>POD Station:</th>
-                        <td><b>{ticket.PODStation}</b></td>
-                      </tr>
-                      <tr>
-                        <th>Category:</th>
-                        <td><b>{ticket.Category}</b></td>
-                      </tr>
-                      <tr>
-                        <th>Sub-Category:</th>
-                        <td><b>{ticket.SubCategory}</b></td>
-                      </tr>
-                    </tbody>
-                    </table>
-                    <button className='btn btn-primary'>View</button>
-                  </div>
+            <div className="accordion-item">
+              <h2 className="accordion-header" id="headingCheckedIn">
+                <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCheckedIn" aria-expanded="true" aria-controls="collapseCheckedIn">
+                  Ticket Details
+                </button>
+              </h2>
+              <div id="collapseCheckedIn" className="accordion-collapse collapse" aria-labelledby="headingCheckedIn" data-bs-parent="#userDetailsAccordion">
+                <div className="accordion-body">
+                  <table class="table table-striped">  <tbody>
+                    <tr>
+                      <th>Ticket no.:</th>
+                      <td><b>1201456787</b></td>
+                    </tr>
+                    <tr>
+                      <th>Picked at:</th>
+                      <td><b>2:00 pm</b></td>
+                    </tr>
+                    <tr>
+                      <th>Category:</th>
+                      <td><b>NST</b></td>
+                    </tr>
+                    <tr>
+                      <th>Sub-Category:</th>
+                      <td><b>LOS</b></td>
+                    </tr>
+                  </tbody>
+                  </table>
+                  <button className='btn btn-primary' onClick={handleModalOpen}>View</button>
+                  <CustomModal
+                    show={showModal}
+                    onHide={handleModalClose}
+                    title="Ticket Details"
+                    tableData={tableData}
+                  />
                 </div>
-              </div> : <></>
-            }
+              </div>
+            </div>
           </div>
         </div>
       ) : null}

@@ -71,6 +71,7 @@ const Home = (props) => {
 
   useEffect(() => {
     fetchUserData();
+    
   }, []);
 
   useEffect(() => {

@@ -18,7 +18,7 @@ const UserCard = ({ user }) => {
                         </a>
                         <p className="card-text"><b>Location:</b> {user.lat}, {user.lng}</p>
                         <p><b>Region Name:</b> {user.vendorName}</p>
-                        <a href={`/user/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>Show History</a>
+                        <a href={`/user/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>Click to Show Details.</a>
                     </div>
                     <div className={`user-avatar${status}`} >
                         <img src={profilePic} alt="User Avatar" className='avatar-image' />
