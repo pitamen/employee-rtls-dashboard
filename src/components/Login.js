@@ -48,10 +48,10 @@ const Login = () => {
             <input type="checkbox" className="form-check-input" id="Remember me" />
             <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
           </div>
-          {/* <div className='my-2'>
+          <div className='d-flex align-items-center justify-content-center'>
             <button type="submit" className="btn btn-danger" >Login</button>
-            <a className="btn btn-outline-secondary mx-2" href="/register" role='button'>Register</a>
-          </div> */}
+            {/* <a className="btn btn-outline-secondary mx-2" href="/register" role='button'>Register</a> */}
+          </div>
         </form>
       </div></div>
   )
