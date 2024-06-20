@@ -45,7 +45,6 @@ const User = () => {
 
         const userDetailResponse = await response.json();
         const userData = userDetailResponse.data;
-        console.log("User Data", userData)
         if (userData.length > 0) {
           setUserDetail(userData[0]);
           if (userData[0].inProgressTicket && Object.keys(userData[0].inProgressTicket).length > 0 && userData[0].inProgressTicket.ticket_id) {
