@@ -15,7 +15,7 @@ const CustomModal = ({ show, onHide, title, tableData }) => {
             {tableData.map((row, index) => (
               <tr key={index}>
                 <th>{row.label}</th>
-                <td><b>{row.value}</b></td>
+                <td>{row.value}</td>
               </tr>
             ))}
           </tbody>

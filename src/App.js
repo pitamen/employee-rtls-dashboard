@@ -2,11 +2,11 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import Home from './components/Home';
 import Login from './components/Login';
-import Register from './components/Register';
+// import Register from './components/Register';
 import { useEffect, useState } from 'react';
 import User from './components/User';
 import LoadingBar from 'react-top-loading-bar';
-import { NewHome } from './components/NewHome';
+import UserHistory from './components/UserHistory';
 
 
 const PrivateRoute = ({ isAuthenticated }) => {
@@ -43,7 +43,7 @@ function App() {
             <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route exact path="/" element={<Home setProgress={setProgress} />} />
               <Route exact path="/user/:user" element={<User setProgress={setProgress} />} />
-              <Route exact path="/NewHome" element={<NewHome />} />
+              <Route exact path="/user/history" element={<UserHistory />} />
             </Route>
           </Routes>
         </div>

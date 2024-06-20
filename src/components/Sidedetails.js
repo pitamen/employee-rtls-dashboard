@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Accordion, AccordionSummary, Typography, AccordionDetails } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PreviewIcon from '@mui/icons-material/Preview';
+import HistoryIcon from '@mui/icons-material/History';
 import fwdrHalfIcon from '../img/tech-fwdr-half.png';
 import cdrHalfIcon from '../img/tech-cdr-half.png';
 import edrHalfIcon from '../img/tech-edr-half.png';
@@ -112,8 +113,11 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                           >
                             <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography> <Typography variant='body2'>Last Update: {calculateTimeDifference(user.location.tracked_at)} ago</Typography>
                           </Link>
-                          <a href={`/user/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>
+                          <a href={`/user/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="User Details">
                             <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
+                          </a>
+                          <a href='/user/history' style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
+                            <span><HistoryIcon style={{ color: '#CC5500' }} /></span>
                           </a>
                         </li>
                       ))}

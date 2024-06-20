@@ -35,7 +35,7 @@ const Login = () => {
     <div id='loginBg'>
       <div className='container d-flex align-items-center justify-content-center' id='loginWallpaper' style={{ height: '100vh' }}>
         <form onSubmit={handleSubmit}>
-          <h2>Login Here..</h2>
+          <h2>RTLS Login</h2>
           <div className="form-group">
             <label htmlFor="username">Username</label>
             <input type="text" className="form-control" id="username" name='username' value={credentials.username} onChange={onChange} required minLength={6} placeholder="Enter username" />
@@ -48,7 +48,7 @@ const Login = () => {
             <input type="checkbox" className="form-check-input" id="Remember me" />
             <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
           </div>
-          <div className='d-flex align-items-center justify-content-center'>
+          <div className='d-flex align-items-center '>
             <button type="submit" className="btn btn-danger" >Login</button>
             {/* <a className="btn btn-outline-secondary mx-2" href="/register" role='button'>Register</a> */}
           </div>
@@ -56,5 +56,4 @@ const Login = () => {
       </div></div>
   )
 }
-
 export default Login;

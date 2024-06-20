@@ -16,7 +16,7 @@ const Timepicker = () => {
   };
 
   return (
-    <form className="d-flex" role="datepick">
+    <form className="d-flex" >
       <div className="datepicker-wrapper mx-4">
         <DatePicker
           selected={startDate}
