@@ -39,7 +39,7 @@ function App() {
           <LoadingBar color="#f11946" progress={progress} />
           <Routes>
             <Route exact path="/login" element={<Login />} />
-            <Route exact path="/register" element={<Register />} />
+            {/* <Route exact path="/register" element={<Register />} /> */}
             <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route exact path="/" element={<Home setProgress={setProgress} />} />
               <Route exact path="/user/:user" element={<User setProgress={setProgress} />} />

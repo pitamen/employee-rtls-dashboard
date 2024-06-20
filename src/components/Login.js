@@ -10,7 +10,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch(BASE_URL+"users/login", {
+    const response = await fetch(BASE_URL + "users/login", {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -30,7 +30,7 @@ const Login = () => {
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value })
   }
-  
+
   return (
     <div id='loginBg'>
       <div className='container d-flex align-items-center justify-content-center' id='loginWallpaper' style={{ height: '100vh' }}>
@@ -48,10 +48,10 @@ const Login = () => {
             <input type="checkbox" className="form-check-input" id="Remember me" />
             <label className="form-check-label" htmlFor="exampleCheck1">Remember me</label>
           </div>
-          <div className='my-2'>
+          {/* <div className='my-2'>
             <button type="submit" className="btn btn-danger" >Login</button>
             <a className="btn btn-outline-secondary mx-2" href="/register" role='button'>Register</a>
-          </div>
+          </div> */}
         </form>
       </div></div>
   )
