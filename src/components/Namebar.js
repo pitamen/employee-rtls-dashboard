@@ -14,7 +14,7 @@ const Namebar = ({ toggleFullScreen, name = "", userId, userDetail = null }) => 
             <h6 className='pt-1'>
                 <Link className="navbar-brand" to="/">
                     <img src={logo} alt="Logo" width="20" height="20" style={{ marginRight: '10px' }} />
-                    {window.innerWidth < 600 ? 'DH-RTLS' : 'DH Field View Dashboard (v0.6.0)'}
+                    {window.innerWidth < 600 ? 'DH-RTLS' : 'DH Field View Dashboard (v0.6.1)'}
                 </Link>
             </h6>
             <button id='fullScreenButton' className="btn btn-outline btn-sm" onClick={() => toggleFullScreen(setIsFullScreen)} >
