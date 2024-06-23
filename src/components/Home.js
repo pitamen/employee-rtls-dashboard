@@ -92,7 +92,7 @@ const Home = (props) => {
 
   return (
     <>
-      <Namebar toggleFullScreen={toggleFullScreen}  />
+      <Namebar toggleFullScreen={toggleFullScreen}  dashboardName={'DH Field View Dashboard (v0.6.1)'} />
       <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
       <MapComponent users={users} receivedData={receivedData} />
     </>
