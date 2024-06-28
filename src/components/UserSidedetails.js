@@ -27,10 +27,10 @@ const UserSidedetails = ({
 
   // Sample table data for the modal
   const tableData = [
-    { label: "Ticket no.:", value: '1201456787' },
-    { label: "Picked at:", value: '2:00 pm' },
-    { label: "Category:", value: 'NST' },
-    { label: "Sub-Category:", value: 'LOS' },
+    { label: "Ticket no.:", value: "1201456787" },
+    { label: "Picked at:", value: "2:00 pm" },
+    { label: "Category:", value: "NST" },
+    { label: "Sub-Category:", value: "LOS" },
   ];
 
   return (
@@ -47,7 +47,9 @@ const UserSidedetails = ({
           className="offcanvas-title"
           id="offcanvasScrollingLabel"
           style={{ color: "white" }}
-        > </h5>
+        >
+          {" "}
+        </h5>
         <button
           type="button"
           className="btn-close text-reset"
@@ -248,8 +250,10 @@ const UserSidedetails = ({
           </div>
         </div>
       ) : null}
-      <div className="pt-2 ps-2">
-        <Timepicker />
+      <div class="text-center pt-2">
+        <div class="d-inline-block">
+          <Timepicker />
+        </div>
       </div>
       <button
         className="btn btn-outline-danger my-2 mx-3"

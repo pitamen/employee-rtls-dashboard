@@ -30,8 +30,8 @@ const Namebar = ({
             </span>
           )}
         </button>
-      ) : (
-        "User"
+      ) :(
+        " "
       )}
       <h6 className="pt-1">
         <Link className="navbar-brand" to="/">
@@ -70,7 +70,7 @@ const Namebar = ({
           )}
         </button>
       ) : (
-        "user"
+        " "
       )}
     </div>
   );
