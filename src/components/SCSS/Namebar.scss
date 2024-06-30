@@ -19,7 +19,7 @@ $nameBarBgImg: '/img/NamebarBg.jpg';
   }
   
   #namebarStyle{
-    background-image: url(#{$nameBarBgImg}); // Use the imported image
+    background: radial-gradient(circle at top, black , red); // Use the imported image
     background-size: cover; // Adjust as needed
     background-repeat: no-repeat; // Adjust as needed
     color: white;

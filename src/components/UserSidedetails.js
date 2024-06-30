@@ -70,7 +70,7 @@ const UserSidedetails = ({
           <div className="d-flex justify-content-center mt-3">
             <button
               className={`btn ${
-                isFetchEnabled ? "btn-danger btn-fetching" : "btn-primary"
+                isFetchEnabled ? "btn-danger btn-fetching" : "btn-outline-danger"
               }`}
               onClick={fetch_enabling}
               // disabled={!userDetail.isCheckedIn}
