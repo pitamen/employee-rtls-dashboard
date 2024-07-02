@@ -16,6 +16,7 @@ const UserCard = ({ user }) => {
                             <span>{lastOnlineInMinute  <= 10 ? 'online' : `${lastOnline}`}</span>
                         </b>
                         <p className="card-text"><b>Location:</b> {user.lat}, {user.lng}</p>
+                        <p className="card-text"><b>Ticket:</b> 123456789 (NST)</p>
                         <p><b>Region Name:</b> {user.vendorName}</p>
                         <a href={`/user/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>Click to Show Details.</a>
                     </div>

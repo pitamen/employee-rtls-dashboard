@@ -69,6 +69,12 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
     setOffcanvasOpen(!offcanvasOpen); // Toggle offcanvas state
   };
 
+  const [activeItem, setActiveItem] = useState('All');
+
+  const handleItemClick = (item) => {
+    setActiveItem(item);
+  };
+  
   return (
     <div>
       <div className={`offcanvas offcanvas-start ${offcanvasOpen ? 'show' : ''}`} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -86,6 +92,29 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
           <div className="p-2"><small>🟩Online-{totalLiveusers}</small></div>
           <div className="p-2"><small>🟥Offline-{76 - totalLiveusers}</small></div>
         </div>
+        <div className="dropdown container pb-2">
+      <button
+        className="btn btn-secondary dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Filter
+      </button>
+      <ul className="dropdown-menu">
+        {['All', 'NST', 'OST'].map((item) => (
+          <li key={item}>
+            <a
+              className={`dropdown-item ${activeItem === item ? 'active' : ''}`}
+              href="#"
+              onClick={() => handleItemClick(item)}
+            >
+              {item}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
         <div className="offcanvas-body">
           <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
             {
