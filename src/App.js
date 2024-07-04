@@ -43,7 +43,7 @@ function App() {
             <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route exact path="/" element={<Home setProgress={setProgress} />} />
               <Route exact path="/user/:user" element={<User setProgress={setProgress} />} />
-              <Route exact path="/user/detail/:user" element={<UserHistory />} />
+              <Route exact path="/user/detail/:user" element={<UserHistory setProgress={setProgress} />} />
             </Route>
           </Routes>
         </div>

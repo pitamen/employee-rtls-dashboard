@@ -165,7 +165,7 @@ const UserSidedetails = ({
                       <tr>
                         <th>Checked In Time:</th>
                         <td>
-                          {userDetail.lastAttendance?.timeIn || "N/A"}
+                          {utcToNpt(userDetail.lastAttendance?.timeIn) || "N/A"}
                         </td>
                       </tr>
                       <tr>

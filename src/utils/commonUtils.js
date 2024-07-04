@@ -99,3 +99,10 @@ export const utcToNpt = (utctime) => {
 
   return formattedNptDate;
 }
+
+export const formatDate = (utctime) => {
+  const nptDate = moment.utc(utctime).tz('Asia/Kathmandu')
+  const formattedNptDate = nptDate.format("YYYY-MM-DD");
+
+  return formattedNptDate;
+}

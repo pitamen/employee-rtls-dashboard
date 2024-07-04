@@ -1,9 +1,119 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Namebar from "./Namebar";
 import "./SCSS/UserHistory.scss";
+import { useParams } from "react-router-dom";
+import { BASE_URL } from "../utils/constants";
+import { formatDate, utcToNpt } from "../utils/commonUtils";
+import { userNameToName } from "../utils/stringUtils";
 
 const UserHistory = () => {
-  // Example data array
+
+  const { user: userId, name: userName } = useParams();
+
+  const [userDetail, setUserDetail] = useState(null);
+  const [isFetchingUserDetail, setIsFetchingUserDetail] = useState(false);
+  const [isFetchingUserAttendance, setIsFetchingUserAttendance] = useState(false);
+  const [fetchIntervalId, setFetchIntervalId] = useState(null);
+  const [fetchEnabled, setFetchEnabled] = useState(false);
+  const [trackedAt, setUserTrackedAt] = useState(false);
+  const [travelledPoints, setTravelledPoints] = useState([]);
+  const [currentTicketDetail, setCurrentTicketDetail] = useState(null);
+  const [isFetchingCurrentTicketDetail, setIsFetchingCurrentTicketDetail] = useState(false);
+  const [attendanceData, setAttendanceData] = useState([])
+
+  //fetch ticket detail
+  const fetchTicketDetail = async (ticketId) => {
+    try {
+      setIsFetchingCurrentTicketDetail(true);
+      const response = await fetch(`${BASE_URL}v2/tickets/detail/${ticketId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const responseJson = await response.json();
+      setCurrentTicketDetail(responseJson);
+    } catch (error) {
+      setCurrentTicketDetail(null);
+      console.error("error: ", error.message);
+    } finally {
+      setIsFetchingCurrentTicketDetail(false);
+    }
+  };
+
+  //fetch location checkin checkout history
+
+  useEffect(() => {
+    const fetchAttendanceHistory = async () => {
+      setIsFetchingUserAttendance(true);
+      try {
+        const response = await fetch(
+          `${BASE_URL}v2/attendance/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const attendanceResponse = await response.json();
+        const attendanceData = attendanceResponse.data;
+        console.log(attendanceData)
+
+        if (attendanceData) {
+          setAttendanceData(attendanceData);
+        }
+        setIsFetchingUserDetail(false);
+      } catch (error) {
+        setIsFetchingUserAttendance(false);
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchAttendanceHistory();
+  }, [userId]);
+
+  //fetch user detail
+  useEffect(() => {
+    const fetchUserDetail = async () => {
+      setIsFetchingUserDetail(true);
+      try {
+        const response = await fetch(
+          `${BASE_URL}v2/employees/byempid/detail?id=${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const userDetailResponse = await response.json();
+        const userData = userDetailResponse.data;
+        console.log(userData[0])
+        if (userData.length > 0) {
+          setUserDetail(userData[0]);
+          if (
+            userData[0].inProgressTicket &&
+            Object.keys(userData[0].inProgressTicket).length > 0 &&
+            userData[0].inProgressTicket.ticket_id
+          ) {
+            fetchTicketDetail(userData[0].inProgressTicket.ticket_id);
+          }
+        }
+        setIsFetchingUserDetail(false);
+      } catch (error) {
+        setIsFetchingUserDetail(false);
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchUserDetail();
+  }, [userId]);
+
+
   const initialUsers = [
     {
       userid: 345589,
@@ -63,9 +173,9 @@ const UserHistory = () => {
         <div className="container mx-auto px-4">
           <div className="personal-details mt-2">
             <h2>User Details</h2>
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Email:</strong> john.doe@example.com</p>
-            <p><strong>Phone:</strong> (123) 456-7890</p>
+            <p><strong>username: </strong>{userDetail ? userNameToName(userDetail.name) : ''}</p>
+            {/* <p><strong>Email:</strong> john.doe@example.com</p>
+            <p><strong>Phone:</strong> (123) 456-7890</p> */}
           </div>
           <div className="container py-1 my-1">
             <div className="mb-6 py-2">
@@ -115,30 +225,34 @@ const UserHistory = () => {
                   <thead>
                     <tr className="table-danger">
                       <th scope="col" onClick={() => onSort("userid")}>
-                        <b>User ID {getSortIcon("userid")}</b>
+                        <b>Date {getSortIcon("userid")}</b>
                       </th>
                       <th scope="col" onClick={() => onSort("username")}>
-                        <b>Username {getSortIcon("username")}</b>
+                        <b>Checked In Time {getSortIcon("username")}</b>
                       </th>
                       <th scope="col" onClick={() => onSort("trackedtime")}>
-                        <b>Tracked Time {getSortIcon("trackedtime")}</b>
+                        <b>Checked Out Time{getSortIcon("trackedtime")}</b>
                       </th>
                       <th scope="col" onClick={() => onSort("trackedlocation")}>
-                        <b>Tracked Location {getSortIcon("trackedlocation")}</b>
+                        <b>Checked In Location {getSortIcon("trackedlocation")}</b>
+                      </th>
+                      <th scope="col" onClick={() => onSort("trackedlocation")}>
+                        <b>Checked Out Location {getSortIcon("trackedlocation")}</b>
                       </th>
                       <th scope="col">
-                        <b>Links</b>
+                        <b>Action</b>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((user) => (
-                      <tr key={user.userid}>
-                        <th scope="row">{user.userid}</th>
-                        <td>{user.username}</td>
-                        <td>{user.trackedtime}</td>
-                        <td>{user.trackedlocation}</td>
-                        <td><button className="btn btn-danger mb-2">{user.button}</button></td>
+                    {attendanceData.map((attendance) => (
+                      <tr key={attendance._id}>
+                        <th scope="row">{formatDate(attendance.date)}</th>
+                        <td>{utcToNpt(attendance.timeIn)}</td>
+                        <td>{utcToNpt(attendance.timeOut)}</td>
+                        <td>{attendance.latitude ? `${attendance.latitude}, ${attendance.longitude}` : ''}</td>
+                        <td>{attendance.olatitude ? `${attendance.olatitude}, ${attendance.olongitude}` : ''}</td>
+                        <td><button className="btn btn-danger mb-2">View</button></td>
                       </tr>
                     ))}
                   </tbody>
