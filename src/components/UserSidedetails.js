@@ -4,7 +4,7 @@ import "./SCSS/user-side-details.scss";
 import Timepicker from "./Timepicker";
 import { userNameToName } from "../utils/stringUtils";
 // import '../user-side-details.scss';
-import { calculateTimeDifference } from "../utils/commonUtils";
+import { calculateTimeDifference, utcToNpt } from "../utils/commonUtils";
 import CustomModal from "./Modal";
 
 const UserSidedetails = ({
@@ -13,9 +13,15 @@ const UserSidedetails = ({
   fetch_enabling,
   isFetchEnabled = false,
   trackedAt,
+  ticketDetail,
+  isFetchingCurrentTicketDetail
 }) => {
+
+  console.log(userDetail)
+
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
+  const ticket = ticketDetail ? ticketDetail.data : null;
 
   const handleModalOpen = () => {
     setShowModal(true);
@@ -26,12 +32,12 @@ const UserSidedetails = ({
   };
 
   // Sample table data for the modal
-  const tableData = [
-    { label: "Ticket no.:", value: "1201456787" },
-    { label: "Picked at:", value: "2:00 pm" },
-    { label: "Category:", value: "NST" },
-    { label: "Sub-Category:", value: "LOS" },
-  ];
+  const tableData = ticket && !isFetchingUserDetail && userDetail && userDetail.inProgressTicket ? [
+    { label: "Ticket no.:", value: ticketDetail.data.TicketNo },
+    { label: "Picked at:", value: utcToNpt(userDetail.inProgressTicket.picked_at) },
+    { label: "Category:", value: ticketDetail.data.Category },
+    { label: "Sub-Category:", value: ticketDetail.data.SubCategory },
+  ] : [];
 
   return (
     <div
@@ -69,13 +75,12 @@ const UserSidedetails = ({
           )}
           <div className="d-flex justify-content-center mt-3">
             <button
-              className={`btn ${
-                isFetchEnabled ? "btn-danger btn-fetching" : "btn-outline-danger"
-              }`}
+              className={`btn ${isFetchEnabled ? "btn-danger btn-fetching" : "btn-outline-danger"
+                }`}
               onClick={fetch_enabling}
-              // disabled={!userDetail.isCheckedIn}
+            // disabled={!userDetail.isCheckedIn}
             >
-              {!isFetchEnabled ? "Start Tracking" : "Stop Tracking"}
+              {!isFetchEnabled ? "Live" : "Stop Live"}
               {isFetchEnabled && <span className="spinner"></span>}
             </button>
           </div>
@@ -160,7 +165,7 @@ const UserSidedetails = ({
                       <tr>
                         <th>Checked In Time:</th>
                         <td>
-                          {userDetail.lastAttendance?.checkedInTime || "N/A"}
+                          {userDetail.lastAttendance?.timeIn || "N/A"}
                         </td>
                       </tr>
                       <tr>
@@ -178,23 +183,15 @@ const UserSidedetails = ({
                         </td>
                       </tr>
                       <tr>
-                        <th>Device Battery:</th>
-                        <td>
-                          {userDetail.lastAttendance?.device_detail
-                            ?.platformApiLevel || "N/A"}
-                          %
-                        </td>
-                      </tr>
-                      <tr>
                         <th>OS Version:</th>
-                        <td>20.5</td>
+                        <td> {userDetail.lastAttendance?.device_detail ? `Android ${userDetail.lastAttendance?.device_detail.osVersion}` : ''}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
-            <div className="accordion-item">
+            {userDetail.inProgressTicket && Object.keys(userDetail.inProgressTicket).length > 0 && !isFetchingCurrentTicketDetail && ticket !== null ? <div className="accordion-item">
               <h2 className="accordion-header" id="headingCheckedIn">
                 <button
                   className="accordion-button collapsed"
@@ -219,19 +216,23 @@ const UserSidedetails = ({
                     <tbody>
                       <tr>
                         <th>Ticket no.:</th>
-                        <td>1201456787</td>
+                        <td>{ticket.TicketNo}</td>
                       </tr>
                       <tr>
                         <th>Picked at:</th>
-                        <td>2:00 pm</td>
+                        <td>{utcToNpt(userDetail.inProgressTicket.picked_at)}</td>
+                      </tr>
+                      <tr>
+                        <th>POD Station:</th>
+                        <td>{ticket.PODStation}</td>
                       </tr>
                       <tr>
                         <th>Category:</th>
-                        <td>NST</td>
+                        <td>{ticket.Category}</td>
                       </tr>
                       <tr>
                         <th>Sub-Category:</th>
-                        <td>LOS</td>
+                        <td>{ticket.SubCategory}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -246,15 +247,15 @@ const UserSidedetails = ({
                   />
                 </div>
               </div>
-            </div>
+            </div> : <></>}
           </div>
         </div>
       ) : null}
-      <div class="text-center pt-2">
+      {/* <div class="text-center pt-2">
         <div class="d-inline-block">
           <Timepicker />
         </div>
-      </div>
+      </div> */}
       <button
         className="btn btn-outline-danger my-2 mx-3"
         onClick={() => navigate("/")}

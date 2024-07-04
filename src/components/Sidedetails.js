@@ -15,6 +15,7 @@ import mwdrHalfIcon from '../img/tech-mwdr-half.png';
 import Search from './Search';
 import './SCSS/SideDetails.scss'
 import { VENDOR_NAMES } from '../utils/constants';
+import { customMapIconVendor, lessZoomedIconVendor, sidebarIcon } from '../utils/mapUtils';
 
 const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
   const handleItemClick = (item) => {
     setActiveItem(item);
   };
-  
+
   return (
     <div>
       <div className={`offcanvas offcanvas-start ${offcanvasOpen ? 'show' : ''}`} data-bs-scroll="true" data-bs-backdrop="false" tabIndex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
@@ -92,29 +93,29 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
           <div className="p-2"><small>🟩Online-{totalLiveusers}</small></div>
           <div className="p-2"><small>🟥Offline-{76 - totalLiveusers}</small></div>
         </div>
-        <div className="dropdown container pb-2">
-      <button
-        className="btn btn-secondary dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-        Filter
-      </button>
-      <ul className="dropdown-menu">
-        {['All', 'NST', 'OST'].map((item) => (
-          <li key={item}>
-            <a
-              className={`dropdown-item ${activeItem === item ? 'active' : ''}`}
-              href="#"
-              onClick={() => handleItemClick(item)}
-            >
-              {item}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+        {/* <div className="dropdown container pb-2">
+          <button
+            className="btn btn-secondary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Filter
+          </button>
+          <ul className="dropdown-menu">
+            {['All', 'NST', 'OST'].map((item) => (
+              <li key={item}>
+                <a
+                  className={`dropdown-item ${activeItem === item ? 'active' : ''}`}
+                  href="#"
+                  onClick={() => handleItemClick(item)}
+                >
+                  {item}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div> */}
         <div className="offcanvas-body">
           <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
             {
@@ -126,9 +127,9 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                     id="panel1-header"
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <VendorIcon imageUrl={VENDOR_NAMES.includes(vendor.vendor_name) ? vendorToIconMap[vendor.vendor_name] : defaultAppValues.defaultHalfIcon} />
+                      <VendorIcon imageUrl={!vendor.isRO ? sidebarIcon(vendor.vendor_name) : VENDOR_NAMES.includes(vendor.vendor_name) ? vendorToIconMap[vendor.vendor_name] : defaultAppValues.defaultHalfIcon} />
                       <div style={{ marginLeft: '10px' }}></div>
-                      <Typography variant='subtitle2'> {vendor.vendor_name} ({vendor.employees.length})</Typography>
+                      <Typography variant='subtitle2'> {vendor.isRO ? vendor.vendor_name : `${vendor.vendor_name} - ${vendor.roDetail.name}`} ({vendor.employees.length})</Typography>
                     </div>
                   </AccordionSummary>
                   <AccordionDetails>
@@ -145,7 +146,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
                           <a href={`/user/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="User Details">
                             <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
                           </a>
-                          <a href='/user/history' style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
+                          <a href={`/user/detail/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
                             <span><HistoryIcon style={{ color: '#CC5500' }} /></span>
                           </a>
                         </li>

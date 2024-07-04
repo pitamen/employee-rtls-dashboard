@@ -22,6 +22,7 @@ import {
 import { customMapIcon } from "../utils/mapUtils";
 
 const User = () => {
+
   const [userData, setUserData] = useState([]);
   const [newCenter, setNewCenter] = useState({
     latitude: 27.633367,
@@ -62,6 +63,7 @@ const User = () => {
 
         const userDetailResponse = await response.json();
         const userData = userDetailResponse.data;
+        console.log(userData[0])
         if (userData.length > 0) {
           setUserDetail(userData[0]);
           if (
@@ -108,9 +110,8 @@ const User = () => {
         },
       });
 
-      const json = await response.json();
-      console.log("Json", json);
-      setCurrentTicketDetail(json);
+      const responseJson = await response.json();
+      setCurrentTicketDetail(responseJson);
     } catch (error) {
       setCurrentTicketDetail(null);
       console.error("error: ", error.message);

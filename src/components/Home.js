@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Namebar from './Namebar';
 import Sidedetails from './Sidedetails';
 import MapComponent from './Map';
-import { BASE_URL, VENDOR_NAMES } from '../utils/constants';
+import { BASE_URL, BASE_URL_V2, VENDOR_NAMES } from '../utils/constants';
 import edrIcon from '../img/tech-edr.png';
 import cdrIcon from '../img/tech-cdr.png';
 import mwdrIcon from '../img/tech-mwdr.png';
@@ -17,11 +17,12 @@ const Home = (props) => {
 
   const getAllEmployees = async (jsonResponse) => {
     const allEmployees = [];
-
     jsonResponse.forEach(vendor => {
-
       const { employees } = vendor;
-      allEmployees.push(...employees);
+      const updateEmployees = employees.map(item => {
+        return { ...item, vendor_name: vendor.vendor_name, isRO: vendor.isRO};
+      });
+      allEmployees.push(...updateEmployees);
 
     });
     return allEmployees;
@@ -42,10 +43,11 @@ const Home = (props) => {
   const fetchUserData = async () => {
     try {
       props.setProgress(10);
-      const response = await fetch(BASE_URL + "locations/live-location-traces", {
+      const response = await fetch(BASE_URL_V2 + "locations/live-location-traces", {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
         }
       });
       let orgResponse = await response.json();
@@ -57,21 +59,24 @@ const Home = (props) => {
         lat: item.location.latitude,
         lng: item.location.longitude,
         time: item.location.tracked_at,
+        isRO:item.isRO,
         icon: VENDOR_NAMES.includes(item.vendor_name) ? vendorToIconMap[item.vendor_name] : defaultAppValues.defaultIcon,
+        empType: item.empType ?? 'N/A',
         vendorName: item.vendor_name
       }));
+
+
 
       setUsers(userData);
       props.setProgress(100);
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Handle error, perhaps set some state to indicate the error to the user
     }
   };
 
   useEffect(() => {
     fetchUserData();
-    
+
   }, []);
 
   useEffect(() => {
@@ -92,7 +97,7 @@ const Home = (props) => {
 
   return (
     <>
-      <Namebar toggleFullScreen={toggleFullScreen}  dashboardName={'DH Field View Dashboard (v0.6.1)'} />
+      <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.6.1)'} />
       <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
       <MapComponent users={users} receivedData={receivedData} />
     </>
