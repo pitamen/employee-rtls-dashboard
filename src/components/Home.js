@@ -20,7 +20,7 @@ const Home = (props) => {
     jsonResponse.forEach(vendor => {
       const { employees } = vendor;
       const updateEmployees = employees.map(item => {
-        return { ...item, vendor_name: vendor.vendor_name, isRO: vendor.isRO};
+        return { ...item, vendor_name: vendor.vendor_name, isRO: vendor.isRO };
       });
       allEmployees.push(...updateEmployees);
 
@@ -59,7 +59,7 @@ const Home = (props) => {
         lat: item.location.latitude,
         lng: item.location.longitude,
         time: item.location.tracked_at,
-        isRO:item.isRO,
+        isRO: item.isRO,
         icon: VENDOR_NAMES.includes(item.vendor_name) ? vendorToIconMap[item.vendor_name] : defaultAppValues.defaultIcon,
         empType: item.empType ?? 'N/A',
         vendorName: item.vendor_name
@@ -97,7 +97,7 @@ const Home = (props) => {
 
   return (
     <>
-      <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.6.1)'} />
+      <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.7.0)'} />
       <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
       <MapComponent users={users} receivedData={receivedData} />
     </>
