@@ -17,8 +17,8 @@ const UserCard = ({ user }) => {
                             <span>{lastOnlineInMinute <= 10 ? 'online' : `${lastOnline}`}</span>
                         </b>
                         <p className="card-text"><b>Location:</b> {user.lat}, {user.lng}</p>
-                        <p className="card-text"><b>Type:</b> {user.empType??'Fiber Team'}</p>
-                        <p><b>{user.isRO?'Region Name:':'Vendor Name: '}</b> {user.vendorName}</p>
+                        <p className="card-text"><b>Type:</b> {user.empType !== '' ? user.empType : 'Fiber Team'}</p>
+                        <p><b>{user.isRO ? 'Region Name:' : 'Vendor Name: '}</b> {user.vendorName}</p>
                         <a href={`/user/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank'>Click to Show Details.</a>
                     </div>
                     <div className={`user-avatar${status}`} >
