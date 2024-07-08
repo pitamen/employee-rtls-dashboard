@@ -14,6 +14,8 @@ import { defaultAppValues, toggleFullScreen } from '../utils/commonUtils'
 const Home = (props) => {
   const [users, setUsers] = useState([]);
   const [orgResponse, setOrgResponse] = useState();
+  const [isFetchingEmployeeCount, setIsFetchingEmployeeCount] = useState(false)
+  const [totalEmployeeCount, setTotalEmployeeCount] = useState(0)
 
   const getAllEmployees = async (jsonResponse) => {
     const allEmployees = [];
@@ -27,6 +29,28 @@ const Home = (props) => {
     });
     return allEmployees;
   }
+
+  const getEmployeeCount = async () => {
+    setIsFetchingEmployeeCount(true)
+    try {
+      props.setProgress(10);
+      const response = await fetch(BASE_URL_V2 + "employees/get-employee-count", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
+        }
+      });
+      let countResponse = await response.json();
+      setTotalEmployeeCount(countResponse.data?.count)
+      setIsFetchingEmployeeCount(false)
+    } catch (error) {
+      setIsFetchingEmployeeCount(false)
+      console.error('Error fetching data:', error);
+    }
+  };
+
+
 
   const vendorToIconMap = {
     'POK': pokIcon,
@@ -75,6 +99,7 @@ const Home = (props) => {
   };
 
   useEffect(() => {
+    getEmployeeCount();
     fetchUserData();
 
   }, []);
@@ -98,7 +123,7 @@ const Home = (props) => {
   return (
     <>
       <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.7.0)'} />
-      <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} />
+      <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} employeeCount={totalEmployeeCount} isFetchingEmployeeCount={isFetchingEmployeeCount} />
       <MapComponent users={users} receivedData={receivedData} />
     </>
   );

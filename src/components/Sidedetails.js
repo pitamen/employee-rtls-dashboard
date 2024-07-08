@@ -17,7 +17,7 @@ import './SCSS/SideDetails.scss'
 import { VENDOR_NAMES } from '../utils/constants';
 import { customMapIconVendor, lessZoomedIconVendor, sidebarIcon } from '../utils/mapUtils';
 
-const Sidedetails = ({ users, orgResponse, logData, userId }) => {
+const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFetchingEmployeeCount }) => {
   const navigate = useNavigate();
   const orgUsersResponse = orgResponse;
 
@@ -88,11 +88,11 @@ const Sidedetails = ({ users, orgResponse, logData, userId }) => {
             <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
           )}
         </div>
-        <div className="d-flex justify-content-around">
-          <div className="p-2"><small>🟦Total-76</small></div>
+        {!isFetchingEmployeeCount ? <div className="d-flex justify-content-around">
+          <div className="p-2"><small>🟦Total-{employeeCount}</small></div>
           <div className="p-2"><small>🟩Online-{totalLiveusers}</small></div>
-          <div className="p-2"><small>🟥Offline-{76 - totalLiveusers}</small></div>
-        </div>
+          <div className="p-2"><small>🟥Offline-{employeeCount - totalLiveusers}</small></div>
+        </div> : <></>}
         {/* <div className="dropdown container pb-2">
           <button
             className="btn btn-secondary dropdown-toggle"
