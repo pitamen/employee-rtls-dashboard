@@ -249,7 +249,7 @@ const UserHistory = () => {
                       <tr key={attendance._id}>
                         <th scope="row">{formatDate(attendance.date)}</th>
                         <td>{utcToNpt(attendance.timeIn)}</td>
-                        <td>{utcToNpt(attendance.timeOut)}</td>
+                        <td>{attendance.timeOut?utcToNpt(attendance.timeOut):'N/A'}</td>
                         <td>{attendance.latitude ? `${attendance.latitude}, ${attendance.longitude}` : ''}</td>
                         <td>{attendance.olatitude ? `${attendance.olatitude}, ${attendance.olongitude}` : ''}</td>
                         <td><button className="btn btn-danger mb-2">View</button></td>
