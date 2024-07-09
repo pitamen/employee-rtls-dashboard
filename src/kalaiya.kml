@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+	<name>Kalaiya.kmz</name>
+	<StyleMap id="poly-FF0000-1000-0-nodesc">
+		<Pair>
+			<key>normal</key>
+			<styleUrl>#poly-FF0000-1000-0-nodesc-normal</styleUrl>
+		</Pair>
+		<Pair>
+			<key>highlight</key>
+			<styleUrl>#poly-FF0000-1000-0-nodesc-highlight</styleUrl>
+		</Pair>
+	</StyleMap>
+	<Style id="poly-FF0000-1000-0-nodesc-highlight">
+		<BalloonStyle>
+			<text><![CDATA[<h3>$[name]</h3>]]></text>
+		</BalloonStyle>
+		<LineStyle>
+			<color>e6000000</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>400000ff</color>
+		</PolyStyle>
+	</Style>
+	<Style id="poly-FF0000-1000-0-nodesc-normal">
+		<BalloonStyle>
+			<text><![CDATA[<h3>$[name]</h3>]]></text>
+		</BalloonStyle>
+		<LineStyle>
+			<color>e6000000</color>
+			<width>2</width>
+		</LineStyle>
+		<PolyStyle>
+			<color>400000ff</color>
+		</PolyStyle>
+	</Style>
+	<Placemark>
+		<name>Kalaiya</name>
+		<styleUrl>#poly-FF0000-1000-0-nodesc</styleUrl>
+		<Polygon>
+			<outerBoundaryIs>
+				<LinearRing>
+					<tessellate>1</tessellate>
+					<coordinates>
+						84.96051300000001,26.996331,0 84.99761599999999,26.982704,0 85.012175,26.996496,0 85.025719,26.997373,0 85.030738,26.999222,0 85.028336,27.00573199999999,0 85.030165,27.015947,0 85.036058,27.025984,0 85.03531700000001,27.037004,0 85.033044,27.048082,0 85.021421,27.04133,0 85.010666,27.053341,0 84.990898,27.058456,0 84.97026700000001,27.059292,0 84.958984,27.029914,0 84.952809,27.00179,0 84.96051300000001,26.996331,0 
+					</coordinates>
+				</LinearRing>
+			</outerBoundaryIs>
+		</Polygon>
+	</Placemark>
+</Document>
+</kml>
