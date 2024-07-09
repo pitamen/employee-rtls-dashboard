@@ -17,12 +17,13 @@ import './SCSS/SideDetails.scss'
 import { VENDOR_NAMES } from '../utils/constants';
 import { customMapIconVendor, lessZoomedIconVendor, sidebarIcon } from '../utils/mapUtils';
 
-const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFetchingEmployeeCount }) => {
+const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFetchingEmployeeCount, filterData }) => {
   const navigate = useNavigate();
   const orgUsersResponse = orgResponse;
 
   const [mapKey, setMapKey] = useState(0)
   const [offcanvasOpen, setOffcanvasOpen] = useState(true);
+  const [searchResults, setSearchResults] = useState([])
 
   const vendorToIconMap = {
     'POK': pokHalfIcon,
@@ -56,9 +57,9 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
     return <img src={imageUrl} alt="Vendor Icon" style={{ width: '20px', height: '20px', borderRadius: '5px' }} />;
   };
 
-  const handleSuccessfulSearch = (user, userId) => {
-    setMapKey((prevValue) => prevValue + 1);
-    logData({ latitude: user.lat, longitude: user.lng, mapKey: mapKey });
+  const handleSuccessfulSearch = (employees) => {
+    console.log(employees)
+    setSearchResults(employees)
   };
 
   const handleLogout = () => {
@@ -70,10 +71,11 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
     setOffcanvasOpen(!offcanvasOpen); // Toggle offcanvas state
   };
 
-  const [activeItem, setActiveItem] = useState('All');
+  const [activeItem, setActiveItem] = useState('ALL');
 
   const handleItemClick = (item) => {
-    setActiveItem(item);
+    setActiveItem(item)
+    filterData(item)
   };
 
   return (
@@ -88,34 +90,71 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
             <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
           )}
         </div>
+
+        {/* {
+          searchResults.length > 1 ? <div>
+            <Typography variant="h6">Search Results</Typography>
+            <ul className="list-group">
+              {searchResults.map((user) => (
+                <li key={user.id} className="list-group-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Link
+                    to="#"
+                    style={{ textDecoration: 'none' }}
+                    onClick={() => handleClick(user)}
+                  >
+                    <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography>
+                  </Link>
+                  <a href={`/user/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="User Details">
+                    <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
+                  </a>
+                  <a href={`/user/detail/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
+                    <span><HistoryIcon style={{ color: '#CC5500' }} /></span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div> : <></>
+        } */}
+
         {!isFetchingEmployeeCount ? <div className="d-flex justify-content-around">
           <div className="p-2"><small>🟦Total-{employeeCount}</small></div>
           <div className="p-2"><small>🟩Online-{totalLiveusers}</small></div>
           <div className="p-2"><small>🟥Offline-{employeeCount - totalLiveusers}</small></div>
         </div> : <></>}
-        {/* <div className="dropdown container pb-2">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            Filter
-          </button>
-          <ul className="dropdown-menu">
-            {['All', 'NST', 'OST'].map((item) => (
-              <li key={item}>
-                <a
-                  className={`dropdown-item ${activeItem === item ? 'active' : ''}`}
-                  href="#"
-                  onClick={() => handleItemClick(item)}
+        <div className="container pb-2">
+          <div className="row align-items-center" style={{ marginTop: '16px', padding: '8px' }}>
+            <div className="col-md-6">
+              <label htmlFor="dropdown" className="form-label">Technician Type:</label>
+            </div>
+            <div className="col-md-6">
+              <div className="dropdown">
+                <button
+                  className="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
                 >
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div> */}
+                  {activeItem}
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  {['ALL', 'NST', 'IST/OST'].map((item) => (
+                    <li key={item}>
+                      <a
+                        className={`dropdown-item ${activeItem === item ? 'active' : ''}`}
+                        href="#"
+                        onClick={() => handleItemClick(item)}
+                      >
+                        {item}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="offcanvas-body">
           <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
             {

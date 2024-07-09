@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Namebar from './Namebar';
 import Sidedetails from './Sidedetails';
 import MapComponent from './Map';
-import { BASE_URL, BASE_URL_V2, VENDOR_NAMES } from '../utils/constants';
+import { BASE_URL_V2, VENDOR_NAMES } from '../utils/constants';
 import edrIcon from '../img/tech-edr.png';
 import cdrIcon from '../img/tech-cdr.png';
 import mwdrIcon from '../img/tech-mwdr.png';
@@ -13,25 +13,28 @@ import { defaultAppValues, toggleFullScreen } from '../utils/commonUtils'
 
 const Home = (props) => {
   const [users, setUsers] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState([]);
   const [orgResponse, setOrgResponse] = useState();
-  const [isFetchingEmployeeCount, setIsFetchingEmployeeCount] = useState(false)
-  const [totalEmployeeCount, setTotalEmployeeCount] = useState(0)
+  const [isFetchingEmployeeCount, setIsFetchingEmployeeCount] = useState(false);
+  const [totalEmployeeCount, setTotalEmployeeCount] = useState(0);
+  const [filteredType, setFilteredType] = useState('ALL');
 
   const getAllEmployees = async (jsonResponse) => {
     const allEmployees = [];
     jsonResponse.forEach(vendor => {
       const { employees } = vendor;
-      const updateEmployees = employees.map(item => {
-        return { ...item, vendor_name: vendor.vendor_name, isRO: vendor.isRO };
-      });
-      allEmployees.push(...updateEmployees);
-
+      const updatedEmployees = employees.map(item => ({
+        ...item,
+        vendor_name: vendor.vendor_name,
+        isRO: vendor.isRO
+      }));
+      allEmployees.push(...updatedEmployees);
     });
     return allEmployees;
   }
 
   const getEmployeeCount = async () => {
-    setIsFetchingEmployeeCount(true)
+    setIsFetchingEmployeeCount(true);
     try {
       props.setProgress(10);
       const response = await fetch(BASE_URL_V2 + "employees/get-employee-count", {
@@ -41,16 +44,14 @@ const Home = (props) => {
           'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
         }
       });
-      let countResponse = await response.json();
-      setTotalEmployeeCount(countResponse.data?.count)
-      setIsFetchingEmployeeCount(false)
+      const countResponse = await response.json();
+      setTotalEmployeeCount(countResponse.data?.count);
     } catch (error) {
-      setIsFetchingEmployeeCount(false)
-      console.error('Error fetching data:', error);
+      console.error('Error fetching employee count:', error);
+    } finally {
+      setIsFetchingEmployeeCount(false);
     }
   };
-
-
 
   const vendorToIconMap = {
     'POK': pokIcon,
@@ -63,7 +64,6 @@ const Home = (props) => {
     'Bagmati Central': edrIcon,
   }
 
-
   const fetchUserData = async () => {
     try {
       props.setProgress(10);
@@ -74,9 +74,9 @@ const Home = (props) => {
           'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
         }
       });
-      let orgResponse = await response.json();
+      const orgResponse = await response.json();
       setOrgResponse(orgResponse);
-      let json = await getAllEmployees(orgResponse);
+      const json = await getAllEmployees(orgResponse);
       const userData = json.map((item) => ({
         id: item.employeeId,
         name: item.name,
@@ -89,19 +89,17 @@ const Home = (props) => {
         vendorName: item.vendor_name
       }));
 
-
-
       setUsers(userData);
+      filterDataAccordingToEmpType(filteredType, userData);
       props.setProgress(100);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching user data:', error);
     }
   };
 
   useEffect(() => {
     getEmployeeCount();
     fetchUserData();
-
   }, []);
 
   useEffect(() => {
@@ -112,7 +110,11 @@ const Home = (props) => {
     return () => {
       clearInterval(intervalId);
     };
-  }, [users]);
+  }, []);
+
+  useEffect(() => {
+    filterDataAccordingToEmpType(filteredType);
+  }, [filteredType, users]);
 
   const [receivedData, setReceivedData] = useState();
 
@@ -120,11 +122,32 @@ const Home = (props) => {
     setReceivedData(data);
   };
 
+  useEffect(()=>{
+    console.log('')
+  },[filteredUsers])
+
+  const filterDataAccordingToEmpType = (type, data = users) => {
+    let filtered;
+    if (type !== "ALL") {
+      filtered = data.filter(user => user.empType === type);
+    } else {
+      filtered = data;
+    }
+    setFilteredUsers(filtered);
+  }
+
   return (
     <>
       <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.7.0)'} />
-      <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} employeeCount={totalEmployeeCount} isFetchingEmployeeCount={isFetchingEmployeeCount} />
-      <MapComponent users={users} receivedData={receivedData} />
+      <Sidedetails
+        orgResponse={orgResponse}
+        users={users}
+        logData={logDataFromSidedetails}
+        employeeCount={totalEmployeeCount}
+        isFetchingEmployeeCount={isFetchingEmployeeCount}
+        filterData={filterDataAccordingToEmpType}
+      />
+      <MapComponent users={filteredUsers} receivedData={receivedData} />
     </>
   );
 };

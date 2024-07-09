@@ -1,29 +1,40 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { URL_ENDPOINTS } from '../utils/apiEndPoints';
+import { BASE_URL_V2 } from '../utils/constants';
 
 const Search = ({ users, handleSuccessfulSearch }) => {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchingUser, setIsSearchingUser] = useState(false);
+  console.log(users)
 
-  const handleSearch = (e) => {
+  const searchUser = async (searchString = '') => {
+    setIsSearchingUser(true)
+    try {
+      const response = await fetch(BASE_URL_V2 + URL_ENDPOINTS.SEARCH_USER + searchString, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
+        }
+      });
+      let searchResponse = await response.json();
+      handleSuccessfulSearch(searchResponse.data)
+      setIsSearchingUser(false)
+    } catch (error) {
+      setIsSearchingUser(false)
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  const handleSearch = async (e) => {
     e.preventDefault();
 
     if (!searchQuery.trim()) {
       alert('Please enter a username.');
       return;
     }
-    const userToSearch = users.find((user) => user.id === searchQuery);
-
-    if (userToSearch) {
-      navigate(`/${userToSearch.id}`);
-    } else {
-      const userByName = users.find((user) => user.name === searchQuery);
-      if (userByName) {
-        handleSuccessfulSearch(userByName);
-      } else {
-        alert('User not found.');
-      }
-    }
+    searchUser(searchQuery)
   };
 
   return (
@@ -34,10 +45,13 @@ const Search = ({ users, handleSuccessfulSearch }) => {
         placeholder="Search by Username"
         aria-label="Search"
         value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
+        onChange={(e) => {
+          handleSuccessfulSearch([]);
+          setSearchQuery(e.target.value);
+        }}
       />
       <button className="btn btn-danger" type="submit">
-      <i className="fa-solid fa-magnifying-glass"></i>
+        <i className="fa-solid fa-magnifying-glass"></i>
       </button>
     </form>
   );
