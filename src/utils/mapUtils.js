@@ -27,7 +27,7 @@ export const lessZoomedIcon = (icon_name) => {
   })
 };
 
-export const customMapIconVendor = (name, vendorName, empType, anchor = [0, 32], height = 32, width = 32) => {
+export const customMapIconVendor = (name, vendorName, empType, anchor = [0, 48], height = 48, width = 48) => {
   return L.divIcon({
     className: 'custom-div-icon',
     html: `<span class="marker-text">${name}</span><img src="${iconHtml(vendorName, empType)}" style="width: ${width}px; height: ${height}px;">`,
@@ -38,8 +38,8 @@ export const customMapIconVendor = (name, vendorName, empType, anchor = [0, 32],
 export const lessZoomedIconVendor = (vendor_name, empType) => {
   return new L.Icon({
     iconUrl: iconHtml(vendor_name, empType),
-    iconSize: [32, 32],
-    iconAnchor: [16, 32],
+    iconSize: [48, 48],
+    iconAnchor: [24, 24],
   })
 };
 

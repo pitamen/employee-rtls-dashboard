@@ -1,5 +1,5 @@
-import defaultIconHalf from '../img/default-icon-half.png'
-import defaultIcon from '../img/default-icon.png'
+import defaultIconHalf from '../img/tech-default-new-half.png'
+import defaultIcon from '../img/tech-default-new.png'
 import moment from 'moment-timezone';
 import L from 'leaflet'
 

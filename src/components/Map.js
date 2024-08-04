@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import { FullscreenControl } from 'react-leaflet-fullscreen'; // Import FullscreenControl
-import L from 'leaflet';
+import { FullscreenControl } from 'react-leaflet-fullscreen';
 import UserCard from './UserCard';
 import { customMapIcon, customMapIconVendor, lessZoomedIcon, lessZoomedIconVendor } from '../utils/mapUtils';
 import './SCSS/Map.scss';
-import ReactLeafletKml from "react-leaflet-kml";
-import kmlFile from '../kalaiya.kml'
+import {GeoJSON} from 'react-leaflet';
+import geoJsonFile from '../dishhome.geojson';
+import { colors } from '@mui/material';
 
 const MapComponent = ({ users, receivedData }) => {
   const [newCenter, setNewCenter] = useState({ latitude: 28.2096, longitude: 83.9856 });
   const [zoomLevel, setZoomLevel] = useState(10);
-  const [kml, setKml] = useState(null);
+  const [geoJSONData, setGeoJSONData] = useState(null);
 
   useEffect(() => {
     if (receivedData) {
@@ -22,15 +22,12 @@ const MapComponent = ({ users, receivedData }) => {
   }, [receivedData]);
 
   useEffect(() => {
-    // Fetch the KML file dynamically
-    fetch(kmlFile) // Adjust the path as needed
-      .then(response => response.text())
-      .then(text => {
-        const parser = new DOMParser();
-        const kmlData = parser.parseFromString(text, 'application/xml');
-        setKml(kmlData);
+    fetch(geoJsonFile)
+      .then(response => response.json())
+      .then(data => {
+        setGeoJSONData(data);
       })
-      .catch(error => console.error('Error fetching KML file:', error));
+      .catch(error => console.error('Error fetching GeoJSON file:', error));
   }, []);
 
   const MyMapComponent = () => {
@@ -43,6 +40,12 @@ const MapComponent = ({ users, receivedData }) => {
     return null;
   };
 
+  const onEachFeature = (feature, layer) => {
+    if (feature.properties && feature.properties.name) {
+      layer.bindPopup(feature.properties.name);
+    }
+  };
+
   return (
     <div className="map-container">
       <MapContainer center={[newCenter.latitude, newCenter.longitude]} zoom={9} style={{ height: '95vh', width: '100%' }} key={`${newCenter.latitude}-${newCenter.longitude}`}>
@@ -51,7 +54,9 @@ const MapComponent = ({ users, receivedData }) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {kml && <ReactLeafletKml kml={kml} />}
+        {geoJSONData && (
+          <GeoJSON data={geoJSONData} style={{color: '#c97a29', weight: 1}} onEachFeature={onEachFeature} /> // Render GeoJSONLayer with fetched GeoJSON data
+        )}
         {users.map((user) => (
           <Marker
             key={user.id}
