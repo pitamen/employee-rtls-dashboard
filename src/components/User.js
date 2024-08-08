@@ -182,7 +182,7 @@ const User = () => {
         name={userName ?? ""}
         userDetail={userDetail}
         toggleFullScreen={toggleFullScreen}
-        dashboardName={"DH Field View Dashboard (v0.7.0)"}
+        dashboardName={"DH Field View Dashboard (v0.8.0)"}
       />
       <UserSidedetails
         userDetail={userDetail}
