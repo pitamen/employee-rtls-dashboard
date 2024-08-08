@@ -5,8 +5,11 @@ import { useParams } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import { formatDate, utcToNpt } from "../utils/commonUtils";
 import { userNameToName } from "../utils/stringUtils";
+import { useNavigate } from 'react-router-dom';
 
 const UserHistory = () => {
+
+  const navigate = useNavigate();
 
   const { user: userId, name: userName } = useParams();
 
@@ -20,6 +23,10 @@ const UserHistory = () => {
   const [currentTicketDetail, setCurrentTicketDetail] = useState(null);
   const [isFetchingCurrentTicketDetail, setIsFetchingCurrentTicketDetail] = useState(false);
   const [attendanceData, setAttendanceData] = useState([])
+
+  const handleButtonClick = (userId, date) => {
+    navigate(`/user/history/${userId}`, { state: { date } }); // Change '/about' to the route you want to navigate to
+  };
 
   //fetch ticket detail
   const fetchTicketDetail = async (ticketId) => {
@@ -249,10 +256,10 @@ const UserHistory = () => {
                       <tr key={attendance._id}>
                         <th scope="row">{formatDate(attendance.date)}</th>
                         <td>{utcToNpt(attendance.timeIn)}</td>
-                        <td>{attendance.timeOut?utcToNpt(attendance.timeOut):'N/A'}</td>
+                        <td>{attendance.timeOut ? utcToNpt(attendance.timeOut) : 'N/A'}</td>
                         <td>{attendance.latitude ? `${attendance.latitude}, ${attendance.longitude}` : ''}</td>
                         <td>{attendance.olatitude ? `${attendance.olatitude}, ${attendance.olongitude}` : ''}</td>
-                        <td><button className="btn btn-danger mb-2">View</button></td>
+                        <td><button className="btn btn-danger mb-2" onClick={() => handleButtonClick(userId, attendance.date)}>View</button></td>
                       </tr>
                     ))}
                   </tbody>
