@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
 import "./SCSS/Login.scss";
-import Logo from '../img/DishHome_Logo.svg.png'
+import Logo from '../img/fibernet-logo.jpg'
 
 const Login = () => {
   const [credentials, setcredentials] = useState({
@@ -27,22 +27,22 @@ const Login = () => {
         }),
       });
       const json = await response.json();
-  
+
       console.log(response)
-  
+
       if (response.status === 200) {
         sessionStorage.setItem("accessToken", json.accessToken);
         navigate("/");
       } else if (response.status === 401) {
         alert("Invalid Credentials, Please enter valid username and password.");
-      }else{
+      } else {
         alert(response.message)
       }
     } catch (error) {
       console.log(error)
       alert("Something went wrong!!!", error.message)
     }
-   
+
   };
   const onChange = (e) => {
     setcredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -58,7 +58,7 @@ const Login = () => {
               alt=""
             />
           </div>
-          <div class="text-center mt-4 name">RTLS Login</div>
+          <div class="text-center mt-4 name">Field View Dashboard Login</div>
           <form class="p-3 mt-3" onSubmit={handleSubmit}>
             <div class="form-field d-flex align-items-center">
               <span class="far fa-user"></span>
@@ -70,6 +70,7 @@ const Login = () => {
                 value={credentials.username}
                 onChange={onChange}
                 required
+                minLength={6}
                 placeholder="Enter username"
               />
             </div>
@@ -83,6 +84,7 @@ const Login = () => {
                 value={credentials.password}
                 onChange={onChange}
                 required
+                minLength={8}
                 placeholder="Password"
               />
             </div>

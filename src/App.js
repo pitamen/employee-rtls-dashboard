@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import User from './components/User';
 import LoadingBar from 'react-top-loading-bar';
 import UserHistory from './components/UserHistory';
+import UserHistoryMap from './components/UserHistoryMap';
 
 
 const PrivateRoute = ({ isAuthenticated }) => {
@@ -44,6 +45,7 @@ function App() {
               <Route exact path="/" element={<Home setProgress={setProgress} />} />
               <Route exact path="/user/:user" element={<User setProgress={setProgress} />} />
               <Route exact path="/user/detail/:user" element={<UserHistory setProgress={setProgress} />} />
+              <Route exact path="/user/history/:user" element={<UserHistoryMap setProgress={setProgress} />} />
             </Route>
           </Routes>
         </div>
