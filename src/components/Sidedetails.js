@@ -6,12 +6,20 @@ import { Accordion, AccordionSummary, Typography, AccordionDetails } from '@mui/
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import PreviewIcon from '@mui/icons-material/Preview';
 import HistoryIcon from '@mui/icons-material/History';
-import fwdrHalfIcon from '../img/tech-fwdr-half.png';
-import cdrHalfIcon from '../img/tech-cdr-half.png';
-import edrHalfIcon from '../img/tech-edr-half.png';
-import pokHalfIcon from '../img/tech-pok-half.png';
-import wdrHalfIcon from '../img/tech-wdr-half.png';
-import mwdrHalfIcon from '../img/tech-mwdr-half.png';
+// import fwdrHalfIcon from '../img/tech-fwdr-half.png';
+// import cdrHalfIcon from '../img/tech-cdr-half.png';
+// import edrHalfIcon from '../img/tech-edr-half.png';
+// import pokHalfIcon from '../img/tech-pok-half.png';
+// import wdrHalfIcon from '../img/tech-wdr-half.png';
+// import mwdrHalfIcon from '../img/tech-mwdr-half.png';
+import fwdrHalfIcon from '../img/tech-fwdr-new-half.png';
+import cdrHalfIcon from '../img/tech-cdr-new-half.png';
+import edrHalfIcon from '../img/tech-edr-new-half.png';
+import pokHalfIcon from '../img/tech-pok-new-half.png';
+import wdrHalfIcon from '../img/tech-wdr-new-half.png';
+import mwdrHalfIcon from '../img/tech-mwdr-new-half.png';
+import defaultHalfIcon from '../img/tech-default-new-half.png';
+
 import Search from './Search';
 import './SCSS/SideDetails.scss'
 import { VENDOR_NAMES } from '../utils/constants';
@@ -27,13 +35,13 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
 
   const vendorToIconMap = {
     'POK': pokHalfIcon,
-    'EDR': cdrHalfIcon,
+    'EDR': edrHalfIcon,
     'WDR-Butwal': wdrHalfIcon,
-    'CDR': edrHalfIcon,
+    'CDR': cdrHalfIcon,
     'FWDR': fwdrHalfIcon,
     'MWDR': mwdrHalfIcon,
-    "Bagmati Central": edrHalfIcon,
-    'Bagmati': edrHalfIcon
+    "Bagmati Central": defaultHalfIcon,
+    'Bagmati': defaultHalfIcon
   }
 
   const countTotalLiveUsers = (data) => {

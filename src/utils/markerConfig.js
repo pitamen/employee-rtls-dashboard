@@ -1,5 +1,9 @@
-import fiberKingIcon from '../img/vendor-markers/fiber-king/nst.png';
-import fiberKingISTIcon from '../img/vendor-markers/fiber-king/ticket2.png';
+// import fiberKingIcon from '../img/vendor-markers/fiber-king/nst.png';
+// import fiberKingISTIcon from '../img/vendor-markers/fiber-king/ticket2.png';
+
+//new icons
+import fiberKingIcon from '../img/vendor-markers/fiber-king/nst-new-a.png';
+import fiberKingISTIcon from '../img/vendor-markers/fiber-king/ist-new-a.png';
 
 export const markerConfig = {
     "Fiber King": {

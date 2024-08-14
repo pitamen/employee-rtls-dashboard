@@ -2,13 +2,23 @@ import React, { useEffect, useState } from 'react';
 import Namebar from './Namebar';
 import Sidedetails from './Sidedetails';
 import MapComponent from './Map';
-import { BASE_URL_V2, VENDOR_NAMES } from '../utils/constants';
-import edrIcon from '../img/tech-edr.png';
-import cdrIcon from '../img/tech-cdr.png';
-import mwdrIcon from '../img/tech-mwdr.png';
-import pokIcon from '../img/tech-pok.png';
-import fwdrIcon from '../img/tech-fwdr.png';
-import wdrIcon from '../img/tech-wdr.png';
+import { BASE_URL, BASE_URL_V2, VENDOR_NAMES } from '../utils/constants';
+// import edrIcon from '../img/tech-edr.png';
+// import cdrIcon from '../img/tech-cdr.png';
+// import mwdrIcon from '../img/tech-mwdr.png';
+// import pokIcon from '../img/tech-pok.png';
+// import fwdrIcon from '../img/tech-fwdr.png';
+// import wdrIcon from '../img/tech-wdr.png';
+
+//new icon
+import edrIcon from '../img/tech-edr-new.png';
+import cdrIcon from '../img/tech-cdr-new.png';
+import mwdrIcon from '../img/tech-mwdr-new.png';
+import pokIcon from '../img/tech-pok-new.png';
+import fwdrIcon from '../img/tech-fwdr-new.png';
+import wdrIcon from '../img/tech-wdr-new.png';
+import defaultIcon from '../img/tech-default-new.png'
+
 import { defaultAppValues, toggleFullScreen } from '../utils/commonUtils'
 
 const Home = (props) => {
@@ -55,13 +65,13 @@ const Home = (props) => {
 
   const vendorToIconMap = {
     'POK': pokIcon,
-    'EDR': cdrIcon,
+    'EDR': edrIcon,
     'WDR-Butwal': wdrIcon,
-    'CDR': edrIcon,
+    'CDR': cdrIcon,
     'FWDR': fwdrIcon,
     'MWDR': mwdrIcon,
-    'Bagmati': edrIcon,
-    'Bagmati Central': edrIcon,
+    'Bagmati': defaultIcon,
+    'Bagmati Central': defaultIcon,
   }
 
   const fetchUserData = async () => {
@@ -122,9 +132,9 @@ const Home = (props) => {
     setReceivedData(data);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log('')
-  },[filteredUsers])
+  }, [filteredUsers])
 
   const filterDataAccordingToEmpType = (type, data = users) => {
     let filtered;
@@ -138,16 +148,9 @@ const Home = (props) => {
 
   return (
     <>
-      <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.7.0)'} />
-      <Sidedetails
-        orgResponse={orgResponse}
-        users={users}
-        logData={logDataFromSidedetails}
-        employeeCount={totalEmployeeCount}
-        isFetchingEmployeeCount={isFetchingEmployeeCount}
-        filterData={filterDataAccordingToEmpType}
-      />
-      <MapComponent users={filteredUsers} receivedData={receivedData} />
+      <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.8.0)'} />
+      <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} employeeCount={totalEmployeeCount} isFetchingEmployeeCount={isFetchingEmployeeCount} />
+      <MapComponent users={users} receivedData={receivedData} />
     </>
   );
 };

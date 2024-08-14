@@ -143,6 +143,8 @@ const User = () => {
       var trackedAt = updatedUserData[0].device_timestamp
         ? unixTimeStampToISOStringConverter(updatedUserData[0].device_timestamp)
         : updatedUserData[0].trackedAt;
+
+      // var trackedAt = updatedUserData[0].tracked_at
       setUserTrackedAt(trackedAt);
 
       if (updatedUserData.length > 0) {
@@ -151,6 +153,12 @@ const User = () => {
           longitude: updatedUserData[0].lng,
         });
       }
+
+      // updatedUserData.sort((a, b) => {
+      //   return new Date(a.device_timestamp) - new Date(b.device_timestamp);
+      // });
+
+      console.log(updatedUserData)
 
       setUserData(updatedUserData);
 
@@ -174,7 +182,7 @@ const User = () => {
         name={userName ?? ""}
         userDetail={userDetail}
         toggleFullScreen={toggleFullScreen}
-        dashboardName={"DH Field View Dashboard (v0.7.0)"}
+        dashboardName={"DH Field View Dashboard (v0.8.0)"}
       />
       <UserSidedetails
         userDetail={userDetail}
