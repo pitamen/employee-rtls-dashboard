@@ -89,15 +89,15 @@ const UserHistoryMap = () => {
         console.log("route data", routeData)
 
 
-        const convertedData = {
-          mode: "drive",
-          waypoints: routeData.map(entry => ({
-            timestamp: entry.tracked_at,
-            location: entry.location.coordinates
-          }))
-        };
+        // const convertedData = {
+        //   mode: "drive",
+        //   waypoints: routeData.map(entry => ({
+        //     timestamp: entry.tracked_at,
+        //     location: entry.location.coordinates
+        //   }))
+        // };
 
-        console.log("converted data", convertedData)
+        // console.log("converted data", convertedData)
 
         if (routeData) {
           setRouteData(routeData);
@@ -105,6 +105,7 @@ const UserHistoryMap = () => {
         let data = routeData.map(item => [item.latitude, item.longitude]);
         console.log(data)
         setPolyLineData(data)
+        console.log(polyLineData[0][0])
         setIsFetchingUserHistory(false);
 
       } catch (error) {
@@ -214,11 +215,12 @@ const UserHistoryMap = () => {
         <div className="container mx-auto px-4">
 
           <div className="mb-6">
-            <div>
+            {polyLineData.length > 0 ? <div>
               <div className="container py-2">
+                {console.log(polyLineData)}
                 <MapContainer
                   // key={`${newCenter.latitude}-${newCenter.longitude}`}
-                  center={[27.700769, 85.300140]}
+                  center={[polyLineData[0][0], polyLineData[0][1]]}
                   zoom={20}
                   style={{ height: "95vh", width: "100%" }}
                 >
@@ -226,8 +228,8 @@ const UserHistoryMap = () => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                   />
-                  {/* <Polyline positions={polyLineData} color="#3d5a91" /> */}
-                  {geoJson && <GeoJSON data={geoJson} />}
+                  <Polyline positions={polyLineData} color="#3d5a91" />
+                  {/* {geoJson && <GeoJSON data={geoJson} />} */}
                   {/* {routeData.map((user, index) =>
                     index === 0 ? (
                       <Marker
@@ -274,7 +276,7 @@ const UserHistoryMap = () => {
                   /> */}
                 </MapContainer>
               </div>
-            </div>
+            </div> : <></>}
           </div>
         </div>
       </div>
