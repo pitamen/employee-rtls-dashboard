@@ -25,7 +25,7 @@ const UserHistory = () => {
   const [attendanceData, setAttendanceData] = useState([])
 
   const handleButtonClick = (userId, date) => {
-    navigate(`/user/history/${userId}`, { state: { date } }); // Change '/about' to the route you want to navigate to
+    // navigate(`/user/history/${userId}`, { state: { date } }); // Change '/about' to the route you want to navigate to
   };
 
   //fetch ticket detail
