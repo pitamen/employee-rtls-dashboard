@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { calculateTimeDifference, defaultAppValues } from '../utils/commonUtils';
 import { useNavigate } from 'react-router-dom';
@@ -53,10 +53,15 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
     return liveCount;
   }
 
+  useEffect(() => {
+    console.log(searchResults)
+  }, [searchResults])
+
 
   const totalLiveusers = orgUsersResponse?.length > 0 ? countTotalLiveUsers(orgUsersResponse) : 0
 
   const handleClick = (user) => {
+    console.log(user)
     setMapKey(pervValue => pervValue + 1)
     logData({ latitude: user.location.latitude, longitude: user.location.longitude, mapKey: mapKey });
   };
@@ -99,43 +104,84 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
           )}
         </div>
 
-        {/* {
-          searchResults.length > 1 ? <div>
-            <Typography variant="h6">Search Results</Typography>
-            <ul className="list-group">
-              {searchResults.map((user) => (
-                <li key={user.id} className="list-group-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <Link
-                    to="#"
-                    style={{ textDecoration: 'none' }}
-                    onClick={() => handleClick(user)}
-                  >
-                    <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography>
-                  </Link>
-                  <a href={`/user/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="User Details">
-                    <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
-                  </a>
-                  <a href={`/user/detail/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
-                    <span><HistoryIcon style={{ color: '#CC5500' }} /></span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div> : <></>
-        } */}
-
         {!isFetchingEmployeeCount ? <div className="d-flex justify-content-around">
           <div className="p-2"><small>🟦Total-{employeeCount}</small></div>
           <div className="p-2"><small>🟩Online-{totalLiveusers}</small></div>
           <div className="p-2"><small>🟥Offline-{employeeCount - totalLiveusers}</small></div>
         </div> : <></>}
-        <div className="container pb-2">
-          <div className="row align-items-center" style={{ marginTop: '16px', padding: '8px' }}>
+
+        {searchResults.length ? <><div className='search-results'>
+          <Typography variant="h6">Search Results</Typography>
+          <ul className="list-group">
+            {
+              searchResults.map((user) => (
+                <li key={user._id} className="list-group-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Link
+                    to="#"
+                    style={{ textDecoration: 'none' }}
+                    onClick={() => {
+                      if (user.isCheckedIn) {
+                        let selectedUser = users.filter((userdata) => userdata.name === user.name)
+                        console.log(selectedUser)
+                        const transformedUser = {
+                          employeeId: selectedUser[0].id,
+                          name: selectedUser[0].name,
+                          location: {
+                            latitude: selectedUser[0].lat,
+                            longitude: selectedUser[0].lng,
+                          },
+                          empType: selectedUser[0].empType
+                        };
+                        handleClick(transformedUser)
+                      }
+                    }
+                    }
+                  >
+                    <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.isCheckedIn ? <small>🟩</small> : <small>🟥</small>} {user.name}</Typography>
+                  </Link>
+                  {user.isCheckedIn ? <a href={`/user/${user._id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="User Details">
+                    <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
+                  </a> : <> </>}
+                  <a href={`/user/detail/${user._id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
+                    <span><HistoryIcon style={{ color: '#CC5500' }} /></span>
+                  </a>
+                </li>
+              ))}
+          </ul>
+        </div></> : <></>}
+
+        {/* {
+          searchResults.length > 1 ? <div>
+            <Typography variant="h6">Search Results</Typography>
+            <ul className="list-group">
+              {
+                searchResults.map((user) => (
+                  <li key={user.id} className="list-group-item" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Link
+                      to="#"
+                      style={{ textDecoration: 'none' }}
+                      onClick={() => handleClick(user)}
+                    >
+                      <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography>
+                    </Link>
+                    <a href={`/user/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="User Details">
+                      <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
+                    </a>
+                    <a href={`/user/detail/${user.id}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
+                      <span><HistoryIcon style={{ color: '#CC5500' }} /></span>
+                    </a>
+                  </li>
+                ))}
+            </ul>
+          </div> : <></>
+        } */}
+        <div className="container">
+          <div className="row align-items-center" style={{ marginTop: '8px', padding: '8px' }}>
             <div className="col-md-6">
               <label htmlFor="dropdown" className="form-label">Technician Type:</label>
             </div>
             <div className="col-md-6">
-              <div className="dropdown">
+              <div className="dropdown tech-type-dropdown">
                 <button
                   className="btn btn-secondary dropdown-toggle"
                   type="button"
@@ -164,7 +210,7 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
         </div>
 
         <div className="offcanvas-body">
-          <div style={{ marginTop: '20px', marginBottom: '20px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
+          <div style={{ marginTop: '0px', marginBottom: '0px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
             {
               orgUsersResponse ? orgUsersResponse.map((vendor, index) => (
                 <Accordion key={index}>

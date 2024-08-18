@@ -4,6 +4,8 @@
 //new icons
 import fiberKingIcon from '../img/vendor-markers/fiber-king/nst-new-a.png';
 import fiberKingISTIcon from '../img/vendor-markers/fiber-king/ist-new-a.png';
+import smartenIcon from '../img/vendor-markers/smarten/nst.png'
+import smartenISTIcon from '../img/vendor-markers/smarten/ist.png';
 
 export const markerConfig = {
     "Fiber King": {
@@ -21,6 +23,23 @@ export const markerConfig = {
         },
         "default": {
             icon_url: fiberKingISTIcon
+        }
+    },
+    "Smarten": {
+        "IST/OST": {
+            mapIconColor: '#FF0000', // Red color for IST/OST employees
+            mapIconColorInnerCircle: '#0000FF',
+            pinInnerCircleRadius: 10,
+            icon_url: smartenISTIcon
+        },
+        "NST": {
+            mapIconColor: '#0000FF', // Blue color for NST employees
+            mapIconColorInnerCircle: '#FFFFFF',
+            pinInnerCircleRadius: 10,
+            icon_url: smartenIcon
+        },
+        "default": {
+            icon_url: smartenISTIcon
         }
     },
     "DMN(P)": {

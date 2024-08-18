@@ -20,6 +20,7 @@ import wdrIcon from '../img/tech-wdr-new.png';
 import defaultIcon from '../img/tech-default-new.png'
 
 import { defaultAppValues, toggleFullScreen } from '../utils/commonUtils'
+import { type } from 'jquery';
 
 const Home = (props) => {
   const [users, setUsers] = useState([]);
@@ -132,16 +133,21 @@ const Home = (props) => {
     setReceivedData(data);
   };
 
+  const filterUserAccordingToCategory = (type) => {
+    setFilteredType(type)
+    filterDataAccordingToEmpType(type, users)
+  }
+
   useEffect(() => {
     console.log('')
   }, [filteredUsers])
 
   const filterDataAccordingToEmpType = (type, data = users) => {
     let filtered;
-    if (type !== "ALL") {
-      filtered = data.filter(user => user.empType === type);
-    } else {
+    if (type === "ALL") {
       filtered = data;
+    } else {
+      filtered = data.filter(user => user.empType === type);
     }
     setFilteredUsers(filtered);
   }
@@ -149,8 +155,8 @@ const Home = (props) => {
   return (
     <>
       <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.8.0)'} />
-      <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} employeeCount={totalEmployeeCount} isFetchingEmployeeCount={isFetchingEmployeeCount} />
-      <MapComponent users={users} receivedData={receivedData} />
+      <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} employeeCount={totalEmployeeCount} isFetchingEmployeeCount={isFetchingEmployeeCount} filterData={filterUserAccordingToCategory} />
+      <MapComponent users={filteredUsers} receivedData={receivedData} />
     </>
   );
 };

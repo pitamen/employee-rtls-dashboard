@@ -19,6 +19,7 @@ const Search = ({ users, handleSuccessfulSearch }) => {
         }
       });
       let searchResponse = await response.json();
+      console.log(searchResponse)
       handleSuccessfulSearch(searchResponse.data)
       setIsSearchingUser(false)
     } catch (error) {

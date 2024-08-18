@@ -20,6 +20,8 @@ import {
   toggleFullScreen,
 } from "../utils/commonUtils";
 import { customMapIcon } from "../utils/mapUtils";
+import { GeoJSON } from 'react-leaflet';
+import geoJsonFile from '../dishhome.geojson';
 
 const User = () => {
 
@@ -38,6 +40,7 @@ const User = () => {
   const [currentTicketDetail, setCurrentTicketDetail] = useState(null);
   const [isFetchingCurrentTicketDetail, setIsFetchingCurrentTicketDetail] =
     useState(false);
+  const [geoJSONData, setGeoJSONData] = useState(null);
 
   const enableDisableLiveTracking = () => {
     if (fetchEnabled) {
@@ -46,6 +49,16 @@ const User = () => {
       setFetchEnabled(true);
     }
   };
+
+
+  useEffect(() => {
+    fetch(geoJsonFile)
+      .then(response => response.json())
+      .then(data => {
+        setGeoJSONData(data);
+      })
+      .catch(error => console.error('Error fetching GeoJSON file:', error));
+  }, []);
 
   useEffect(() => {
     const fetchUserDetail = async () => {
@@ -176,6 +189,12 @@ const User = () => {
     fetchData();
   }, [userId]);
 
+  const onEachFeature = (feature, layer) => {
+    if (feature.properties && feature.properties.name) {
+      layer.bindPopup(feature.properties.name);
+    }
+  };
+
   return (
     <div className="App">
       <Namebar
@@ -204,6 +223,9 @@ const User = () => {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
+          {geoJSONData && (
+            <GeoJSON data={geoJSONData} style={{ color: '#c97a29', weight: 1 }} onEachFeature={onEachFeature} /> // Render GeoJSONLayer with fetched GeoJSON data
+          )}
           <Polyline positions={travelledPoints} color="#3d5a91" />
           {userData.map((user, index) =>
             index === 0 ? (
