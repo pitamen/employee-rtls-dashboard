@@ -3,22 +3,15 @@ import Namebar from "./Namebar";
 import "./SCSS/UserHistory.scss";
 import { useParams } from "react-router-dom";
 import { BASE_URL } from "../utils/constants";
-import { formatDate, utcToNpt } from "../utils/commonUtils";
-import { userNameToName } from "../utils/stringUtils";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { CircleMarker, MapContainer, Marker, Polyline, TileLayer, Tooltip, GeoJSON } from "react-leaflet";
+import { useLocation } from 'react-router-dom';
+import { CircleMarker, MapContainer, Polyline, TileLayer } from "react-leaflet";
 import * as turf from '@turf/turf';
 
 const UserHistoryMap = () => {
 
-  const { user: userId, name: userName } = useParams();
+  const { user: userId} = useParams();
   let location = useLocation()
-
-  const [userDetail, setUserDetail] = useState(null);
   const [isFetchingUserHistory, setIsFetchingUserHistory] = useState(false);
-  const [trackedAt, setUserTrackedAt] = useState(false);
-  const [travelledPoints, setTravelledPoints] = useState([]);
-  const [isFetchingCurrentTicketDetail, setIsFetchingCurrentTicketDetail] = useState(false);
   const [routeData, setRouteData] = useState(null)
   const [polyLineData, setPolyLineData] = useState([])
 
@@ -31,10 +24,6 @@ const UserHistoryMap = () => {
     if (!routeData) {
       return
     }
-    // // Parse and sort data by tracked_at
-    // const sortedData = data.sort((a, b) => new Date(a.tracked_at.$date) - new Date(b.tracked_at.$date));
-
-    // Create a feature collection
     const features = routeData.map(point => {
       return turf.point([point.longitude, point.latitude], {
         employeeId: point.employeeId.$oid,
@@ -61,8 +50,6 @@ const UserHistoryMap = () => {
     // Create GeoJSON object
     const geoJson = turf.featureCollection(segments);
 
-    console.log(geoJson)
-
     setGeoJson(geoJson);
   }, [routeData]);
 
@@ -86,18 +73,7 @@ const UserHistoryMap = () => {
 
         const jsonResponse = await response.json();
         const routeData = jsonResponse.data;
-        console.log("route data", routeData)
-
-
-        // const convertedData = {
-        //   mode: "drive",
-        //   waypoints: routeData.map(entry => ({
-        //     timestamp: entry.tracked_at,
-        //     location: entry.location.coordinates
-        //   }))
-        // };
-
-        // console.log("converted data", convertedData)
+        console.log("route data", routeData);
 
         if (routeData) {
           setRouteData(routeData);
@@ -116,97 +92,6 @@ const UserHistoryMap = () => {
 
     fetchLocationHistory();
   }, [userId]);
-
-  // //fetch user detail
-  // useEffect(() => {
-  //   const fetchUserDetail = async () => {
-  //     setIsFetchingUserDetail(true);
-  //     try {
-  //       const response = await fetch(
-  //         `${BASE_URL}v2/employees/byempid/detail?id=${userId}`,
-  //         {
-  //           method: "GET",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         }
-  //       );
-
-  //       const userDetailResponse = await response.json();
-  //       const userData = userDetailResponse.data;
-  //       console.log(userData[0])
-  //       if (userData.length > 0) {
-  //         setUserDetail(userData[0]);
-  //         if (
-  //           userData[0].inProgressTicket &&
-  //           Object.keys(userData[0].inProgressTicket).length > 0 &&
-  //           userData[0].inProgressTicket.ticket_id
-  //         ) {
-  //           fetchTicketDetail(userData[0].inProgressTicket.ticket_id);
-  //         }
-  //       }
-  //       setIsFetchingUserDetail(false);
-  //     } catch (error) {
-  //       setIsFetchingUserDetail(false);
-  //       console.error("Error fetching data:", error);
-  //     }
-  //   };
-
-  //   fetchUserDetail();
-  // }, [userId]);
-
-
-  // const initialUsers = [
-  //   {
-  //     userid: 345589,
-  //     username: "Larry",
-  //     trackedtime: "the Bird",
-  //     trackedlocation: "@twitter",
-  //     button: "view"
-  //   },
-  //   {
-  //     userid: 345590,
-  //     username: "Moe",
-  //     trackedtime: "the Manager",
-  //     trackedlocation: "@office",
-  //     button: "view"
-  //   },
-  //   {
-  //     userid: 345591,
-  //     username: "Curly",
-  //     trackedtime: "the Comedian",
-  //     trackedlocation: "@stage",
-  //     button: "view"
-  //   }
-  // ];
-
-  const [users, setUsers] = useState([]);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
-
-  // const onSort = (key) => {
-  //   let direction = "asc";
-  //   if (sortConfig.key === key && sortConfig.direction === "asc") {
-  //     direction = "desc";
-  //   }
-  //   setSortConfig({ key, direction });
-
-  //   const sortedUsers = [...users].sort((a, b) => {
-  //     if (a[key] < b[key]) {
-  //       return direction === "asc" ? -1 : 1;
-  //     }
-  //     if (a[key] > b[key]) {
-  //       return direction === "asc" ? 1 : -1;
-  //     }
-  //     return 0;
-  //   });
-
-  //   setUsers(sortedUsers);
-  // };
-
-  // const getSortIcon = (key) => {
-  //   if (sortConfig.key !== key) return null;
-  //   return sortConfig.direction === "asc" ? "▲" : "▼";
-  // };
 
   return (
     <div className="tableBody">

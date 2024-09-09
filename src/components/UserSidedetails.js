@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SCSS/user-side-details.scss";
-import Timepicker from "./Timepicker";
 import { userNameToName } from "../utils/stringUtils";
-// import '../user-side-details.scss';
 import { calculateTimeDifference, utcToNpt } from "../utils/commonUtils";
 import CustomModal from "./Modal";
 
@@ -16,8 +14,6 @@ const UserSidedetails = ({
   ticketDetail,
   isFetchingCurrentTicketDetail
 }) => {
-
-  console.log(userDetail)
 
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -251,11 +247,6 @@ const UserSidedetails = ({
           </div>
         </div>
       ) : null}
-      {/* <div class="text-center pt-2">
-        <div class="d-inline-block">
-          <Timepicker />
-        </div>
-      </div> */}
       <button
         className="btn btn-outline-danger my-2 mx-3"
         onClick={() => navigate("/")}

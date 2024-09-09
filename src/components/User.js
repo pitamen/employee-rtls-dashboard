@@ -124,6 +124,7 @@ const User = () => {
       });
 
       const responseJson = await response.json();
+      console.log(responseJson)
       setCurrentTicketDetail(responseJson);
     } catch (error) {
       setCurrentTicketDetail(null);

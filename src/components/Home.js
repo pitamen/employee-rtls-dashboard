@@ -86,6 +86,7 @@ const Home = (props) => {
         }
       });
       const orgResponse = await response.json();
+      console.log(orgResponse)
       setOrgResponse(orgResponse);
       const json = await getAllEmployees(orgResponse);
       const userData = json.map((item) => ({
