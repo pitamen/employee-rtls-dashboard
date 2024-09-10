@@ -8,8 +8,8 @@ import smartenIcon from '../img/vendor-markers/smarten/nst.png'
 import smartenISTIcon from '../img/vendor-markers/smarten/ist.png';
 import optinetIcon from '../img/vendor-markers/optinet/nst-new-a.png'
 import optinetISTIcon from '../img/vendor-markers/optinet/ist-new-a.png'
-import paschimanchalIcon from '../img/vendor-markers/paschimanchal/ist.png'
-import paschimanchalISTIcon from '../img/vendor-markers/paschimanchal/nst.png'
+import paschimanchalIcon from '../img/vendor-markers/paschimanchal/nst.png'
+import paschimanchalISTIcon from '../img/vendor-markers/paschimanchal/ist.png'
 
 export const markerConfig = {
     "Fiber King": {
