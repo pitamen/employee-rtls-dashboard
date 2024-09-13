@@ -6,7 +6,6 @@ import { BASE_URL_V2 } from '../utils/constants';
 const Search = ({ users, handleSuccessfulSearch }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchingUser, setIsSearchingUser] = useState(false);
-  console.log(users)
 
   const searchUser = async (searchString = '') => {
     setIsSearchingUser(true)
@@ -19,7 +18,6 @@ const Search = ({ users, handleSuccessfulSearch }) => {
         }
       });
       let searchResponse = await response.json();
-      console.log(searchResponse)
       handleSuccessfulSearch(searchResponse.data)
       setIsSearchingUser(false)
     } catch (error) {

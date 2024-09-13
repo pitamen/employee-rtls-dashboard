@@ -1,6 +1,6 @@
 {
   "name": "location-tracking-system",
-  "version": "0.1.0",
+  "version": "0.8.2",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.11.4",
@@ -23,6 +23,7 @@
     "bootstrap": "^5.3.3",
     "class-variance-authority": "^0.7.0",
     "dayjs": "^1.11.10",
+    "dotenv": "^16.4.5",
     "jquery": "^3.7.1",
     "leaflet": "^1.9.4",
     "mdb-ui-kit": "^7.3.0",

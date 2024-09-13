@@ -76,7 +76,6 @@ const User = () => {
 
         const userDetailResponse = await response.json();
         const userData = userDetailResponse.data;
-        console.log(userData[0])
         if (userData.length > 0) {
           setUserDetail(userData[0]);
           if (
@@ -124,7 +123,6 @@ const User = () => {
       });
 
       const responseJson = await response.json();
-      console.log(responseJson)
       setCurrentTicketDetail(responseJson);
     } catch (error) {
       setCurrentTicketDetail(null);
@@ -157,8 +155,6 @@ const User = () => {
       var trackedAt = updatedUserData[0].device_timestamp
         ? unixTimeStampToISOStringConverter(updatedUserData[0].device_timestamp)
         : updatedUserData[0].trackedAt;
-
-      // var trackedAt = updatedUserData[0].tracked_at
       setUserTrackedAt(trackedAt);
 
       if (updatedUserData.length > 0) {
@@ -167,13 +163,6 @@ const User = () => {
           longitude: updatedUserData[0].lng,
         });
       }
-
-      // updatedUserData.sort((a, b) => {
-      //   return new Date(a.device_timestamp) - new Date(b.device_timestamp);
-      // });
-
-      console.log(updatedUserData)
-
       setUserData(updatedUserData);
 
       const travelledPointsData = updatedUserData.map((point) => [

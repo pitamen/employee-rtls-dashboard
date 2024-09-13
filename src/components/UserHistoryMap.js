@@ -30,9 +30,7 @@ const UserHistoryMap = () => {
         tracked_at: point.tracked_at.$date
       });
     });
-
-    console.log(features)
-
+    
     const featureCollection = turf.featureCollection(features);
 
     // Split lines into segments of 3 km
@@ -73,15 +71,12 @@ const UserHistoryMap = () => {
 
         const jsonResponse = await response.json();
         const routeData = jsonResponse.data;
-        console.log("route data", routeData);
 
         if (routeData) {
           setRouteData(routeData);
         }
         let data = routeData.map(item => [item.latitude, item.longitude]);
-        console.log(data)
         setPolyLineData(data)
-        console.log(polyLineData[0][0])
         setIsFetchingUserHistory(false);
 
       } catch (error) {
@@ -102,7 +97,6 @@ const UserHistoryMap = () => {
           <div className="mb-6">
             {polyLineData.length > 0 ? <div>
               <div className="container py-2">
-                {console.log(polyLineData)}
                 <MapContainer
                   // key={`${newCenter.latitude}-${newCenter.longitude}`}
                   center={[polyLineData[0][0], polyLineData[0][1]]}

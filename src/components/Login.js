@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BASE_URL } from "../utils/constants";
+import { BASE_URL, BASE_URL_V2 } from "../utils/constants";
 import "./SCSS/Login.scss";
 import Logo from '../img/fibernet-logo.jpg'
 
@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch(BASE_URL + "users/login", {
+      const response = await fetch(BASE_URL_V2 + "users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -26,20 +26,19 @@ const Login = () => {
           password: credentials.password,
         }),
       });
-      const json = await response.json();
-
-      console.log(response)
+      const signInResponse = await response.json();
 
       if (response.status === 200) {
-        sessionStorage.setItem("accessToken", json.accessToken);
-        navigate("/");
+        let location = signInResponse.data.roDetail ? signInResponse.data.roDetail.location : null;
+        sessionStorage.setItem("accessToken", signInResponse.accessToken);
+        sessionStorage.setItem("location", location ? JSON.stringify(location) : null)
+        navigate('/');
       } else if (response.status === 401) {
-        alert("Invalid Credentials, Please enter valid username and password.");
+        alert(signInResponse.message);
       } else {
-        alert(response.message)
+        alert(signInResponse.message)
       }
     } catch (error) {
-      console.log(error)
       alert("Something went wrong!!!", error.message)
     }
 

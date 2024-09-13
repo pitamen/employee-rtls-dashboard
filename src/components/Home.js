@@ -20,7 +20,6 @@ import wdrIcon from '../img/tech-wdr-new.png';
 import defaultIcon from '../img/tech-default-new.png'
 
 import { defaultAppValues, toggleFullScreen } from '../utils/commonUtils'
-import { type } from 'jquery';
 
 const Home = (props) => {
   const [users, setUsers] = useState([]);
@@ -29,6 +28,7 @@ const Home = (props) => {
   const [isFetchingEmployeeCount, setIsFetchingEmployeeCount] = useState(false);
   const [totalEmployeeCount, setTotalEmployeeCount] = useState(0);
   const [filteredType, setFilteredType] = useState('ALL');
+  const [mapCenterOfRO, setMapCenterOfRO] = useState(null)
 
   const getAllEmployees = async (jsonResponse) => {
     const allEmployees = [];
@@ -86,7 +86,6 @@ const Home = (props) => {
         }
       });
       const orgResponse = await response.json();
-      console.log(orgResponse)
       setOrgResponse(orgResponse);
       const json = await getAllEmployees(orgResponse);
       const userData = json.map((item) => ({
@@ -110,6 +109,14 @@ const Home = (props) => {
   };
 
   useEffect(() => {
+    let location = sessionStorage.getItem('location')
+    location = location ? JSON.parse(location) : null
+    if (location) {
+      setMapCenterOfRO({ latitude: location.coordinates[1], longitude: location.coordinates[0] })
+    } else {
+      setMapCenterOfRO(null)
+    }
+
     getEmployeeCount();
     fetchUserData();
   }, []);
@@ -155,9 +162,11 @@ const Home = (props) => {
 
   return (
     <>
-      <Namebar toggleFullScreen={toggleFullScreen} dashboardName={'DH Field View Dashboard (v0.8.0)'} />
+      <Namebar toggleFullScreen={toggleFullScreen} dashboardName={`DishHome Field View Dashboard (v0.8.1)`} />
       <Sidedetails orgResponse={orgResponse} users={users} logData={logDataFromSidedetails} employeeCount={totalEmployeeCount} isFetchingEmployeeCount={isFetchingEmployeeCount} filterData={filterUserAccordingToCategory} />
-      <MapComponent users={filteredUsers} receivedData={receivedData} />
+      {
+        mapCenterOfRO ? <MapComponent users={filteredUsers} receivedData={receivedData} mapCenter={mapCenterOfRO} /> : <MapComponent users={filteredUsers} receivedData={receivedData} />
+      }
     </>
   );
 };

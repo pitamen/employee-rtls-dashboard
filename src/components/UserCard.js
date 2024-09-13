@@ -3,7 +3,6 @@ import { calculateTimeDifference, calculateTimeDifferenceInMinutes } from '../ut
 import profilePic from '../img/profile.jpeg'
 
 const UserCard = ({ user }) => {
-    console.log(user)
     const lastOnline = (calculateTimeDifference(user.time));
     const lastOnlineInMinute = (calculateTimeDifferenceInMinutes(user.time))
     const status = lastOnlineInMinute <= 10 ? 'Online' : 'Offline';

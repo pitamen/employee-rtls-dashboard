@@ -5,12 +5,14 @@ import { FullscreenControl } from 'react-leaflet-fullscreen';
 import UserCard from './UserCard';
 import { customMapIcon, customMapIconVendor, lessZoomedIcon, lessZoomedIconVendor } from '../utils/mapUtils';
 import './SCSS/Map.scss';
-import {GeoJSON} from 'react-leaflet';
+import { GeoJSON } from 'react-leaflet';
 import geoJsonFile from '../dishhome.geojson';
-import { colors } from '@mui/material';
 
-const MapComponent = ({ users, receivedData }) => {
-  const [newCenter, setNewCenter] = useState({ latitude: 28.2096, longitude: 83.9856 });
+const MapComponent = ({ users, receivedData, mapCenter = null }) => {
+
+  let center = mapCenter !== null ? mapCenter : { latitude: 28.2096, longitude: 83.9856 };
+
+  const [newCenter, setNewCenter] = useState(center);
   const [zoomLevel, setZoomLevel] = useState(10);
   const [geoJSONData, setGeoJSONData] = useState(null);
 
@@ -55,7 +57,7 @@ const MapComponent = ({ users, receivedData }) => {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
         {geoJSONData && (
-          <GeoJSON data={geoJSONData} style={{color: '#c97a29', weight: 1}} onEachFeature={onEachFeature} /> // Render GeoJSONLayer with fetched GeoJSON data
+          <GeoJSON data={geoJSONData} style={{ color: '#c97a29', weight: 1 }} onEachFeature={onEachFeature} /> // Render GeoJSONLayer with fetched GeoJSON data
         )}
         {users.map((user) => (
           <Marker

@@ -54,14 +54,13 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
   }
 
   useEffect(() => {
-    console.log(searchResults)
+    console.log('')
   }, [searchResults])
 
 
   const totalLiveusers = orgUsersResponse?.length > 0 ? countTotalLiveUsers(orgUsersResponse) : 0
 
   const handleClick = (user) => {
-    console.log(user)
     setMapKey(pervValue => pervValue + 1)
     logData({ latitude: user.location.latitude, longitude: user.location.longitude, mapKey: mapKey });
   };
@@ -71,7 +70,6 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
   };
 
   const handleSuccessfulSearch = (employees) => {
-    console.log(employees)
     setSearchResults(employees)
   };
 
@@ -122,7 +120,6 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
                     onClick={() => {
                       if (user.isCheckedIn) {
                         let selectedUser = users.filter((userdata) => userdata.name === user.name)
-                        console.log(selectedUser)
                         const transformedUser = {
                           employeeId: selectedUser[0].id,
                           name: selectedUser[0].name,

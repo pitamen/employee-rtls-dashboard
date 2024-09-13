@@ -16,10 +16,6 @@ const UserHistory = () => {
   const [userDetail, setUserDetail] = useState(null);
   const [isFetchingUserDetail, setIsFetchingUserDetail] = useState(false);
   const [isFetchingUserAttendance, setIsFetchingUserAttendance] = useState(false);
-  const [fetchIntervalId, setFetchIntervalId] = useState(null);
-  const [fetchEnabled, setFetchEnabled] = useState(false);
-  const [trackedAt, setUserTrackedAt] = useState(false);
-  const [travelledPoints, setTravelledPoints] = useState([]);
   const [currentTicketDetail, setCurrentTicketDetail] = useState(null);
   const [isFetchingCurrentTicketDetail, setIsFetchingCurrentTicketDetail] = useState(false);
   const [attendanceData, setAttendanceData] = useState([])
@@ -67,7 +63,6 @@ const UserHistory = () => {
 
         const attendanceResponse = await response.json();
         const attendanceData = attendanceResponse.data;
-        console.log(attendanceData)
 
         if (attendanceData) {
           setAttendanceData(attendanceData);
@@ -96,10 +91,8 @@ const UserHistory = () => {
             },
           }
         );
-
         const userDetailResponse = await response.json();
         const userData = userDetailResponse.data;
-        console.log(userData[0])
         if (userData.length > 0) {
           setUserDetail(userData[0]);
           if (
@@ -120,32 +113,7 @@ const UserHistory = () => {
     fetchUserDetail();
   }, [userId]);
 
-
-  const initialUsers = [
-    {
-      userid: 345589,
-      username: "Larry",
-      trackedtime: "the Bird",
-      trackedlocation: "@twitter",
-      button: "view"
-    },
-    {
-      userid: 345590,
-      username: "Moe",
-      trackedtime: "the Manager",
-      trackedlocation: "@office",
-      button: "view"
-    },
-    {
-      userid: 345591,
-      username: "Curly",
-      trackedtime: "the Comedian",
-      trackedlocation: "@stage",
-      button: "view"
-    }
-  ];
-
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState([]);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
 
   const onSort = (key) => {
@@ -181,8 +149,6 @@ const UserHistory = () => {
           <div className="personal-details mt-2">
             <h2>User Details</h2>
             <p><strong>username: </strong>{userDetail ? userNameToName(userDetail.name) : ''}</p>
-            {/* <p><strong>Email:</strong> john.doe@example.com</p>
-            <p><strong>Phone:</strong> (123) 456-7890</p> */}
           </div>
           <div className="container py-1 my-1">
             <div className="mb-6 py-2">
