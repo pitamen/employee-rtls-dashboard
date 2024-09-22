@@ -70,6 +70,7 @@ const User = () => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
+              'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
             },
           }
         );
@@ -119,8 +120,11 @@ const User = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
         },
       });
+
+      console.log(response)
 
       const responseJson = await response.json();
       setCurrentTicketDetail(responseJson);
@@ -138,6 +142,7 @@ const User = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${sessionStorage.getItem('accessToken')}`
         },
       });
 
