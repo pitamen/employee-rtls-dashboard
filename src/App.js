@@ -8,6 +8,7 @@ import User from './components/User';
 import LoadingBar from 'react-top-loading-bar';
 import UserHistory from './components/UserHistory';
 import UserHistoryMap from './components/UserHistoryMap';
+import CentralDash from './components/CentralDash';
 
 
 const PrivateRoute = ({ isAuthenticated }) => {
@@ -40,6 +41,7 @@ function App() {
           <LoadingBar color="#f11946" progress={progress} />
           <Routes>
             <Route exact path="/login" element={<Login />} />
+            <Route exact path='/central-dash' element={<CentralDash  setProgress={setProgress}/>}/>
             {/* <Route exact path="/register" element={<Register />} /> */}
             <Route path="/" element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
               <Route exact path="/" element={<Home setProgress={setProgress} />} />

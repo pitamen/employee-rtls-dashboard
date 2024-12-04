@@ -25,7 +25,7 @@ import './SCSS/SideDetails.scss'
 import { VENDOR_NAMES } from '../utils/constants';
 import { customMapIconVendor, lessZoomedIconVendor, sidebarIcon } from '../utils/mapUtils';
 
-const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFetchingEmployeeCount, filterData }) => {
+const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFetchingEmployeeCount, filterData, isCentral = false }) => {
   const navigate = useNavigate();
   const orgUsersResponse = orgResponse;
 
@@ -96,11 +96,13 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
           <h5 className="offcanvas-title" id="offcanvasScrollingLabel"></h5>
           <button type="button" className="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close" onClick={toggleOffcanvas}></button>
         </div>
-        <div className='container py-2'>
-          {!userId && (
-            <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
-          )}
-        </div>
+        {
+          isCentral ? <></> : <div className='container py-2'>
+            {!userId && (
+              <Search users={users} handleSuccessfulSearch={handleSuccessfulSearch} />
+            )}
+          </div>
+        }
 
         {!isFetchingEmployeeCount ? <div className="d-flex justify-content-around">
           <div className="p-2"><small>🟦Total-{employeeCount}</small></div>
@@ -172,39 +174,41 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
             </ul>
           </div> : <></>
         } */}
-        <div className="container">
-          <div className="row align-items-center" style={{ marginTop: '8px', padding: '8px' }}>
-            <div className="col-md-6">
-              <label htmlFor="dropdown" className="form-label">Technician Type:</label>
-            </div>
-            <div className="col-md-6">
-              <div className="dropdown tech-type-dropdown">
-                <button
-                  className="btn btn-secondary dropdown-toggle"
-                  type="button"
-                  id="dropdownMenuButton"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  {activeItem}
-                </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                  {['ALL', 'NST', 'IST/OST'].map((item) => (
-                    <li key={item}>
-                      <a
-                        className={`dropdown-item ${activeItem === item ? 'active' : ''}`}
-                        href="#"
-                        onClick={() => handleItemClick(item)}
-                      >
-                        {item}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
+        {
+          isCentral ? <></> : <div className="container">
+            <div className="row align-items-center" style={{ marginTop: '8px', padding: '8px' }}>
+              <div className="col-md-6">
+                <label htmlFor="dropdown" className="form-label">Technician Type:</label>
+              </div>
+              <div className="col-md-6">
+                <div className="dropdown tech-type-dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle"
+                    type="button"
+                    id="dropdownMenuButton"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    {activeItem}
+                  </button>
+                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {['ALL', 'NST', 'IST/OST'].map((item) => (
+                      <li key={item}>
+                        <a
+                          className={`dropdown-item ${activeItem === item ? 'active' : ''}`}
+                          href="#"
+                          onClick={() => handleItemClick(item)}
+                        >
+                          {item}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        }
 
         <div className="offcanvas-body">
           <div style={{ marginTop: '0px', marginBottom: '0px', overflowY: 'auto', maxHeight: '100vh', scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'none' }} >
@@ -233,12 +237,16 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
                           >
                             <Typography variant='body2' style={{ fontWeight: 'bold', color: '#581845' }}>{user.name}</Typography> <Typography variant='body2'>Last Update: {calculateTimeDifference(user.location.tracked_at)} ago</Typography>
                           </Link>
-                          <a href={`/user/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="User Details">
-                            <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
-                          </a>
-                          <a href={`/user/detail/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
-                            <span><HistoryIcon style={{ color: '#CC5500' }} /></span>
-                          </a>
+                          {
+                            isCentral ? <></> : <a href={`/user/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="User Details">
+                              <span><PreviewIcon style={{ color: '#CC5500' }} /></span>
+                            </a>
+                          }
+                          {
+                            isCentral ? <></> : <a href={`/user/detail/${user.employeeId}`} style={{ textDecoration: 'none' }} className="card-link" target='blank' title="Show History">
+                              <span><HistoryIcon style={{ color: '#CC5500' }} /></span>
+                            </a>
+                          }
                         </li>
                       ))}
                     </ul>
@@ -248,9 +256,11 @@ const Sidedetails = ({ users, orgResponse, logData, userId, employeeCount, isFet
             }
           </div>
         </div>
-        <button className="btn btn-outline-danger my-2 mx-3" onClick={handleLogout} >
-          Logout
-        </button>
+        {
+          isCentral ? <></> : <button className="btn btn-outline-danger my-2 mx-3" onClick={handleLogout} >
+            Logout
+          </button>
+        }
       </div>
     </div>
 
